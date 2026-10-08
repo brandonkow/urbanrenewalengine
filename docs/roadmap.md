@@ -17,6 +17,8 @@ Do task 0 first, then the free builds A–C, then the numbered tasks as they bec
 These three use only what is already in the kit plus free public sources; running them uses your Claude plan's usage and nothing else. They can go in any order. Do A first if you plan to meet owners soon.
 
 ### A. Owner briefing packs *(plan first)*
+**Status: built in 5.1.** Before any pack is printed, have a native speaker check the Malay and Chinese (then set `PACK_REVIEWED`), and a lawyer read the disclaimer and the rights section.
+
 **Prompt**
 > Build owner briefing packs for the sites that have an owner model: Apartmen Taman Taiping, Kampung Baru Salak Selatan, Kampung Pantai, and both Jinjang sites.
 >
@@ -159,6 +161,8 @@ The single 250 KB file is fine to publish but hard to edit safely.
 ---
 
 ## 10. Automation (optional)
+**Status: the workflow is in `.github/workflows/test.yml`.** To make a failing run block merging, add a branch protection rule that requires the `npm test` check.
+
 **Prompt**
 > Put this project on a private GitHub repository, add a GitHub Actions workflow that runs `npm test` on every push, and explain how to use Claude Code on the web and the Claude GitHub app with it.
 

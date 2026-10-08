@@ -13,7 +13,9 @@ This folder is a ready-to-open Claude Code project for the KL Urban Renewal Engi
 | `docs/CHANGELOG.md` | One entry per change that moves numbers. |
 | `docs/sources/` | The DBKL 2026 guideline PDF, workbook v3 and the original handoff. |
 | `data/land-deals-seed.csv` | The land deals already in the engine, as a starting point for the land-deal tracker. |
-| `tests/` | Formula tests with golden numbers (`expected.json`), a UI sweep and interaction checks. |
+| `tests/` | Formula tests with golden numbers (`expected.json`), a UI sweep, interaction checks and owner-pack checks. |
+| `scripts/packs.mjs` | `npm run packs`: exports every owner briefing pack to PDF in `out/packs/`. |
+| `.github/workflows/test.yml` | Runs `npm test` on every push and pull request. |
 | `.claude/` | Project settings, two skills (`/check-engine`, `/add-evidence`) and a `numbers-auditor` subagent. |
 
 ## 1. Install (once)
@@ -31,7 +33,7 @@ Check it with `claude --version`, and update with `claude update`. Docs: https:/
 ```
 npm install
 npm run setup      # downloads Chromium for the tests, once
-npm test           # should end with three OK lines
+npm test           # should end with four OK lines
 ```
 
 ## 2. Open the project

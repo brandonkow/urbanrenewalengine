@@ -16,6 +16,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 - `npm test`: formula tests, UI sweep and interaction checks. It must pass before a change counts as done.
 - `npm run test:numbers -- --verbose`: every formula check, with values.
 - `npm run shots`: screenshots in `screenshots/`. Look at them after any UI change.
+- `npm run packs`: exports every owner briefing pack (site × language × scenario) to PDF in `out/packs/`. Add `-- --contact file.json` to print your own contact block.
 - Set `CHROMIUM_PATH=/path/to/chrome` to use an existing browser instead of `npm run setup`.
 
 ## Rules that must not break
@@ -25,7 +26,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 4. **Consent is unanimous** until a new law is passed. The withdrawn Urban Renewal Bill's 75–80% thresholds are for reference only.
 5. **Golden numbers:** base scenarios must keep reproducing the workbook (handoff §7.1), the Taiping handoff figures (§7.4) and the guideline results (§8). `tests/expected.json` encodes them.
 6. **Changing golden numbers:** edit `tests/expected.json` only when a change is meant to move numbers. Record which values moved, old → new, and why in `docs/CHANGELOG.md`.
-7. **Privacy:** the Assembly tracker stores unit or parcel labels only. Never add fields for owners' names, phone numbers, IC numbers or other personal data.
+7. **Privacy:** the Assembly tracker stores unit or parcel labels only; owner packs carry only your own contact details. Never add fields for owners' names, phone numbers, IC numbers or other personal data.
 8. **Evidence:** every new data point needs a source URL, a check date and a confidence level in `EVIDENCE`. Use the `add-evidence` skill.
 
 ## How app/index.html is organised (top to bottom)
@@ -34,6 +35,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 - **DBKL 2026 guideline:** `G26`, `AFF`, `INC_DEFAULT`, `INC`, `incP`, `incB`, `incMax`, `g26Share`, `catA`, `g26Row`.
 - **Engine (pure functions):** `calcRLV`, `calcOwner`, `model`, `requiredASP`, `requiredPR`, `requiredHC`, `applyOwnerDerived`, `dealCalc`.
 - **Judgement:** `suggestVerdict`, `TRIGGERS`, `evalTrigger`, `levers`, `prBand`, `v2Score`.
+- **Owner packs:** `PK` (English, Malay, Chinese text), `PACK_REVIEWED`, `packState`, `packData`, `packHTML`, `viewPack`. Packs read the base preset and the guideline as read, never lab edits, and show payment figures only when coverage ≥ 1 and the option is fundable.
 - **Views:** one `view…` and `bind…` pair per route, with the router (`render()`) at the end.
 - **Sync:** on claude.ai the page saves a private workspace through the artifact runtime (`window.claude`); elsewhere it uses localStorage. Keep that fallback.
 
