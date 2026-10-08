@@ -1,0 +1,469 @@
+{
+ "_about": "Golden numbers for tests/run-tests.mjs: [expected value, tolerance]. Sources: the v3 workbook RLV Model sheet (wb …), the 17 Sep 2026 handoff (taiping …), hand calculations in builds 2–5, and DBKL’s 2026 guideline worked examples (section 7.2). Change a value only when the engine is meant to change, and record why in docs/CHANGELOG.md.",
+ "checks": {
+  "wb taiping down RLV/ac (m)": [
+   -10.184328,
+   0.0001
+  ],
+  "wb taiping down breakeven ASP": [
+   1019.8974,
+   0.001
+  ],
+  "wb taiping base RLV/ac (m)": [
+   21.4071264,
+   0.0001
+  ],
+  "wb taiping base breakeven ASP": [
+   864.9062,
+   0.001
+  ],
+  "wb taiping up RLV/ac (m)": [
+   56.75868,
+   0.0001
+  ],
+  "wb taiping up breakeven ASP": [
+   777.8986,
+   0.001
+  ],
+  "wb jujur down RLV/ac (m)": [
+   -19.6162659,
+   0.0001
+  ],
+  "wb jujur down breakeven ASP": [
+   713.9282,
+   0.001
+  ],
+  "wb jujur base RLV/ac (m)": [
+   -4.4167662,
+   0.0001
+  ],
+  "wb jujur base breakeven ASP": [
+   605.4344,
+   0.001
+  ],
+  "wb jujur up RLV/ac (m)": [
+   11.0952765,
+   0.0001
+  ],
+  "wb jujur up breakeven ASP": [
+   544.529,
+   0.001
+  ],
+  "wb rejang down RLV/ac (m)": [
+   -17.7951312,
+   0.0001
+  ],
+  "wb rejang down breakeven ASP": [
+   739.4256,
+   0.001
+  ],
+  "wb rejang base RLV/ac (m)": [
+   -2.1557844,
+   0.0001
+  ],
+  "wb rejang base breakeven ASP": [
+   627.057,
+   0.001
+  ],
+  "wb rejang up RLV/ac (m)": [
+   14.3093239,
+   0.0001
+  ],
+  "wb rejang up breakeven ASP": [
+   563.9764,
+   0.001
+  ],
+  "wb keramat down RLV/ac (m)": [
+   -12.257784,
+   0.0001
+  ],
+  "wb keramat down breakeven ASP": [
+   892.4103,
+   0.001
+  ],
+  "wb keramat base RLV/ac (m)": [
+   6.3654228,
+   0.0001
+  ],
+  "wb keramat base breakeven ASP": [
+   756.793,
+   0.001
+  ],
+  "wb keramat up RLV/ac (m)": [
+   28.7945212,
+   0.0001
+  ],
+  "wb keramat up breakeven ASP": [
+   680.6612,
+   0.001
+  ],
+  "wb angkasa down RLV/ac (m)": [
+   -12.3317271,
+   0.0001
+  ],
+  "wb angkasa down breakeven ASP": [
+   815.9179,
+   0.001
+  ],
+  "wb angkasa base RLV/ac (m)": [
+   6.6190509,
+   0.0001
+  ],
+  "wb angkasa base breakeven ASP": [
+   691.925,
+   0.001
+  ],
+  "wb angkasa up RLV/ac (m)": [
+   29.211336,
+   0.0001
+  ],
+  "wb angkasa up breakeven ASP": [
+   622.3188,
+   0.001
+  ],
+  "taiping total RLV (m)": [
+   27.5866,
+   0.001
+  ],
+  "taiping weighted value": [
+   752500,
+   0.5
+  ],
+  "taiping package": [
+   978250,
+   0.5
+  ],
+  "taiping max interests": [
+   28.2,
+   0.05
+  ],
+  "taiping required ASP @40": [
+   1198.37,
+   0.05
+  ],
+  "taiping required PR @40": [
+   5.6738,
+   0.001
+  ],
+  "taiping premium @40": [
+   -0.0835,
+   0.0005
+  ],
+  "taiping required ASP @60": [
+   1365.11,
+   0.05
+  ],
+  "taiping required PR @60": [
+   8.5106,
+   0.001
+  ],
+  "taiping required ASP @20": [
+   1031.64,
+   0.05
+  ],
+  "taiping required PR @30": [
+   4.2553,
+   0.001
+  ],
+  "taiping max interests per acre (workbook)": [
+   21.8831,
+   0.001
+  ],
+  "taiping area for 40 interests (workbook)": [
+   1.8279,
+   0.001
+  ],
+  "taiping workbook premium, 1.5 ac / 40": [
+   0.0668003,
+   1e-05
+  ],
+  "dc 0: required PR gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0: required ASP gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0: required hard cost gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0.3: required PR gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0.3: required ASP gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0.3: required hard cost gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0.6: required PR gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0.6: required ASP gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "dc 0.6: required hard cost gives coverage 1": [
+   1,
+   1e-06
+  ],
+  "salak payable lot psf": [
+   133.0,
+   0.1
+  ],
+  "salak required ASP": [
+   667.4,
+   0.1
+  ],
+  "salak coverage": [
+   0.79,
+   0.005
+  ],
+  "pantai payable lot psf": [
+   208.2,
+   0.1
+  ],
+  "pantai required PR": [
+   4.9,
+   0.01
+  ],
+  "deal A surplus (m)": [
+   -11.54,
+   0.01
+  ],
+  "deal B surplus (m)": [
+   -15.16,
+   0.01
+  ],
+  "deal C surplus (m)": [
+   -16.34,
+   0.01
+  ],
+  "tuan straits implied PR": [
+   6.94,
+   0.01
+  ],
+  "tuan straits RLV psf land": [
+   404,
+   1
+  ],
+  "tuan straits land share of GDV": [
+   0.107,
+   0.001
+  ],
+  "levers: worst |coverage - 1|": [
+   0,
+   1e-06
+  ],
+  "levers: reachable moves checked": [
+   11,
+   0
+  ],
+  "csv rows (header + 21 sites)": [
+   22,
+   0
+  ],
+  "guideline worked example, 50% eligibility: final PR": [
+   9.6,
+   1e-09
+  ],
+  "guideline worked example, 100% eligibility: final PR": [
+   10.2,
+   1e-09
+  ],
+  "guideline worked example 2 is capped": [
+   1,
+   0
+  ],
+  "incB taiping share as read": [
+   0.5,
+   1e-12
+  ],
+  "incB taiping effective PR": [
+   6,
+   1e-12
+  ],
+  "incB taiping + open space 10%": [
+   0.6,
+   1e-12
+  ],
+  "incB taiping + open 10% + transit 20% (capped)": [
+   0.7,
+   1e-12
+  ],
+  "incB capped flag": [
+   1,
+   0
+  ],
+  "incB residing ignored in an R3 zone": [
+   0.5,
+   1e-12
+  ],
+  "incB half eligibility halves components, not transit": [
+   0.35,
+   1e-12
+  ],
+  "incB clamps open space at 10%": [
+   0.1,
+   1e-12
+  ],
+  "incB salak share as read": [
+   0.3,
+   1e-12
+  ],
+  "lab DBKL 2026 preset PR uplift (taiping)": [
+   0.5,
+   1e-12
+  ],
+  "incEdited false at the reading": [
+   0,
+   0
+  ],
+  "incEdited true after a change": [
+   1,
+   0
+  ],
+  "incTag says as set": [
+   1,
+   0
+  ],
+  "taiping Category B coverage (PR 6.0)": [
+   1.0575,
+   0.001
+  ],
+  "taiping coverage at the 70% cap (PR 6.8)": [
+   1.1985,
+   0.001
+  ],
+  "incMax taiping reaches the cap": [
+   0.7,
+   1e-12
+  ],
+  "incMax salak tops out at 60% (R3, 30% tier)": [
+   0.6,
+   1e-12
+  ],
+  "incMax salak at 50% eligibility": [
+   0.4,
+   1e-12
+  ],
+  "prBand: beyond this classification": [
+   1,
+   0
+  ],
+  "prBand: beyond the 70% cap": [
+   1,
+   0
+  ],
+  "catA taiping IV units": [
+   257,
+   0
+  ],
+  "catA taiping IV controlled units needed": [
+   52,
+   0
+  ],
+  "catA taiping IV MADANI units": [
+   4,
+   0
+  ],
+  "catA taiping IV RMM units": [
+   8,
+   0
+  ],
+  "catA taiping IV free-market units": [
+   205,
+   0
+  ],
+  "catA taiping IV equivalent PR": [
+   5.82851,
+   0.0001
+  ],
+  "catA taiping IV RLV (m)": [
+   34.82387,
+   0.0001
+  ],
+  "catA taiping IV coverage": [
+   0.88995,
+   0.0001
+  ],
+  "catA taiping III RLV (m)": [
+   23.8089,
+   0.0001
+  ],
+  "catA taiping II RLV (m)": [
+   -11.42544,
+   0.0001
+  ],
+  "catA taiping IV at 1,200 sf coverage": [
+   1.0872,
+   0.0001
+  ],
+  "catA taiping best tier is IV": [
+   1,
+   0
+  ],
+  "catA split under 10 acres: units": [
+   400,
+   0
+  ],
+  "catA split under 10 acres: MADANI share": [
+   0.12,
+   1e-12
+  ],
+  "catA split under 10 acres: RMM share": [
+   0.28,
+   1e-12
+  ],
+  "catA split: free-market share": [
+   0.5,
+   1e-12
+  ],
+  "catA split at 10 acres or more: MADANI share": [
+   0.2,
+   1e-12
+  ],
+  "catA split at 10 acres or more: RMM share": [
+   0.2,
+   1e-12
+  ],
+  "transit read: keramat is a possible TPZ": [
+   1,
+   0
+  ],
+  "transit read: pantai is a possible TIZ": [
+   1,
+   0
+  ],
+  "prBand: taiping within the guideline": [
+   1,
+   0
+  ],
+  "prBand: pantai needs more components": [
+   1,
+   0
+  ],
+  "trigger count": [
+   28,
+   0
+  ],
+  "export: taiping dbkl2026 share": [
+   0.5,
+   1e-12
+  ],
+  "export: taiping best Category A tier is IV": [
+   1,
+   0
+  ],
+  "csv has the g26MaxCoverage column": [
+   1,
+   0
+  ]
+ }
+}

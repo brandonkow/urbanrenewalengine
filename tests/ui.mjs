@@ -1,0 +1,55 @@
+// Interaction checks on the DBKL incentives calculator and the lab handover.
+//   npm run test:ui
+import { launch, openEngine, report } from './lib.mjs';
+
+const browser = await launch();
+const { page, errors } = await openEngine(browser, '#/incentive/pantai');
+const lines = []; let fails = 0;
+const chk = (name, cond) => { if (!cond) fails++; lines.push(`${cond ? 'PASS' : 'FAIL'} ${name}`); };
+const ev = (fn, arg) => page.evaluate(fn, arg);
+const near = (a, b) => Math.abs(a - b) < 1e-9;
+
+chk('Pantai reads +30% by default', near(await ev(() => incB('pantai').share), 0.3));
+await ev(() => { const el = document.getElementById('i_tpz'); el.value = '0.1'; el.dispatchEvent(new Event('input')); el.dispatchEvent(new Event('change')); });
+await page.waitForTimeout(150);
+chk('transit slider commits on release', near(await ev(() => INC.pantai.tpz), 0.1));
+chk('share becomes +40%', near(await ev(() => incB('pantai').share), 0.4));
+const text = await page.innerText('main');
+chk('page shows +40% and "as set"', text.includes('+40%') && text.includes('Category B, as set'));
+const cov = await ev(() => g26Row('pantai').mb.own.coverage);
+chk(`Pantai coverage at +40% is about 100% (${cov.toFixed(4)})`, Math.abs(cov - 1) < 0.01);
+await page.click('[data-ie="0.5"]'); await page.waitForTimeout(150);
+chk('half eligibility halves the components', near(await ev(() => incB('pantai').share), 0.25));
+chk('focus stays on the pressed button', await ev(() => document.activeElement && document.activeElement.dataset.ie === '0.5'));
+await page.click('[data-ir="0.5"]'); await page.waitForTimeout(150);
+chk('50% tier at half eligibility + 10% transit = 35%', near(await ev(() => incB('pantai').share), 0.35));
+chk('settings saved in local storage', await ev(() => !!localStorage.getItem('klure:inc')));
+await page.click('#iReset'); await page.waitForTimeout(50); await page.click('#iReset'); await page.waitForTimeout(150);
+chk('reset returns to the reading', near(await ev(() => incB('pantai').share), 0.3) && !(await ev(() => incEdited('pantai'))));
+await page.click('#iApply'); await page.waitForTimeout(200);
+chk('apply opens the lab', (await ev(() => location.hash)) === '#/lab/pantai');
+chk('lab PR uplift equals the share', near(await ev(() => st('pantai').prUp), 0.3));
+chk('lab marks the DBKL 2026 preset', await ev(() => document.querySelector('[data-preset="g26"]').getAttribute('aria-pressed') === 'true'));
+await page.click('[data-preset="base"]'); await page.waitForTimeout(150);
+chk('base preset restores PR uplift 0', near(await ev(() => st('pantai').prUp), 0));
+await page.click('[data-preset="g26"]'); await page.waitForTimeout(150);
+chk('DBKL 2026 preset sets PR uplift +30%', near(await ev(() => st('pantai').prUp), 0.3));
+await page.click('[data-preset="base"]'); await page.waitForTimeout(150);
+await ev(() => { location.hash = '#/incentive/salak'; }); await page.waitForTimeout(200);
+await page.selectOption('#incSel', 'taiping'); await page.waitForTimeout(200);
+chk('site picker changes the route', (await ev(() => location.hash)) === '#/incentive/taiping');
+await page.click('#nav button[data-p="watchlist"]'); await page.waitForTimeout(150);
+await page.click('#nav button[data-p="incentive"]'); await page.waitForTimeout(150);
+chk('navigation remembers the last incentive site', (await ev(() => location.hash)) === '#/incentive/taiping');
+await ev(() => { location.hash = '#/triggers'; }); await page.waitForTimeout(200);
+chk('triggers page lists the DBKL confirmation trigger', (await page.innerText('main')).includes('DBKL confirms the 50% Category B redevelopment incentive for Site 6'));
+chk('workspace includes guideline settings', (await ev(() => Object.keys(workspaceBody()))).includes('inc'));
+await ev(() => { INC.taiping = { ...incDefault('taiping'), open: 0.1 }; store.set('inc', INC); });
+const exported = await ev(() => JSON.stringify(exportObj()));
+await ev(() => { INC = {}; store.set('inc', INC); });
+await ev((t) => importWorkspace(t), exported);
+chk('import restores guideline settings', near(await ev(() => incB('taiping').share), 0.6));
+await ev(() => { INC = {}; store.set('inc', INC); });
+await browser.close();
+const ok = report('Interaction checks', lines, fails, errors);
+process.exit(ok ? 0 : 1);
