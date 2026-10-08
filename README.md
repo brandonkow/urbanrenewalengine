@@ -33,7 +33,7 @@ Check it with `claude --version`, and update with `claude update`. Docs: https:/
 ```
 npm install
 npm run setup      # downloads Chromium for the tests, once
-npm test           # should end with four OK lines
+npm test           # should end with five OK lines
 ```
 
 ## 2. Open the project

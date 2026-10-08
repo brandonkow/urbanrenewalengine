@@ -35,6 +35,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 - **DBKL 2026 guideline:** `G26`, `AFF`, `INC_DEFAULT`, `INC`, `incP`, `incB`, `incMax`, `g26Share`, `catA`, `g26Row`.
 - **Engine (pure functions):** `calcRLV`, `calcOwner`, `model`, `requiredASP`, `requiredPR`, `requiredHC`, `applyOwnerDerived`, `dealCalc`.
 - **Judgement:** `suggestVerdict`, `TRIGGERS`, `evalTrigger`, `levers`, `prBand`, `v2Score`.
+- **Owner-test odds:** `MC_DEFAULT`, `MC` (synced), `mcCfg`, `mcRun`, `mcTornado`, `viewOdds`. Seeded Monte Carlo on top of `model()`; never writes to `STATE`.
 - **Owner packs:** `PK` (English, Malay, Chinese text), `PACK_REVIEWED`, `packState`, `packData`, `packHTML`, `viewPack`. Packs read the base preset and the guideline as read, never lab edits, and show payment figures only when coverage ≥ 1 and the option is fundable.
 - **Views:** one `view…` and `bind…` pair per route, with the router (`render()`) at the end.
 - **Sync:** on claude.ai the page saves a private workspace through the artifact runtime (`window.claude`); elsewhere it uses localStorage. Keep that fallback.

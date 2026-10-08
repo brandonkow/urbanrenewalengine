@@ -136,6 +136,8 @@ The single 250 KB file is fine to publish but hard to edit safely.
 ---
 
 ## 7. Probability of clearing the owner test
+**Status: built in 5.2** (Owner-test odds).
+
 **Prompt**
 > Add a Monte Carlo view: ranges for ASP, hard cost, interest count, lot value and development-charge rate, plus discrete DBKL outcomes (Category B as read, half eligibility, no incentive, double privilege). Show the probability that coverage reaches 1 for each site, and a tornado chart of which input matters most. Use a fixed random seed so the results are reproducible and testable.
 

@@ -887,8 +887,9 @@ The script inside the single HTML file runs top to bottom:
 | Views | `viewWatchlist`, `viewBoard`, `viewMap`, `viewSite`, `viewLab`, `viewDeal`, `viewAssembly`, `viewCalibration`, `viewTriggers`, `viewSources`, `viewUniverse`, `viewMethod` (each with a `bind…`) |
 | Data | `siteResults`, `exportObj`, `resultsCSV`, `saveText`, `importWorkspace`, `armConfirm` |
 | Sync | `initSync`, `pushNow`, `schedulePush`, `applyRemote`, `workspaceBody` |
+| Owner-test odds (5.2) | `MC_OUT`, `MC_DEFAULT`, `MC_SRC`, `MC`, `mcRng`, `mcTri`, `mcCfg`, `mcShares`, `mcPoint`, `mcRun`, `mcTornado`, `mcHist`, `mcTornadoSVG`, `viewOdds` / `bindOdds` |
 | Owner packs (5.1) | `PK`, `PACK_REVIEWED`, `packSites`, `packState`, `packData`, `packBand`, `packHTML`, `viewPack` / `bindPack`; `leversFor` |
-| Router | hash routes `#/pack/<id>/<lang>/<scenario>`, `#/watchlist`, `#/board`, `#/incentive/<id>`, `#/site/<id>`, `#/lab/<id>`, `#/deal/<id>`, `#/assembly/<id>`, `#/calibration`, `#/triggers`, `#/sources`, `#/universe`, `#/method`, `#/map` |
+| Router | hash routes `#/odds/<id>`, `#/pack/<id>/<lang>/<scenario>`, `#/watchlist`, `#/board`, `#/incentive/<id>`, `#/site/<id>`, `#/lab/<id>`, `#/deal/<id>`, `#/assembly/<id>`, `#/calibration`, `#/triggers`, `#/sources`, `#/universe`, `#/method`, `#/map` |
 
 **Verification done in build 5 (headless Chromium):**
 - **133 formula tests, all passing.** The 80 from build 4, plus 53 for the guideline: the worked examples (9.6 and 10.2), Category B shares, caps, clamps and eligibility, the residing zone rule, the most-reachable share, the MADANI:RMM split below and above 10 acres, Category A unit counts and residuals against an independent calculation, the charge on free-market floor area only, transit readings, planning bands, trigger count and export fields. The build-4 tests cover:
