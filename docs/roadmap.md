@@ -48,6 +48,7 @@ These three use only what is already in the kit plus free public sources; runnin
 Before anything is printed, have a native speaker check the Malay and Chinese, and a lawyer read the disclaimer.
 
 ### B. Massing check *(plan first)*
+**Status: implemented in 5.3 as an assumption-based envelope and parking sensitivity.** See [calculation, evidence limits and remaining confirmations](massing.md). Parcel-specific controls and QS cost reconciliation remain pending; the screen does not certify physical or planning feasibility.
 **Prompt**
 > Add a massing check: can a given plot ratio physically be built on a site, and what does car parking do to the residual? Start with Apartmen Taman Taiping (the 1.29-acre public-map proxy) at base PR 4.0, the guideline's 6.0 and the 70% cap of 6.8. Then make it work for any site and plot ratio, with an editable assumed parcel size for the villages (default 5 acres), because they are modelled per acre.
 >

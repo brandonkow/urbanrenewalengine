@@ -10,6 +10,12 @@ Build 5: DBKL's 2026 redevelopment incentive guideline applied to every underwri
 
 > Screening model only. Not a valuation, not legal advice and not investment advice. Every figure carries a provenance label in the engine; this file keeps those labels.
 
+## Build 5.3 continuation (11 October 2026)
+
+The historical Build 5 narrative below is retained. The current implementation also includes Build 5.1 owner packs, Build 5.2 owner-test odds and Build 5.3 massing at `#/massing/<site>`. See [massing assumptions and arithmetic](massing.md), [changelog](CHANGELOG.md) and [comparison with the user's Build 4 attachment](handoff-comparison-2026-10-11.md).
+
+Massing adds `massingDefaults`, `massingConfig`, `massingCalc`, `massingScenarios`, `massingSVG`, `viewMassing` and `bindMassing`. Inputs use the `massing` workspace key. Existing financial functions and golden values are unchanged. Confirm parcel controls and parking cost inclusion before relying on the overlay.
+
 ## 0. How to use this file
 
 - **To get the answer:** read sections 1 and 2.

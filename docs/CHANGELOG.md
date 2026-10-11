@@ -2,6 +2,16 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.3 (11 Oct 2026): massing and parking sensitivity
+- New Massing check route for every modelled site. Compare base, DBKL as read, classification ceiling and custom PR; Taiping includes 4.0, 6.0 and 6.8.
+- Editable rectangular parcel, setbacks, tower/parking footprints, unit size, parking demand, full-floor basement/podium cost and assumed height check. A theme-aware SVG shows an equivalent block.
+- Explicit parking-inclusion toggle avoids double counting. Additional parking cost includes professional fees and contingency; the result is a separate residual and owner-coverage sensitivity.
+- Unverified controls/rates are labelled UNDERWRITING_ASSUMPTION. Added evidence and three diligence items; source limits and calculation are documented in docs/massing.md.
+- Per-site settings join the workspace export/import and existing sync. Added independent arithmetic and interaction tests, massing route/phone coverage and screenshots.
+- Golden values: none changed. Existing base, incentive, deal, owner-pack and odds calculations are unchanged.
+- Compared the user's supplied Build 4 handoff with the newer repository version; details in docs/handoff-comparison-2026-10-11.md. They are not identical; §7.1–7.3 match.
+- Validation executes in GitHub Actions; refer to this commit's checks for the outcome. No local project files were created.
+
 ## Build 5.2 (8 Oct 2026): owner-test odds
 - New page `#/odds/<site>` (nav: Owner-test odds): the chance that each owner-model site clears the owner test once its inputs are uncertain. Seeded Monte Carlo (2,000 draws per site by default) over end price (triangular from the downside, base and upside presets), hard cost (0.92–1.15 × base), ownership interests (Taiping 30/40/80) or lot value (village asking ranges), the development-charge rate (0/10/30%) and DBKL's decision (Category B as set 45%, half eligibility 15%, no incentive 30%, double privilege 10%).
 - Each draw runs the engine's own `model()`. The base case, the lab and every golden number are unchanged.

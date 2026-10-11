@@ -1,6 +1,8 @@
-# KL Urban Renewal Engine: Claude Code starter kit
+# KL Urban Renewal Engine
 
-This folder is a ready-to-open Claude Code project for the KL Urban Renewal Engine, build 5. That build applies DBKL's 2026 redevelopment incentive guideline.
+The current build is 5.3: DBKL incentive scenarios, owner briefing packs, owner-test odds and a separate massing / parking sensitivity. The application remains one self-contained HTML file.
+
+Use **Massing check** in the sidebar to compare plot ratios, storeys, height, parking and adjusted owner coverage. Its controls and costs remain assumptions until confirmed. See [massing notes](docs/massing.md) and the [handoff comparison](docs/handoff-comparison-2026-10-11.md). Changes are checked by GitHub Actions on each push.
 
 ## What is inside
 
