@@ -3183,7 +3183,7 @@ function bindMassing(root){
  root.querySelectorAll('[data-mass]').forEach(el=>el.onchange=()=>{
   if(!el.checkValidity()||el.value.trim()===''){el.reportValidity();return}
   const p=massingConfig(MSEL), k=el.dataset.mass, v=Number(el.value);
-  if(!Number.isFinite(v))return;
+  if(!Number.isFinite(v)||p[k]===v)return; // blur can repeat change while render removes the old input
   p[k]=v;save(p);
   const fresh=root.querySelector('#mass_'+k);if(fresh)fresh.focus({preventScroll:true});
  });

@@ -10,6 +10,7 @@ Add one entry per change that moves numbers or behaviour. When golden values in 
 - Per-site settings join the workspace export/import and existing sync. Added independent arithmetic and interaction tests, massing route/phone coverage and screenshots.
 - Golden values: none changed. Existing base, incentive, deal, owner-pack and odds calculations are unchanged.
 - Compared the user's supplied Build 4 handoff with the newer repository version; details in docs/handoff-comparison-2026-10-11.md. They are not identical; §7.1–7.3 match.
+- CI found a repeated change event during numeric-input blur; unchanged values now return before a redraw, preventing nested DOM replacement.
 - Validation executes in GitHub Actions; refer to this commit's checks for the outcome. No local project files were created.
 
 ## Build 5.2 (8 Oct 2026): owner-test odds
