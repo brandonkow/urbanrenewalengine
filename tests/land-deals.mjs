@@ -30,6 +30,7 @@ chk('embedded metadata equals canonical JSON',JSON.stringify(meta)===JSON.string
 const results=await page.evaluate(()=>{
  const out=[],ck=(n,c)=>out.push([n,!!c]),near=(a,b,t=1e-6)=>Math.abs(a-b)<t;
  const before=JSON.stringify({STATE,CAL,GLOB,INC});
+ ck('provenance legend covers both new types',!viewMethodCore().includes('undefined')&&viewMethodCore().includes('Primary company press release'));
  ck('15 scoped sourced deals',LAND_DEALS.filter(ldEligible).length>=15);
  ck('unique deal IDs',new Set(LAND_DEALS.map(d=>d.id)).size===LAND_DEALS.length);
  for(const d of LAND_DEALS){

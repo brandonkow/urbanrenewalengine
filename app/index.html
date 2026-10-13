@@ -872,6 +872,7 @@ function sgnCls(v){return v<0?'neg':''}
 /* ---------- evidence registry ---------- */
 Object.assign(U,{"land_ms-aspira":"https://www.businesstoday.com.my/2024/07/03/mah-sing-acquiring-land-in-taman-desa-for-1600-residential-unit-with-gdv-of-rm1-01-billion/","land_ms-aurora":"https://theedgemalaysia.com/node/733054","land_param-brunsfield":"https://theedgemalaysia.com/node/737550","land_ms-aria":"https://www.thestar.com.my/business/business-news/2025/01/22/mah-sing-unit-acquires-sentul-land","land_sky-montkiara":"https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_2.pdf","land_ms-corus":"https://www.mahsing.com.my/news/mah-sing-acquires-land-within-klcc-for-rm260mil/","land_osk-rawang":"https://www.oskgroup.com/osk-property-enters-new-market-in-rawang-with-a-rm1-26-billion-gdv-project/","land_osk-subang":"https://www.oskgroup.com/osk-property-expands-presence-in-the-subang-shah-alam-corridor-with-rm427-million-gdv-development/","land_ms-legasi":"https://www.thestar.com.my/business/business-news/2025/11/03/mah-sing-acquires-275-acre-parcel-for-m-legasi-2-project","land_ms-mira":"https://www.edgeprop.my/content/1914519/mah-sing-acquires-279-acre-land-sri-rampai-setapak-m-mira-development","land_param-u9":"https://paramountproperty.my/paramount-acquires-48-489-acres-of-land-in-mukim-bukit-raja-selangor/","land_sdb-penaga":"https://theedgemalaysia.com/node/789055","land_param-ampang":"https://www.pcb.my/wp-content/uploads/2026/04/Paramount-Corporation-Berhad-AR2025.pdf","land_sime-unirazak":"https://www.simedarbyproperty.com/press-releases/sime-darby-property-acquires-prime-asset-rm160-million-marking-entry-kuala-lumpur","land_eco-forest2":"https://ecoworld.my/news/ecoworld-malaysia-inks-deal-to-develop-847-25-acres-of-land-as-eco-forest-2-in-semenyih-corridor/","land_ayer-seed":"https://propnewstime.com/latestnewsstories/Mzc0NjI=/ayer-holdings-to-acquire-9-11-acre-kuala-lumpur-land-parcels-for-rm138-million","land_malton-seed":"https://theedgemalaysia.com/node/805704"});
 const EVIDENCE = [
+{"site":"all","f":"M Mira vendor, tenure and SPA date","v":"The Rampai Development; leasehold; SPA 21 November 2025","type":"PRESS_REPORT","conf":"LOW","url":"https://www.midf.com.my/sites/corporate/files/2025-11/mah_sing-cu-land_acquisition_in_setapak_for_m_series_project-mbsbr-241125.pdf","chk":"2026-10-13","n":"MBSB Research note dated 24 November 2025, publicly indexed text. Direct PDF fetch timed out. Supports fields not stated in the EdgeProp release; obtain original filing for higher confidence."},
 {"site":"all","f":"Land deal: Mah Sing / Taman Desa — M Aspira","v":"2024-07-03; 6.1690 ac; RM108,000,000; GDV RM1,010,000,000; seller: pending; tenure: pending; use: Serviced residences and affordable housing","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://www.businesstoday.com.my/2024/07/03/mah-sing-acquiring-land-in-taman-desa-for-1600-residential-unit-with-gdv-of-rm1-01-billion/","chk":"2026-10-13","n":"Combined 6.169-acre acquisition includes M Aspira and Residensi Madani; not just the 3.7-acre market housing phase. Tenure and vendor require filing check. Announcement date. Signed/proposed; completion not verified"},
 {"site":"all","f":"Land deal: Mah Sing / Old Klang Road — M Aurora","v":"2024-11-07; 5.2400 ac; RM113,000,000; GDV RM660,000,000; seller: Team Keris Bhd; tenure: Freehold; use: Apartments and retail","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://theedgemalaysia.com/node/733054","chk":"2026-10-13","n":"SPA signed 7 Nov 2024. Source describes Old Klang Road, near Jalan Gasing. Gross development value is a projection. Announcement date. Signed/proposed; completion not verified"},
 {"site":"all","f":"Land deal: Paramount / Taman U-Thant — Brunsfield Residence","v":"2024-12-12; 4.5262 ac; RM145,000,000; GDV RM300,000,000; seller: Prismaworld Embassyview Sdn Bhd; tenure: Leasehold; use: High-end residential redevelopment","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://theedgemalaysia.com/node/737550","chk":"2026-10-13","n":"Price includes land and 93 existing condominium units. Area converted from 18,317 sqm. GDV at least RM300m; ratio is an upper bound, not a point estimate. Announcement date. Signed/proposed; completion not verified"},
@@ -1744,7 +1745,7 @@ implied PR from a project = units × size ÷ eff ÷ land sf</pre>
       <p class="small muted" style="margin-top:6px">Scores are normalised by the total, so weights need not sum to 100. <button type="button" class="btn ghost" id="wReset">Reset weights</button></p>
       <p class="small">V1 (original): structural upside 35%, planning clarity 25%, dealability 25%, information edge 15%. V2 replaces qualitative upside with the modelled residual gap and adds owner feasibility, because owner density proved decisive.</p></div>
      <div class="block"><h3>Provenance badges</h3><dl class="kv small">
-      ${Object.keys(SRC).map(k=>`<dt>${badge(k)}</dt><dd>${({OFFICIAL_PLANNING:'PTKL, JWP or DBKL planning documents',OFFICIAL_CADASTRAL:'Surveyed lot boundary or area',OFFICIAL_STRATA:'Strata roll or title data',TRANSACTION:'Filed transaction evidence',ASKING_LISTING:'Asking price or rent',PRESS_REPORT:'Published news or third-party benchmark',PUBLIC_MAP:'OSM or other non-legal geometry',INFERRED:'Analyst inference or judgement',UNDERWRITING_ASSUMPTION:'Chosen model input',MODEL_OUTPUT:'Calculated by the engine',MISSING:'Needed but not yet obtained',EDITED:'Changed in the scenario lab'})[k]}</dd>`).join('')}</dl></div>
+      ${Object.keys(SRC).map(k=>`<dt>${badge(k)}</dt><dd>${({OFFICIAL_PLANNING:'PTKL, JWP or DBKL planning documents',OFFICIAL_CADASTRAL:'Surveyed lot boundary or area',OFFICIAL_STRATA:'Strata roll or title data',TRANSACTION:'Filed transaction evidence',ASKING_LISTING:'Asking price or rent',PRESS_REPORT:'Published news or third-party benchmark',COMPANY_FILING:'Company announcement or annual report; not proof of completion',COMPANY_RELEASE:'Primary company press release; status must be read separately',PUBLIC_MAP:'OSM or other non-legal geometry',INFERRED:'Analyst inference or judgement',UNDERWRITING_ASSUMPTION:'Chosen model input',MODEL_OUTPUT:'Calculated by the engine',MISSING:'Needed but not yet obtained',EDITED:'Changed in the scenario lab'})[k]}</dd>`).join('')}</dl></div>
      <div class="block"><h3>Stages</h3><p class="small">${STAGES.map(stageTag).join(' &nbsp; ')}</p></div>
      <div class="block"><h3>Not in scope yet</h3><p class="small">Powered industrial land and old-office adaptive reuse modules. The RLV engine is reusable for adaptive reuse; powered land needs grid, substation, water and fibre layers first.</p></div>
     </div>
@@ -2317,6 +2318,7 @@ function tierSection(pshares){
 
 
 /* ---------- land deals: canonical CSV + metadata snapshots; no calibration writes ---------- */
+U.land_mira_detail="https://www.midf.com.my/sites/corporate/files/2025-11/mah_sing-cu-land_acquisition_in_setapak_for_m_series_project-mbsbr-241125.pdf";
 const LAND_DEAL_DATA = [
  {
   "date": "2024-07-03",
@@ -2752,7 +2754,8 @@ const LAND_DEAL_META = [
   "pin": [
    3.2,
    101.73
-  ]
+  ],
+  "extraSource": "https://www.midf.com.my/sites/corporate/files/2025-11/mah_sing-cu-land_acquisition_in_setapak_for_m_series_project-mbsbr-241125.pdf"
  },
  {
   "id": "param-u9",
@@ -2773,7 +2776,7 @@ const LAND_DEAL_META = [
   "checked": "2026-10-13",
   "confidence": "MEDIUM",
   "status": "Signed/proposed; completion not verified",
-  "dateBasis": "Announcement date",
+  "dateBasis": "Report day; year inferred from article context",
   "product": "high-rise",
   "tier": "suburban",
   "eligible": true,

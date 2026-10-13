@@ -76,3 +76,5 @@ Public sources only; no logins or bulk downloads. These pages need a user-suppli
 - Original Bursa notices for AYER, SDB and Paramount completion; M Aria's exact SPA date; missing vendors/tenure noted in CSV.
 
 Recommended next improvements: reconcile all completion/termination notices with a dated status history; obtain parcel coordinates and title references; broaden the developer sample before trusting fit rankings; then add comparable transaction imports with explicit user acceptance before ASP calibration changes.
+
+- [M Mira supporting research note](https://www.midf.com.my/sites/corporate/files/2025-11/mah_sing-cu-land_acquisition_in_setapak_for_m_series_project-mbsbr-241125.pdf): indexed text supports leasehold, vendor and SPA date, but direct PDF retrieval timed out; those fields have a separate low-confidence evidence entry.

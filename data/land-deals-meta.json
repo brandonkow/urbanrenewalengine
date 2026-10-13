@@ -142,7 +142,8 @@
     "pin": [
       3.2,
       101.73
-    ]
+    ],
+    "extraSource": "https://www.midf.com.my/sites/corporate/files/2025-11/mah_sing-cu-land_acquisition_in_setapak_for_m_series_project-mbsbr-241125.pdf"
   },
   {
     "id": "param-u9",
@@ -163,7 +164,7 @@
     "checked": "2026-10-13",
     "confidence": "MEDIUM",
     "status": "Signed/proposed; completion not verified",
-    "dateBasis": "Announcement date",
+    "dateBasis": "Report day; year inferred from article context",
     "product": "high-rise",
     "tier": "suburban",
     "eligible": true,
