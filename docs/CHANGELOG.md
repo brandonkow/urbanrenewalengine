@@ -10,6 +10,7 @@ Add one entry per change that moves numbers or behaviour. When golden values in 
 - Land psf uses gross area; partial GDV ratios are withheld and minimum GDV marked as a bound. Existing buildings and JV consideration receive explicit notes.
 - Proposed bands remain review-only: suburban 10.30–17.12% (five records), prime 23.45% (one record; insufficient range). Existing calibration and all golden values are unchanged.
 - Added independent arithmetic, data/provenance, ranking, isolation and UI tests plus route/phone/dark screenshots. Validation runs in GitHub Actions; see commit checks for the result. No local project files created.
+- Screenshot review fixed dark-mode input contrast and phone table wrapping; wide tables have keyboard-accessible scroll regions. Single-record bands explicitly state that the range is insufficient.
 - See docs/land-deals.md for methods, sample limits, pending source fields and follow-up recommendations.
 
 ## Build 5.3 (11 Oct 2026): massing and parking sensitivity
