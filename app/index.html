@@ -415,6 +415,22 @@ tr.mc-cur td{background:color-mix(in srgb,var(--zone-soft) 45%,transparent)}
 @media(min-width:901px){.rail{overflow-y:auto}.nav{flex-shrink:0}.rail-foot{flex-shrink:0}}
 @media(max-width:700px){.mass-layout{grid-template-columns:1fr}.mass-fields{grid-template-columns:1fr 1fr;gap:12px}.mass-page .page-head>div{max-width:100%}}
 @media(max-width:420px){.mass-fields{grid-template-columns:1fr}}
+
+/* Build 5.4: evidence-led land-deal tracker */
+.ld-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:20px 0}
+.ld-controls label{display:grid;gap:5px;font-size:12px;min-width:0;flex:1 1 180px}
+.ld-controls input.sel,.ld-controls select{width:100%;min-width:0}
+.ld-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.ld-map{min-width:0}.ld-map svg{display:block;width:100%;max-height:520px;border:1px solid var(--rule);background:var(--sunk)}
+.ld-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.ld-card{padding:18px;border:1px solid var(--rule);background:var(--panel);min-width:0;overflow-wrap:anywhere}
+.ld-card p+p{margin-top:9px}.ld-card h3{margin:4px 0 8px}
+.ld-link{border:0;padding:0;background:none;color:var(--ink);font:inherit;text-decoration:underline;text-align:left;cursor:pointer}
+.ld-pin{cursor:pointer}.ld-pin:focus circle{stroke:var(--focus);stroke-width:5}
+.ld-table{min-width:1150px}.ld-table th .btn{white-space:nowrap;font-size:12px;padding:5px}
+.ld-table td{max-width:260px}.land-page .sec{min-width:0}
+@media(max-width:760px){.ld-layout,.ld-cards{grid-template-columns:1fr}.ld-controls label{flex-basis:100%}.ld-card{padding:14px}}
+
 </style>
 </head>
 <body>
@@ -490,6 +506,8 @@ const SRC = {
   TRANSACTION:{l:'Transaction',t:2},
   ASKING_LISTING:{l:'Asking listing',t:2},
   PRESS_REPORT:{l:'Press report',t:2},
+  COMPANY_FILING:{l:'Company filing',t:2},
+  COMPANY_RELEASE:{l:'Company release',t:2},
   PUBLIC_MAP:{l:'Public-map proxy',t:3},
   INFERRED:{l:'Inferred',t:3},
   UNDERWRITING_ASSUMPTION:{l:'Assumption',t:3},
@@ -852,7 +870,29 @@ function fmtSPct(v,d=1){return isFinite(v)?(v>=0?'+':'−')+Math.abs(v*100).toFi
 function sgnCls(v){return v<0?'neg':''}
 
 /* ---------- evidence registry ---------- */
+Object.assign(U,{"land_ms-aspira":"https://www.businesstoday.com.my/2024/07/03/mah-sing-acquiring-land-in-taman-desa-for-1600-residential-unit-with-gdv-of-rm1-01-billion/","land_ms-aurora":"https://theedgemalaysia.com/node/733054","land_param-brunsfield":"https://theedgemalaysia.com/node/737550","land_ms-aria":"https://www.thestar.com.my/business/business-news/2025/01/22/mah-sing-unit-acquires-sentul-land","land_sky-montkiara":"https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_2.pdf","land_ms-corus":"https://www.mahsing.com.my/news/mah-sing-acquires-land-within-klcc-for-rm260mil/","land_osk-rawang":"https://www.oskgroup.com/osk-property-enters-new-market-in-rawang-with-a-rm1-26-billion-gdv-project/","land_osk-subang":"https://www.oskgroup.com/osk-property-expands-presence-in-the-subang-shah-alam-corridor-with-rm427-million-gdv-development/","land_ms-legasi":"https://www.thestar.com.my/business/business-news/2025/11/03/mah-sing-acquires-275-acre-parcel-for-m-legasi-2-project","land_ms-mira":"https://www.edgeprop.my/content/1914519/mah-sing-acquires-279-acre-land-sri-rampai-setapak-m-mira-development","land_param-u9":"https://paramountproperty.my/paramount-acquires-48-489-acres-of-land-in-mukim-bukit-raja-selangor/","land_sdb-penaga":"https://theedgemalaysia.com/node/789055","land_param-ampang":"https://www.pcb.my/wp-content/uploads/2026/04/Paramount-Corporation-Berhad-AR2025.pdf","land_sime-unirazak":"https://www.simedarbyproperty.com/press-releases/sime-darby-property-acquires-prime-asset-rm160-million-marking-entry-kuala-lumpur","land_eco-forest2":"https://ecoworld.my/news/ecoworld-malaysia-inks-deal-to-develop-847-25-acres-of-land-as-eco-forest-2-in-semenyih-corridor/","land_ayer-seed":"https://propnewstime.com/latestnewsstories/Mzc0NjI=/ayer-holdings-to-acquire-9-11-acre-kuala-lumpur-land-parcels-for-rm138-million","land_malton-seed":"https://theedgemalaysia.com/node/805704"});
 const EVIDENCE = [
+{"site":"all","f":"Land deal: Mah Sing / Taman Desa — M Aspira","v":"2024-07-03; 6.1690 ac; RM108,000,000; GDV RM1,010,000,000; seller: pending; tenure: pending; use: Serviced residences and affordable housing","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://www.businesstoday.com.my/2024/07/03/mah-sing-acquiring-land-in-taman-desa-for-1600-residential-unit-with-gdv-of-rm1-01-billion/","chk":"2026-10-13","n":"Combined 6.169-acre acquisition includes M Aspira and Residensi Madani; not just the 3.7-acre market housing phase. Tenure and vendor require filing check. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Mah Sing / Old Klang Road — M Aurora","v":"2024-11-07; 5.2400 ac; RM113,000,000; GDV RM660,000,000; seller: Team Keris Bhd; tenure: Freehold; use: Apartments and retail","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://theedgemalaysia.com/node/733054","chk":"2026-10-13","n":"SPA signed 7 Nov 2024. Source describes Old Klang Road, near Jalan Gasing. Gross development value is a projection. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Paramount / Taman U-Thant — Brunsfield Residence","v":"2024-12-12; 4.5262 ac; RM145,000,000; GDV RM300,000,000; seller: Prismaworld Embassyview Sdn Bhd; tenure: Leasehold; use: High-end residential redevelopment","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://theedgemalaysia.com/node/737550","chk":"2026-10-13","n":"Price includes land and 93 existing condominium units. Area converted from 18,317 sqm. GDV at least RM300m; ratio is an upper bound, not a point estimate. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Mah Sing / Sentul — M Aria","v":"2025-01-22; 2.7800 ac; RM32,000,000; GDV RM283,000,000; seller: pending; tenure: Freehold; use: Apartments","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://www.thestar.com.my/business/business-news/2025/01/22/mah-sing-unit-acquires-sentul-land","chk":"2026-10-13","n":"Date is the report publication date, not asserted as SPA date. Multiple vendors; identities not extracted. Report date; SPA date unverified. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: SkyWorld / Sungai Teba / Mont Kiara","v":"2025-04-16; 3.0320 ac; RM110,000,000; GDV not entered; seller: M S Tan Corporation Sdn Bhd; tenure: Freehold; use: Residential development","type":"COMPANY_FILING","conf":"HIGH","url":"https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_2.pdf","chk":"2026-10-13","n":"Annual report 2025 note 40(a): SPA on 16 Apr 2025, completion pending conditions at reporting date. No GDV entered from this source. Announcement date. Signed/proposed; completion not verified Supporting source: https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_1.pdf"},
+{"site":"all","f":"Land deal: Mah Sing / KLCC — Corus Hotel site","v":"2025-08-07; 1.4850 ac; RM260,000,000; GDV RM1,280,000,000; seller: MUI Group; tenure: Freehold; use: Premium serviced apartments","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://www.mahsing.com.my/news/mah-sing-acquires-land-within-klcc-for-rm260mil/","chk":"2026-10-13","n":"Company-hosted Star report. Date is report date. Price includes existing hotel asset; not a vacant-land comparable. Report date; SPA date unverified. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: OSK Holdings / Bandar Country Homes, Rawang","v":"2025-09-02; 14.4770 ac; RM58,000,000; GDV RM1,260,000,000; seller: pending; tenure: Freehold; use: Residential and commercial","type":"COMPANY_RELEASE","conf":"MEDIUM","url":"https://www.oskgroup.com/osk-property-enters-new-market-in-rawang-with-a-rm1-26-billion-gdv-project/","chk":"2026-10-13","n":"Three parcels; total transaction considered one deal. Vendor not named in release. Plans remain preliminary. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: OSK Holdings / Tropicana Metropark, Subang Jaya","v":"2025-09-30; 3.3120 ac; RM44,000,000; GDV RM427,000,000; seller: Tropicana Metropark Sdn Bhd; tenure: Freehold; use: Serviced apartments","type":"COMPANY_RELEASE","conf":"MEDIUM","url":"https://www.oskgroup.com/osk-property-expands-presence-in-the-subang-shah-alam-corridor-with-rm427-million-gdv-development/","chk":"2026-10-13","n":"SPA date and preliminary GDV from company release. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Mah Sing / Semenyih — M Legasi 2","v":"2025-11-03; 305.0000 ac; RM273,500,000; GDV RM1,700,000,000; seller: Petaling Garden Sdn Bhd; tenure: Freehold; use: Mixed township","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://www.thestar.com.my/business/business-news/2025/11/03/mah-sing-acquires-275-acre-parcel-for-m-legasi-2-project","chk":"2026-10-13","n":"Gross area approximately 305 acres; 275 net developable acres. RM1.7bn GDV covers only 175 acres; remaining 100 acres under review. Land/GDV ratio suppressed due to mismatched scope. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Mah Sing / Sri Rampai, Setapak — M Mira","v":"2025-11-21; 2.7900 ac; RM44,500,000; GDV RM300,000,000; seller: The Rampai Development Sdn Bhd; tenure: Leasehold; use: Residential apartments","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://www.edgeprop.my/content/1914519/mah-sing-acquires-279-acre-land-sri-rampai-setapak-m-mira-development","chk":"2026-10-13","n":"SPA and planned mass-market residential project; expected dates are not completion evidence. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Paramount / Section U9 Shah Alam / Mukim Bukit Raja","v":"2025-12-17; 48.4890 ac; RM113,500,000; GDV RM579,000,000; seller: SJ Properties Sdn Bhd; tenure: Leasehold; use: Terraces, townhouses and low-rise condominiums","type":"COMPANY_RELEASE","conf":"MEDIUM","url":"https://paramountproperty.my/paramount-acquires-48-489-acres-of-land-in-mukim-bukit-raja-selangor/","chk":"2026-10-13","n":"Three contiguous parcels under one agreement. Development order is reported by the company, not independently verified. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Selangor Dredging / Jalan Subang 2, Taman Industri Penaga, Petaling Jaya","v":"2026-01-13; 2.9999 ac; RM63,000,000; GDV RM507,000,000; seller: Hectare Square Sdn Bhd; tenure: Freehold; use: Serviced apartments","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://theedgemalaysia.com/node/789055","chk":"2026-10-13","n":"Seed verified: 1.214 hectares converted to acres. Existing building included. Tuesday 13 January and FY ending March 2027 contextualise 2026; obtain original filing for the completion update. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: Paramount / U-Thant enclave / off Jalan Ampang","v":"2026-03-18; 3.7000 ac; RM258,000,000; GDV RM1,100,000,000; seller: pending; tenure: Freehold; use: High-end serviced apartments","type":"COMPANY_FILING","conf":"MEDIUM","url":"https://www.pcb.my/wp-content/uploads/2026/04/Paramount-Corporation-Berhad-AR2025.pdf","chk":"2026-10-13","n":"Annual report land-replenishment table uses rounded 3.7 acres and RM258m. Distinct from December 2024 Brunsfield acquisition. Completion reported 16 Jun 2026 in linked announcement mirror; figures retained at annual-report precision. Announcement date. Completion reported 16 Jun 2026 (filing mirror) Supporting source: https://www.klsescreener.com/v2/announcements/view/11614685"},
+{"site":"all","f":"Land deal: Sime Darby Property / Jalan Tun Razak — Wisma UNIRAZAK","v":"2026-07-06; 1.4600 ac; RM160,000,000; GDV RM900,000,000; seller: Permodalan Nasional Berhad; tenure: Freehold; use: Premium mixed-use redevelopment","type":"COMPANY_RELEASE","conf":"MEDIUM","url":"https://www.simedarbyproperty.com/press-releases/sime-darby-property-acquires-prime-asset-rm160-million-marking-entry-kuala-lumpur","chk":"2026-10-13","n":"Binding offer accepted; not reported as completed. Price includes a 15-storey office with basement parking. Area rounded in release. Replaces incomplete seed record; 17.78% derived from disclosed price/GDV. Announcement date. Binding offer accepted; completion unverified"},
+{"site":"all","f":"Land deal: Eco World Development / Beranang / Semenyih — Eco Forest 2","v":"2024-11-07; 847.2490 ac; RM742,400,000; GDV RM4,600,000,000; seller: Boustead Properties group; tenure: Freehold; use: Landed residential and commercial township","type":"COMPANY_RELEASE","conf":"MEDIUM","url":"https://ecoworld.my/news/ecoworld-malaysia-inks-deal-to-develop-847-25-acres-of-land-as-eco-forest-2-in-semenyih-corridor/","chk":"2026-10-13","n":"Two conditional SPAs for ten parcels. Buyer vehicle Mutiara Balau is 81% EcoWorld and 19% Boustead; consideration is 100% gross deal value, not EcoWorld equity spend. Announcement date. Signed/proposed; completion not verified"},
+{"site":"all","f":"Land deal: AYER Holdings / Jalan Kuchai Lama","v":"Date unverified; 9.1100 ac; RM138,000,000; GDV not entered; seller: pending; tenure: pending; use: pending","type":"PRESS_REPORT","conf":"LOW","url":"https://propnewstime.com/latestnewsstories/Mzc0NjI=/ayer-holdings-to-acquire-9-11-acre-kuala-lumpur-land-parcels-for-rm138-million","chk":"2026-10-13","n":"Legacy seed retained. Source returned errors during follow-up; report date, vendor and tenure not fully verified. Excluded from buyer rankings and proposed bands pending original announcement. Date unverified. Legacy seed; verification incomplete"},
+{"site":"all","f":"Land deal: Malton / Johor Bahru — W City Larkinton","v":"Date unverified; 3.7200 ac; RM97,230,000; GDV RM950,000,000; seller: Tanjung Nakhoda (M) Sdn Bhd; tenure: Freehold; use: Serviced apartments","type":"PRESS_REPORT","conf":"MEDIUM","url":"https://theedgemalaysia.com/node/805704","chk":"2026-10-13","n":"Seed figures and conditional SPA verified in article; June 3 reported but publication year not established from page. Outside KL/Selangor scope; retained for audit only. June 3; year unverified. Conditional SPA reported; outside region"},
+{"site":"all","f":"Land deal locality pins and buyer-fit rules","v":"Inferred locality centres rounded to 0.01 degrees; 40 area / 30 ticket / 30 product match points","type":"INFERRED","conf":"LOW","url":"https://github.com/brandonkow/urbanrenewalengine/blob/claude/new-session-bzuaka/docs/land-deals.md","chk":"2026-10-13","n":"Not cadastral boundaries or buyer interest. Best single supporting deal per buyer; unknown ticket omitted and remaining weights normalised. Product assumption is urban high-rise redevelopment. Geographic and product categories are analytical."},
+{"site":"all","f":"Land deal implied PR assumptions","v":"Default ASP RM750/ saleable sf; current calibration cost and efficiency; 20% margin","type":"UNDERWRITING_ASSUMPTION","conf":"LOW","url":"https://github.com/brandonkow/urbanrenewalengine/blob/claude/new-session-bzuaka/docs/land-deals.md","chk":"2026-10-13","n":"Screening back-solve using existing calcLand. No calibration writes; no positive residual means no solution. Township rows withheld."},
+{"site":"all","f":"Proposed land/GDV sample bands","v":"Min–max by inferred market tier; urban high-rise only","type":"MODEL_OUTPUT","conf":"LOW","url":"https://github.com/brandonkow/urbanrenewalengine/blob/claude/new-session-bzuaka/docs/land-deals.md","chk":"2026-10-13","n":"Excludes existing buildings, township/mixed schemes, partial or lower-bound GDV, unresolved legacy and out-of-region deals. Small samples do not establish market bands. No values are applied."},
+
  {"site":"all","f":"Massing height control reference","v":"Site-level DCP2 check required; no parcel height assigned","type":"OFFICIAL_PLANNING","conf":"MEDIUM","url":"https://ppkl.dbkl.gov.my/wp-content/uploads/2025/06/1.-VOLUME-1-PART-1_DEVELOPMENT-CONTROL_.pdf","chk":"11 Oct 2026","n":"Figure 3.3.2, printed page B1-32, indexed official page text directs readers to DCP2. This is not a verified height limit for any modelled site."},
  {"site":"all","f":"Massing footprint and setbacks","v":"6 m all sides; tower 35%, parking 65%; rectangular aspect 1.5","type":"UNDERWRITING_ASSUMPTION","conf":"LOW","url":"https://github.com/brandonkow/urbanrenewalengine/blob/claude/new-session-bzuaka/docs/massing.md","chk":"11 Oct 2026","n":"Editable screening assumptions, not DBKL requirements. Confirm road surrender, fire access, separation, plinth and cadastral geometry."},
  {"site":"all","f":"Massing height","v":"Tower 3.2 m/floor; parking 3 m/floor; height limit unknown","type":"UNDERWRITING_ASSUMPTION","conf":"LOW","url":"https://github.com/brandonkow/urbanrenewalengine/blob/claude/new-session-bzuaka/docs/massing.md","chk":"11 Oct 2026","n":"Zero height limit means unverified, not no restriction. Podium floors add to height; basement floors do not."},
@@ -1054,7 +1094,7 @@ function interestGrid(x,m){
 }
 
 /* ---------- shell ---------- */
-const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
+const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['land','Land deals','Buyers & evidence'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('show'),1800)}
 function go(h){location.hash=h}
 function head(title,lede,right=''){return `<div class="page-head"><div><h1>${title}</h1>${lede?`<p class="lede">${lede}</p>`:''}</div><div>${right}</div></div>`}
@@ -1351,6 +1391,7 @@ function viewSite(id){
    ${m&&m.own?`<div class="sec"><div class="sec-head"><h2>Owner sensitivity</h2><span class="muted">Current scenario at ${fmt2(x.area)} ac</span></div>
      <h3>By ownership count</h3>${countTable(x,m)}
      <div style="margin-top:22px">${heatTables(x,m)}</div></div>`:''}
+   ${buyerFitHTML(s)}
    ${trig.length?`<div class="sec"><div class="sec-head"><h2>Triggers</h2><span class="muted">What must change</span></div>${triggerTable(trig,true)}</div>`:''}
    ${m?`<div class="sec"><div class="sec-head"><h2>Sensitivity charts</h2><span class="muted">Current scenario</span></div>${chartsHTML(x,m)}</div>`:''}
    <div class="sec"><div class="sec-head"><h2>Evidence and confidence</h2><span class="muted">Filled badge is official; dashed is proxy or assumption</span></div>${evidenceTable(EVIDENCE.filter(e=>e.site===s.id))}</div>
@@ -2273,6 +2314,655 @@ function tierSection(pshares){
    ${tp&&tp.m.own?`<p class="note small">Taiping’s model land share is ${fmtPct(tp.share)}. Underwritten like the prime KL buyers, its land budget would be ${fmtM(tp.m.gdv*lo,1)}–${fmtM(tp.m.gdv*hi,1)}, enough for ${fmt1(tp.m.gdv*lo/tp.m.own.per)}–${fmt1(tp.m.gdv*hi/tp.m.own.per)} interests at the current package. Those deals are city-centre plots at PR 8–10, so treat this as an upper bound, not a base case.</p>`:''}
   </div>`;
 }
+
+
+/* ---------- land deals: canonical CSV + metadata snapshots; no calibration writes ---------- */
+const LAND_DEAL_DATA = [
+ {
+  "date": "2024-07-03",
+  "buyer": "Mah Sing",
+  "seller": "",
+  "location": "Taman Desa — M Aspira",
+  "state": "Kuala Lumpur",
+  "acres": 6.169,
+  "price_rm": 108000000,
+  "land_psf": 401.9029,
+  "tenure": "",
+  "intended_use": "Serviced residences and affordable housing",
+  "gdv_rm": 1010000000,
+  "land_share_of_gdv": 0.106931,
+  "source_type": "PRESS_REPORT",
+  "url": "https://www.businesstoday.com.my/2024/07/03/mah-sing-acquiring-land-in-taman-desa-for-1600-residential-unit-with-gdv-of-rm1-01-billion/",
+  "notes": "Combined 6.169-acre acquisition includes M Aspira and Residensi Madani; not just the 3.7-acre market housing phase. Tenure and vendor require filing check."
+ },
+ {
+  "date": "2024-11-07",
+  "buyer": "Mah Sing",
+  "seller": "Team Keris Bhd",
+  "location": "Old Klang Road — M Aurora",
+  "state": "Kuala Lumpur",
+  "acres": 5.24,
+  "price_rm": 113000000,
+  "land_psf": 495.0617,
+  "tenure": "Freehold",
+  "intended_use": "Apartments and retail",
+  "gdv_rm": 660000000,
+  "land_share_of_gdv": 0.171212,
+  "source_type": "PRESS_REPORT",
+  "url": "https://theedgemalaysia.com/node/733054",
+  "notes": "SPA signed 7 Nov 2024. Source describes Old Klang Road, near Jalan Gasing. Gross development value is a projection."
+ },
+ {
+  "date": "2024-12-12",
+  "buyer": "Paramount",
+  "seller": "Prismaworld Embassyview Sdn Bhd",
+  "location": "Taman U-Thant — Brunsfield Residence",
+  "state": "Kuala Lumpur",
+  "acres": 4.526229272334067,
+  "price_rm": 145000000,
+  "land_psf": 735.4338,
+  "tenure": "Leasehold",
+  "intended_use": "High-end residential redevelopment",
+  "gdv_rm": 300000000,
+  "land_share_of_gdv": 0.483333,
+  "source_type": "PRESS_REPORT",
+  "url": "https://theedgemalaysia.com/node/737550",
+  "notes": "Price includes land and 93 existing condominium units. Area converted from 18,317 sqm. GDV at least RM300m; ratio is an upper bound, not a point estimate."
+ },
+ {
+  "date": "2025-01-22",
+  "buyer": "Mah Sing",
+  "seller": "",
+  "location": "Sentul — M Aria",
+  "state": "Kuala Lumpur",
+  "acres": 2.78,
+  "price_rm": 32000000,
+  "land_psf": 264.2514,
+  "tenure": "Freehold",
+  "intended_use": "Apartments",
+  "gdv_rm": 283000000,
+  "land_share_of_gdv": 0.113074,
+  "source_type": "PRESS_REPORT",
+  "url": "https://www.thestar.com.my/business/business-news/2025/01/22/mah-sing-unit-acquires-sentul-land",
+  "notes": "Date is the report publication date, not asserted as SPA date. Multiple vendors; identities not extracted."
+ },
+ {
+  "date": "2025-04-16",
+  "buyer": "SkyWorld",
+  "seller": "M S Tan Corporation Sdn Bhd",
+  "location": "Sungai Teba / Mont Kiara",
+  "state": "Kuala Lumpur",
+  "acres": 3.032,
+  "price_rm": 110000000,
+  "land_psf": 832.8669,
+  "tenure": "Freehold",
+  "intended_use": "Residential development",
+  "gdv_rm": null,
+  "land_share_of_gdv": null,
+  "source_type": "COMPANY_FILING",
+  "url": "https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_2.pdf",
+  "notes": "Annual report 2025 note 40(a): SPA on 16 Apr 2025, completion pending conditions at reporting date. No GDV entered from this source."
+ },
+ {
+  "date": "2025-08-07",
+  "buyer": "Mah Sing",
+  "seller": "MUI Group",
+  "location": "KLCC — Corus Hotel site",
+  "state": "Kuala Lumpur",
+  "acres": 1.485,
+  "price_rm": 260000000,
+  "land_psf": 4019.3796,
+  "tenure": "Freehold",
+  "intended_use": "Premium serviced apartments",
+  "gdv_rm": 1280000000,
+  "land_share_of_gdv": 0.203125,
+  "source_type": "PRESS_REPORT",
+  "url": "https://www.mahsing.com.my/news/mah-sing-acquires-land-within-klcc-for-rm260mil/",
+  "notes": "Company-hosted Star report. Date is report date. Price includes existing hotel asset; not a vacant-land comparable."
+ },
+ {
+  "date": "2025-09-02",
+  "buyer": "OSK Holdings",
+  "seller": "",
+  "location": "Bandar Country Homes, Rawang",
+  "state": "Selangor",
+  "acres": 14.477,
+  "price_rm": 58000000,
+  "land_psf": 91.9733,
+  "tenure": "Freehold",
+  "intended_use": "Residential and commercial",
+  "gdv_rm": 1260000000,
+  "land_share_of_gdv": 0.046032,
+  "source_type": "COMPANY_RELEASE",
+  "url": "https://www.oskgroup.com/osk-property-enters-new-market-in-rawang-with-a-rm1-26-billion-gdv-project/",
+  "notes": "Three parcels; total transaction considered one deal. Vendor not named in release. Plans remain preliminary."
+ },
+ {
+  "date": "2025-09-30",
+  "buyer": "OSK Holdings",
+  "seller": "Tropicana Metropark Sdn Bhd",
+  "location": "Tropicana Metropark, Subang Jaya",
+  "state": "Selangor",
+  "acres": 3.312,
+  "price_rm": 44000000,
+  "land_psf": 304.9822,
+  "tenure": "Freehold",
+  "intended_use": "Serviced apartments",
+  "gdv_rm": 427000000,
+  "land_share_of_gdv": 0.103044,
+  "source_type": "COMPANY_RELEASE",
+  "url": "https://www.oskgroup.com/osk-property-expands-presence-in-the-subang-shah-alam-corridor-with-rm427-million-gdv-development/",
+  "notes": "SPA date and preliminary GDV from company release."
+ },
+ {
+  "date": "2025-11-03",
+  "buyer": "Mah Sing",
+  "seller": "Petaling Garden Sdn Bhd",
+  "location": "Semenyih — M Legasi 2",
+  "state": "Selangor",
+  "acres": 305,
+  "price_rm": 273500000,
+  "land_psf": 20.5859,
+  "tenure": "Freehold",
+  "intended_use": "Mixed township",
+  "gdv_rm": 1700000000,
+  "land_share_of_gdv": null,
+  "source_type": "PRESS_REPORT",
+  "url": "https://www.thestar.com.my/business/business-news/2025/11/03/mah-sing-acquires-275-acre-parcel-for-m-legasi-2-project",
+  "notes": "Gross area approximately 305 acres; 275 net developable acres. RM1.7bn GDV covers only 175 acres; remaining 100 acres under review. Land/GDV ratio suppressed due to mismatched scope."
+ },
+ {
+  "date": "2025-11-21",
+  "buyer": "Mah Sing",
+  "seller": "The Rampai Development Sdn Bhd",
+  "location": "Sri Rampai, Setapak — M Mira",
+  "state": "Kuala Lumpur",
+  "acres": 2.79,
+  "price_rm": 44500000,
+  "land_psf": 366.1575,
+  "tenure": "Leasehold",
+  "intended_use": "Residential apartments",
+  "gdv_rm": 300000000,
+  "land_share_of_gdv": 0.148333,
+  "source_type": "PRESS_REPORT",
+  "url": "https://www.edgeprop.my/content/1914519/mah-sing-acquires-279-acre-land-sri-rampai-setapak-m-mira-development",
+  "notes": "SPA and planned mass-market residential project; expected dates are not completion evidence."
+ },
+ {
+  "date": "2025-12-17",
+  "buyer": "Paramount",
+  "seller": "SJ Properties Sdn Bhd",
+  "location": "Section U9 Shah Alam / Mukim Bukit Raja",
+  "state": "Selangor",
+  "acres": 48.489,
+  "price_rm": 113500000,
+  "land_psf": 53.7359,
+  "tenure": "Leasehold",
+  "intended_use": "Terraces, townhouses and low-rise condominiums",
+  "gdv_rm": 579000000,
+  "land_share_of_gdv": 0.196028,
+  "source_type": "COMPANY_RELEASE",
+  "url": "https://paramountproperty.my/paramount-acquires-48-489-acres-of-land-in-mukim-bukit-raja-selangor/",
+  "notes": "Three contiguous parcels under one agreement. Development order is reported by the company, not independently verified."
+ },
+ {
+  "date": "2026-01-13",
+  "buyer": "Selangor Dredging",
+  "seller": "Hectare Square Sdn Bhd",
+  "location": "Jalan Subang 2, Taman Industri Penaga, Petaling Jaya",
+  "state": "Selangor",
+  "acres": 2.999859331011387,
+  "price_rm": 63000000,
+  "land_psf": 482.1163,
+  "tenure": "Freehold",
+  "intended_use": "Serviced apartments",
+  "gdv_rm": 507000000,
+  "land_share_of_gdv": 0.12426,
+  "source_type": "PRESS_REPORT",
+  "url": "https://theedgemalaysia.com/node/789055",
+  "notes": "Seed verified: 1.214 hectares converted to acres. Existing building included. Tuesday 13 January and FY ending March 2027 contextualise 2026; obtain original filing for the completion update."
+ },
+ {
+  "date": "2026-03-18",
+  "buyer": "Paramount",
+  "seller": "",
+  "location": "U-Thant enclave / off Jalan Ampang",
+  "state": "Kuala Lumpur",
+  "acres": 3.7,
+  "price_rm": 258000000,
+  "land_psf": 1600.7743,
+  "tenure": "Freehold",
+  "intended_use": "High-end serviced apartments",
+  "gdv_rm": 1100000000,
+  "land_share_of_gdv": 0.234545,
+  "source_type": "COMPANY_FILING",
+  "url": "https://www.pcb.my/wp-content/uploads/2026/04/Paramount-Corporation-Berhad-AR2025.pdf",
+  "notes": "Annual report land-replenishment table uses rounded 3.7 acres and RM258m. Distinct from December 2024 Brunsfield acquisition. Completion reported 16 Jun 2026 in linked announcement mirror; figures retained at annual-report precision."
+ },
+ {
+  "date": "2026-07-06",
+  "buyer": "Sime Darby Property",
+  "seller": "Permodalan Nasional Berhad",
+  "location": "Jalan Tun Razak — Wisma UNIRAZAK",
+  "state": "Kuala Lumpur",
+  "acres": 1.46,
+  "price_rm": 160000000,
+  "land_psf": 2515.8182,
+  "tenure": "Freehold",
+  "intended_use": "Premium mixed-use redevelopment",
+  "gdv_rm": 900000000,
+  "land_share_of_gdv": 0.177778,
+  "source_type": "COMPANY_RELEASE",
+  "url": "https://www.simedarbyproperty.com/press-releases/sime-darby-property-acquires-prime-asset-rm160-million-marking-entry-kuala-lumpur",
+  "notes": "Binding offer accepted; not reported as completed. Price includes a 15-storey office with basement parking. Area rounded in release. Replaces incomplete seed record; 17.78% derived from disclosed price/GDV."
+ },
+ {
+  "date": "2024-11-07",
+  "buyer": "Eco World Development",
+  "seller": "Boustead Properties group",
+  "location": "Beranang / Semenyih — Eco Forest 2",
+  "state": "Selangor",
+  "acres": 847.249,
+  "price_rm": 742400000,
+  "land_psf": 20.1159,
+  "tenure": "Freehold",
+  "intended_use": "Landed residential and commercial township",
+  "gdv_rm": 4600000000,
+  "land_share_of_gdv": 0.161391,
+  "source_type": "COMPANY_RELEASE",
+  "url": "https://ecoworld.my/news/ecoworld-malaysia-inks-deal-to-develop-847-25-acres-of-land-as-eco-forest-2-in-semenyih-corridor/",
+  "notes": "Two conditional SPAs for ten parcels. Buyer vehicle Mutiara Balau is 81% EcoWorld and 19% Boustead; consideration is 100% gross deal value, not EcoWorld equity spend."
+ },
+ {
+  "date": "",
+  "buyer": "AYER Holdings",
+  "seller": "",
+  "location": "Jalan Kuchai Lama",
+  "state": "Kuala Lumpur",
+  "acres": 9.11,
+  "price_rm": 138000000,
+  "land_psf": 347.7546,
+  "tenure": "",
+  "intended_use": "",
+  "gdv_rm": null,
+  "land_share_of_gdv": null,
+  "source_type": "PRESS_REPORT",
+  "url": "https://propnewstime.com/latestnewsstories/Mzc0NjI=/ayer-holdings-to-acquire-9-11-acre-kuala-lumpur-land-parcels-for-rm138-million",
+  "notes": "Legacy seed retained. Source returned errors during follow-up; report date, vendor and tenure not fully verified. Excluded from buyer rankings and proposed bands pending original announcement."
+ },
+ {
+  "date": "",
+  "buyer": "Malton",
+  "seller": "Tanjung Nakhoda (M) Sdn Bhd",
+  "location": "Johor Bahru — W City Larkinton",
+  "state": "Johor",
+  "acres": 3.72,
+  "price_rm": 97230000,
+  "land_psf": 600.0252,
+  "tenure": "Freehold",
+  "intended_use": "Serviced apartments",
+  "gdv_rm": 950000000,
+  "land_share_of_gdv": 0.102347,
+  "source_type": "PRESS_REPORT",
+  "url": "https://theedgemalaysia.com/node/805704",
+  "notes": "Seed figures and conditional SPA verified in article; June 3 reported but publication year not established from page. Outside KL/Selangor scope; retained for audit only."
+ }
+];
+const LAND_DEAL_META = [
+ {
+  "id": "ms-aspira",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.1,
+   101.69
+  ]
+ },
+ {
+  "id": "ms-aurora",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.09,
+   101.66
+  ]
+ },
+ {
+  "id": "param-brunsfield",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "prime",
+  "eligible": true,
+  "pin": [
+   3.16,
+   101.73
+  ],
+  "asset": true,
+  "gdvLowerBound": true
+ },
+ {
+  "id": "ms-aria",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Report date; SPA date unverified",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.18,
+   101.69
+  ]
+ },
+ {
+  "id": "sky-montkiara",
+  "checked": "2026-10-13",
+  "confidence": "HIGH",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "prime",
+  "eligible": true,
+  "pin": [
+   3.17,
+   101.65
+  ],
+  "extraSource": "https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_1.pdf"
+ },
+ {
+  "id": "ms-corus",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Report date; SPA date unverified",
+  "product": "high-rise",
+  "tier": "prime",
+  "eligible": true,
+  "pin": [
+   3.16,
+   101.71
+  ],
+  "asset": true
+ },
+ {
+  "id": "osk-rawang",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "mixed",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.32,
+   101.53
+  ]
+ },
+ {
+  "id": "osk-subang",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.06,
+   101.56
+  ]
+ },
+ {
+  "id": "ms-legasi",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "township",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   2.96,
+   101.84
+  ],
+  "partialGDV": true
+ },
+ {
+  "id": "ms-mira",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.2,
+   101.73
+  ]
+ },
+ {
+  "id": "param-u9",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "mixed",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.17,
+   101.49
+  ]
+ },
+ {
+  "id": "sdb-penaga",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   3.07,
+   101.61
+  ],
+  "asset": true
+ },
+ {
+  "id": "param-ampang",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Completion reported 16 Jun 2026 (filing mirror)",
+  "dateBasis": "Announcement date",
+  "product": "high-rise",
+  "tier": "prime",
+  "eligible": true,
+  "pin": [
+   3.16,
+   101.73
+  ],
+  "extraSource": "https://www.klsescreener.com/v2/announcements/view/11614685"
+ },
+ {
+  "id": "sime-unirazak",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Binding offer accepted; completion unverified",
+  "dateBasis": "Announcement date",
+  "product": "mixed",
+  "tier": "prime",
+  "eligible": true,
+  "pin": [
+   3.16,
+   101.72
+  ],
+  "asset": true
+ },
+ {
+  "id": "eco-forest2",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Signed/proposed; completion not verified",
+  "dateBasis": "Announcement date",
+  "product": "township",
+  "tier": "suburban",
+  "eligible": true,
+  "pin": [
+   2.91,
+   101.86
+  ],
+  "joint": true
+ },
+ {
+  "id": "ayer-seed",
+  "checked": "2026-10-13",
+  "confidence": "LOW",
+  "status": "Legacy seed; verification incomplete",
+  "dateBasis": "Date unverified",
+  "product": "unknown",
+  "tier": "suburban",
+  "eligible": false,
+  "pin": null
+ },
+ {
+  "id": "malton-seed",
+  "checked": "2026-10-13",
+  "confidence": "MEDIUM",
+  "status": "Conditional SPA reported; outside region",
+  "dateBasis": "June 3; year unverified",
+  "product": "high-rise",
+  "tier": "suburban",
+  "eligible": false,
+  "pin": null
+ }
+];
+const LAND_DEALS = LAND_DEAL_DATA.map((d,i)=>({...d,...LAND_DEAL_META[i]}));
+let LD={q:'',buyer:'',sort:'date',dir:-1,legacy:false,asp:750,sel:'sime-unirazak',site:'taiping'};
+function ldEligible(d){return d.eligible&&d.date>='2024-01-01'&&d.date<='2026-12-31'&&['Kuala Lumpur','Selangor'].includes(d.state)}
+function ldMedian(ns){const a=ns.filter(Number.isFinite).slice().sort((a,b)=>a-b),n=a.length;return n?n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2:null}
+function landDealStats(rows){
+ const names=[...new Set(rows.filter(ldEligible).map(d=>d.buyer))];
+ return names.map(buyer=>{
+  const deals=rows.filter(d=>ldEligible(d)&&d.buyer===buyer),prices=deals.map(d=>d.price_rm).filter(Number.isFinite),sizes=deals.map(d=>d.acres).filter(Number.isFinite),psfs=deals.map(d=>d.land_psf).filter(Number.isFinite);
+  return {buyer,deals,count:deals.length,total:prices.reduce((a,b)=>a+b,0),medianAc:ldMedian(sizes),minPrice:prices.length?Math.min(...prices):null,maxPrice:prices.length?Math.max(...prices):null,minPsf:psfs.length?Math.min(...psfs):null,maxPsf:psfs.length?Math.max(...psfs):null,areas:[...new Set(deals.map(d=>d.location))]};
+ }).sort((a,b)=>b.total-a.total||a.buyer.localeCompare(b.buyer));
+}
+function landDealFiltered(rows,cfg){
+ const q=cfg.q.trim().toLowerCase(),numeric=new Set(['acres','price_rm','land_psf','land_share_of_gdv']);
+ return rows.filter(d=>(cfg.legacy||ldEligible(d))&&(!cfg.buyer||d.buyer===cfg.buyer)&&(!q||[d.buyer,d.location,d.intended_use].join(' ').toLowerCase().includes(q))).slice().sort((a,b)=>{
+  const x=a[cfg.sort],y=b[cfg.sort],missing=v=>v===null||v===undefined||v==='';
+  if(missing(x)||missing(y))return missing(x)?missing(y)?a.id.localeCompare(b.id):1:-1;
+  return (numeric.has(cfg.sort)?x-y:String(x).localeCompare(String(y)))*cfg.dir||a.id.localeCompare(b.id);
+ });
+}
+function landDealBand(rows,tier){
+ // Prospective min/max on comparable urban deals only. Buildings, townships,
+ // partial/lower-bound GDV and unknown fields cannot silently enter the band.
+ const deals=rows.filter(d=>ldEligible(d)&&d.tier===tier&&d.product==='high-rise'&&!d.asset&&!d.partialGDV&&!d.gdvLowerBound&&Number.isFinite(d.land_share_of_gdv));
+ return {deals,lo:deals.length?Math.min(...deals.map(d=>d.land_share_of_gdv)):null,hi:deals.length?Math.max(...deals.map(d=>d.land_share_of_gdv)):null};
+}
+function ldDistance(lat,lon,pin){
+ if(!pin)return null;
+ const rad=Math.PI/180,dl=(pin[0]-lat)*rad,dn=(pin[1]-lon)*rad;
+ const a=Math.sin(dl/2)**2+Math.cos(lat*rad)*Math.cos(pin[0]*rad)*Math.sin(dn/2)**2;
+ return 6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(Math.max(0,1-a)));
+}
+function landBuyerFit(site,rows,ticket=null){
+ // Heuristic only. Each buyer is represented by its single best-matching deal,
+ // preventing an unrelated small purchase from supplying a large site's ticket fit.
+ return landDealStats(rows).map(b=>{
+  const matches=b.deals.map(d=>{
+   const km=ldDistance(site.lat,site.lon,d.pin),area=km===null?0:40*Math.max(0,1-km/25);
+   const hasTicket=Number.isFinite(ticket)&&ticket>0&&d.price_rm>0;
+   const ticketScore=hasTicket?30*Math.min(ticket,d.price_rm)/Math.max(ticket,d.price_rm):0;
+   const product=d.product==='high-rise'?30:d.product==='mixed'?15:0;
+   const available=(km===null?0:40)+(hasTicket?30:0)+30;
+   return {deal:d,km,area,ticket:ticketScore,product,hasTicket,score:available?(area+ticketScore+product)/available*100:0};
+  }).sort((a,b)=>b.score-a.score||a.deal.id.localeCompare(b.deal.id));
+  return {...b,...matches[0]};
+ }).sort((a,b)=>b.score-a.score||a.buyer.localeCompare(b.buyer)).slice(0,3);
+}
+function ldSiteTicket(s){
+ // Only known-area sites have a total target; never treat normalised 1 acre as an assembled site.
+ if(!s.area||!s.rlv||!s.owner)return null;
+ const x=presetState(s,'base'),m=model(x);
+ return m.own&&m.own.reqTotal>0?m.own.reqTotal:null;
+}
+function buyerFitHTML(s){
+ const ticket=ldSiteTicket(s),fits=landBuyerFit(s,LAND_DEALS,ticket);
+ return '<section class="sec ld-fit"><div class="sec-head"><h2>Potential buyer fit</h2>'+badge('INFERRED','Analytical candidates, not evidence of buyer interest')+'</div>'+
+ '<p class="small muted">Three research candidates from the tracked deals, not expressions of interest. Product assumption: urban high-rise redevelopment. Area uses approximate locality centres; ticket uses '+(ticket?fmtM(ticket)+' base owner-budget proxy, with unconfirmed interests.':'no total budget because site area or owner model is missing; ticket match is omitted.')+' Scores are heuristic match points, not probabilities.</p>'+
+ '<div class="ld-cards">'+fits.map((b,i)=>'<article class="ld-card"><p class="small muted">CANDIDATE '+(i+1)+'</p><h3>'+esc(b.buyer)+'</h3><p><b>'+fmt0(b.score)+'/100</b> match points</p><p class="small">Area: '+(b.km===null?'unknown':'about '+fmt0(b.km)+' km to '+esc(b.deal.location))+'. Product: '+esc(b.deal.intended_use||'not disclosed')+'. '+(b.hasTicket?'Ticket: '+fmtM(b.deal.price_rm)+' recorded consideration versus '+fmtM(ticket)+' target proxy.':'Ticket: not scored; site total is unverified.')+'</p><p class="small muted">'+b.count+' tracked deal'+(b.count===1?'':'s')+'; sparse sample, not a complete acquisition history. Ownership fragmentation and mandate still require diligence.</p><a class="small" href="#/land/'+b.deal.id+'">Inspect supporting deal</a></article>').join('')+'</div></section>';
+}
+function ldImplied(d,asp){
+ if(!ldEligible(d)||!d.acres||!d.price_rm||d.product==='township'||!Number.isFinite(asp)||asp<=0)return null;
+ return calcLand({id:'ld_'+d.id,ac:d.acres,price:d.price_rm,asp,hc:270}).impliedPR;
+}
+function ldInFrame(d){return d.pin&&d.pin[0]>=MB.lat0&&d.pin[0]<=MB.lat1&&d.pin[1]>=MB.lon0&&d.pin[1]<=MB.lon1}
+function landDealMap(rows,selected){
+ const pins=rows.filter(d=>ldEligible(d)&&ldInFrame(d)),groups=new Map();
+ pins.forEach(d=>{const k=d.pin.join(',');if(!groups.has(k))groups.set(k,[]);groups.get(k).push(d)});
+ let svg='<rect width="'+MW+'" height="'+MH+'" fill="var(--sunk)"/>';
+ for(let lat=3.08;lat<=3.24;lat+=.04){const y=PX(lat,MB.lon0)[1];svg+='<line x1="0" x2="'+MW+'" y1="'+y+'" y2="'+y+'" stroke="var(--rule)"/><text x="8" y="'+(y-6)+'" fill="var(--ink2)" font-size="16">'+lat.toFixed(2)+'°N</text>'}
+ RAIL.forEach(r=>{svg+='<path fill="none" stroke="var(--rail)" stroke-width="2" d="'+r.st.map((p,i)=>{const[x,y]=PX(p[1],p[2]);return(i?'L':'M')+x+' '+y}).join('')+'"/>'});
+ groups.forEach(ds=>{const d=ds.find(x=>x.id===selected)||ds[0],[x,y]=PX(...d.pin),on=ds.some(d=>d.id===selected);
+ svg+='<g class="ld-pin" data-ldpin="'+d.id+'" tabindex="0" role="button" aria-label="'+esc(ds.map(d=>d.buyer+' — '+d.location).join('; '))+'" transform="translate('+x+' '+y+')"><title>'+esc(ds.map(d=>d.location).join('; '))+' — approximate locality, not parcel boundary</title><circle r="'+(on?16:12)+'" fill="var(--zone)" stroke="var(--ink)" stroke-width="'+(on?4:2)+'"/>'+(ds.length>1?'<text text-anchor="middle" y="5" font-size="15" fill="var(--ink)">'+ds.length+'</text>':'')+'</g>';
+ });
+ return '<div class="ld-map"><svg viewBox="0 0 '+MW+' '+MH+'" role="group" aria-label="Land deal locality pins over schematic Kuala Lumpur rail lines">'+svg+'</svg><p class="small muted">'+pins.length+' deals in this KL frame; '+(rows.length-pins.length)+' table-only. Shared locality pins are grouped; select either deal from the table. '+badge('INFERRED','Manually estimated locality centres at 0.01 degree precision, not geocoded parcels')+'</p></div>';
+}
+function ldDetail(d){
+ const pr=ldImplied(d,LD.asp);
+ return '<aside class="ld-card" id="ld-detail"><h2>'+esc(d.buyer)+'</h2><p>'+esc(d.location)+'</p><p>'+badge(d.source_type)+' <span class="chip warn">'+esc(d.status)+'</span></p><dl class="kv small"><dt>Date basis</dt><dd>'+esc(d.date||'Unverified')+' — '+esc(d.dateBasis)+'</dd><dt>Seller</dt><dd>'+esc(d.seller||'Not extracted; filing check pending')+'</dd><dt>Tenure</dt><dd>'+esc(d.tenure||'Not verified')+'</dd><dt>Use</dt><dd>'+esc(d.intended_use||'Not confirmed')+'</dd><dt>Consideration</dt><dd>'+fmtM(d.price_rm)+' / '+fmt2(d.acres)+' gross ac'+(d.asset?' (includes buildings)':'')+'</dd><dt>Land psf</dt><dd>'+fmtRM(d.land_psf)+' '+badge('MODEL_OUTPUT')+'</dd><dt>Disclosed GDV</dt><dd>'+(d.gdv_rm?fmtM(d.gdv_rm)+(d.partialGDV?' — partial site only':d.gdvLowerBound?' — minimum':' — estimate'):'Not disclosed')+'</dd><dt>Land / GDV</dt><dd>'+(d.land_share_of_gdv===null?'Not comparable or not disclosed':(d.gdvLowerBound?'≤ ':'')+fmtPct(d.land_share_of_gdv))+'</dd><dt>Implied PR</dt><dd>'+(pr===null?'Not available for these inputs':fmt2(pr)+'× at assumed '+fmtRM(LD.asp)+' psf ASP')+' '+badge('MODEL_OUTPUT')+'</dd><dt>Evidence check</dt><dd>'+d.checked+' · '+d.confidence+' confidence</dd></dl><p class="small">'+esc(d.notes)+'</p><p><a href="'+esc(d.url)+'" target="_blank" rel="noopener">Open source</a>'+(d.extraSource?' · <a href="'+esc(d.extraSource)+'" target="_blank" rel="noopener">Supporting source</a>':'')+'</p></aside>';
+}
+function landBandHTML(){
+ return '<section class="sec"><div class="sec-head"><h2>Proposed calibration bands</h2><span class="chip warn">Review only — not applied</span></div><p class="small muted">Min–max land/GDV from comparable urban high-rise deals. Existing bands remain authoritative for the current model. New sample excludes buildings, townships, mixed-product schemes, partial-site GDV, lower-bound GDV and legacy rows. Tier assignments are analytical. Thin samples are not market ranges.</p><div class="tw"><table class="cost"><thead><tr><th>Tier</th><th>Existing band</th><th>Proposed sample</th><th>Included evidence</th></tr></thead><tbody>'+['suburban','prime'].map(t=>{
+ const old=GDVCOMPS.filter(g=>g.tier===(t==='prime'?'prime':'sub')).map(gShare),b=landDealBand(LAND_DEALS,t);
+ return '<tr><td>'+esc(t)+'</td><td>'+fmtPct(Math.min(...old))+'–'+fmtPct(Math.max(...old))+'</td><td>'+(b.lo===null?'Insufficient data':fmtPct(b.lo)+'–'+fmtPct(b.hi))+' ('+b.deals.length+' deals)</td><td>'+b.deals.map(d=>'<a href="#/land/'+d.id+'">'+esc(d.buyer+' / '+d.location)+'</a>').join('<br>')+'</td></tr>'
+ }).join('')+'</tbody></table></div><p class="small muted">Approving a change requires a separate documented calibration edit and regression checks; this page cannot alter calibration.</p></section>';
+}
+function viewLand(id){
+ if(LAND_DEALS.some(d=>d.id===id)&&LAST!==location.hash){LD.sel=id;LD.q='';LD.buyer='';LD.legacy=!ldEligible(LAND_DEALS.find(d=>d.id===id))}
+ const rows=landDealFiltered(LAND_DEALS,LD),stats=landDealStats(rows),selected=rows.find(d=>d.id===LD.sel)||rows[0],allStats=landDealStats(LAND_DEALS);
+ const th=(key,label)=>'<th aria-sort="'+(LD.sort===key?(LD.dir===1?'ascending':'descending'):'none')+'"><button class="btn ghost" data-ldsort="'+key+'">'+label+(LD.sort===key?(LD.dir===1?' ↑':' ↓'):'')+'</button></th>';
+ const s=SITE[LD.site]||SITE.taiping;
+ return '<div class="page land-page">'+head('Land deals','Public acquisition evidence, 2024–2026. Checked 13 Oct 2026. A curated sample of Bursa-listed developers, not a complete market register.')+
+ '<div class="metrics"><div class="metric"><span class="v">'+rows.length+'</span><span class="k">Rows shown</span></div><div class="metric"><span class="v">'+stats.length+'</span><span class="k">Buyers in scoped rows</span></div><div class="metric"><span class="v">'+fmtM(stats.reduce((n,b)=>n+b.total,0))+'</span><span class="k">Reported consideration, not cash paid</span></div></div>'+
+ '<p class="note small">Agreements and offers do not prove completion. Consideration may include buildings or joint-venture partners; GDV is projected. Sources were checked on the stated date, but completion status is only as reported in each linked document. Two legacy rows remain outside the ranked sample.</p>'+
+ '<form id="ld-filter" class="ld-controls"><label>Search area or product<input id="ld-search" class="sel" type="search" value="'+esc(LD.q)+'"></label><label>Buyer<select id="ld-buyer" class="sel"><option value="">All buyers</option>'+allStats.map(b=>'<option '+(b.buyer===LD.buyer?'selected ':'')+'value="'+esc(b.buyer)+'">'+esc(b.buyer)+'</option>').join('')+'</select></label><label>Assumed ASP (RM/saleable sf)<input class="sel" id="ld-asp" type="number" min="100" max="10000" step="25" value="'+LD.asp+'"></label><label class="small"><input id="ld-legacy" type="checkbox" '+(LD.legacy?'checked':'')+'> Show legacy / outside-region rows</label><button class="btn" type="submit">Apply filters</button><button class="btn ghost" type="button" id="ld-reset">Reset</button></form>'+
+ '<p class="small muted">Implied PR reuses the current calibration cost stack: '+fmtRM(CAL.hc)+' hard cost / GFA sf, '+fmtPct(CAL.eff)+' efficiency and 20% developer margin. ASP above is an assumption for comparison, not a verified selling price. No positive residual per floor means no solution; township PR is withheld.</p>'+
+ '<div class="tw"><table class="cost ld-table"><thead><tr>'+th('date','Date')+th('buyer','Buyer')+th('location','Location')+th('acres','Gross acres')+th('price_rm','Price RM')+th('land_psf','RM/land sf')+th('land_share_of_gdv','Land/GDV')+'<th>Implied PR</th><th>Source / status</th></tr></thead><tbody>'+
+ rows.map(d=>{const pr=ldImplied(d,LD.asp);return '<tr data-deal="'+d.id+'"><td>'+esc(d.date||'Unverified')+'<br><span class="small muted">'+esc(d.dateBasis)+'</span></td><td>'+esc(d.buyer)+'</td><td><button type="button" class="ld-link" data-ldselect="'+d.id+'">'+esc(d.location)+'</button>'+(d.asset?'<br><span class="small muted">Includes buildings</span>':'')+'</td><td class="num">'+fmt2(d.acres)+'</td><td class="num">'+fmtM(d.price_rm)+'</td><td class="num">'+fmtRM(d.land_psf)+'</td><td class="num">'+(d.land_share_of_gdv===null?'—':(d.gdvLowerBound?'≤ ':'')+fmtPct(d.land_share_of_gdv))+'</td><td class="num">'+(pr===null?'No estimate':fmt2(pr)+'×')+'</td><td>'+badge(d.source_type)+'<br><span class="small">'+esc(d.status)+'</span></td></tr>'}).join('')+
+ (!rows.length?'<tr><td colspan="9">No matching deals. Clear the search or reset filters.</td></tr>':'')+'</tbody></table></div>'+
+ (selected?'<section class="sec"><div class="sec-head"><h2>Inspect a deal</h2><span class="muted">Select a location or map pin</span></div><div class="ld-layout">'+landDealMap(rows,selected.id)+ldDetail(selected)+'</div></section>':'')+
+ '<section class="sec"><div class="sec-head"><h2>Who is buying?</h2><span class="muted">Filtered, scoped sample only</span></div><div class="tw"><table class="cost"><thead><tr><th>Developer</th><th>Deals</th><th>Total consideration</th><th>Median acres</th><th>Ticket range</th><th>Land psf range</th><th>Areas</th></tr></thead><tbody>'+stats.map(b=>'<tr><td>'+esc(b.buyer)+'</td><td>'+b.count+'</td><td>'+fmtM(b.total)+'</td><td>'+fmt2(b.medianAc)+'</td><td>'+fmtM(b.minPrice)+'–'+fmtM(b.maxPrice)+'</td><td>'+fmtRM(b.minPsf)+'–'+fmtRM(b.maxPsf)+'</td><td>'+esc(b.areas.join('; '))+'</td></tr>').join('')+'</tbody></table></div><p class="small muted">Transaction-level gross amounts, not equity-attributable cash outlay. A purchase of multiple parcels counts once. Mixed asset and land-only deals make price bands descriptive, not valuations.</p></section>'+
+ '<section class="sec">'+siteSelect(s.id,SITES,'ld-site')+'<p class="small"><a href="#/site/'+s.id+'">Open selected site dossier</a></p>'+buyerFitHTML(s)+'</section>'+landBandHTML()+'</div>';
+}
+function bindLand(root){
+ const form=root.querySelector('#ld-filter');
+ form.onsubmit=e=>{e.preventDefault();const asp=+root.querySelector('#ld-asp').value;if(!Number.isFinite(asp)||asp<100||asp>10000)return;LD={...LD,q:root.querySelector('#ld-search').value,buyer:root.querySelector('#ld-buyer').value,asp,legacy:root.querySelector('#ld-legacy').checked};render()};
+ root.querySelector('#ld-reset').onclick=()=>{LD={q:'',buyer:'',sort:'date',dir:-1,legacy:false,asp:750,sel:'sime-unirazak',site:'taiping'};if(location.hash!=='#/land')go('#/land');else render()};
+ root.querySelectorAll('[data-ldsort]').forEach(el=>el.onclick=()=>{const k=el.dataset.ldsort;LD.dir=LD.sort===k?-LD.dir:1;LD.sort=k;render()});
+ const select=id=>{LD.sel=id;go('#/land/'+id)};
+ root.querySelectorAll('[data-ldselect]').forEach(el=>el.onclick=()=>select(el.dataset.ldselect));
+ root.querySelectorAll('[data-ldpin]').forEach(el=>{el.onclick=()=>select(el.dataset.ldpin);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(el.dataset.ldpin)}}});
+ root.querySelector('#ld-site').onchange=e=>{LD.site=e.target.value;render()};
+}
+
 
 /* ---------- in-page confirmation (sandboxed pages may block browser dialogs) ---------- */
 function armConfirm(btn,fn){
@@ -3197,7 +3887,7 @@ function route(){const h=(location.hash||'#/watchlist').slice(2).split('/');retu
 let LAST='';
 function render(){
   const r=route(), v=document.getElementById('view');
-  const views={watchlist:[viewWatchlist,bindWatchlist],map:[viewMap,bindMap],site:[()=>viewSite(r.a||'taiping'),bindSite],lab:[()=>viewLab(r.a),bindLab],deal:[()=>viewDeal(r.a),bindDeal],calibration:[viewCalibration,bindCalibration],board:[viewBoard,bindBoard],incentive:[()=>viewIncentive(r.a),bindIncentive],assembly:[()=>viewAssembly(r.a),bindAssembly],pack:[()=>viewPack(r.a,r.b,r.c),bindPack],odds:[()=>viewOdds(r.a),bindOdds],massing:[()=>viewMassing(r.a),bindMassing],triggers:[viewTriggers,()=>{}],sources:[viewSources,bindSources],universe:[viewUniverse,bindUniverse],method:[viewMethod,bindMethod]};
+  const views={watchlist:[viewWatchlist,bindWatchlist],map:[viewMap,bindMap],site:[()=>viewSite(r.a||'taiping'),bindSite],lab:[()=>viewLab(r.a),bindLab],deal:[()=>viewDeal(r.a),bindDeal],land:[()=>viewLand(r.a),bindLand],calibration:[viewCalibration,bindCalibration],board:[viewBoard,bindBoard],incentive:[()=>viewIncentive(r.a),bindIncentive],assembly:[()=>viewAssembly(r.a),bindAssembly],pack:[()=>viewPack(r.a,r.b,r.c),bindPack],odds:[()=>viewOdds(r.a),bindOdds],massing:[()=>viewMassing(r.a),bindMassing],triggers:[viewTriggers,()=>{}],sources:[viewSources,bindSources],universe:[viewUniverse,bindUniverse],method:[viewMethod,bindMethod]};
   const [fn,bind]=views[r.p]||views.watchlist;
   const y=window.scrollY, same=LAST===location.hash;
   const fid=document.activeElement&&document.activeElement.id;

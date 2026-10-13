@@ -21,7 +21,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 
 ## Rules that must not break
 1. **Decision rule:** coverage = RLV ÷ owner budget, and a site passes the owner test only at coverage ≥ 1.
-2. **Provenance:** every figure carries one of OFFICIAL_PLANNING, OFFICIAL_CADASTRAL, OFFICIAL_STRATA, TRANSACTION, ASKING_LISTING, PRESS_REPORT, PUBLIC_MAP, INFERRED, UNDERWRITING_ASSUMPTION, MODEL_OUTPUT, MISSING or EDITED. Never present an assumption, listing or model output as official.
+2. **Provenance:** every figure carries one of OFFICIAL_PLANNING, OFFICIAL_CADASTRAL, OFFICIAL_STRATA, TRANSACTION, ASKING_LISTING, PRESS_REPORT, COMPANY_FILING, COMPANY_RELEASE, PUBLIC_MAP, INFERRED, UNDERWRITING_ASSUMPTION, MODEL_OUTPUT, MISSING or EDITED. Never present an assumption, listing or model output as official.
 3. **No incentive in the base case:** DBKL 2026 incentives are discretionary, so they appear as scenarios beside the base case, never inside it.
 4. **Consent is unanimous** until a new law is passed. The withdrawn Urban Renewal Bill's 75–80% thresholds are for reference only.
 5. **Golden numbers:** base scenarios must keep reproducing the workbook (handoff §7.1), the Taiping handoff figures (§7.4) and the guideline results (§8). `tests/expected.json` encodes them.
@@ -37,6 +37,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 - **Judgement:** `suggestVerdict`, `TRIGGERS`, `evalTrigger`, `levers`, `prBand`, `v2Score`.
 - **Owner-test odds:** `MC_DEFAULT`, `MC` (synced), `mcCfg`, `mcRun`, `mcTornado`, `viewOdds`. Seeded Monte Carlo on top of `model()`; never writes to `STATE`.
 - **Owner packs:** `PK` (English, Malay, Chinese text), `PACK_REVIEWED`, `packState`, `packData`, `packHTML`, `viewPack`. Packs read the base preset and the guideline as read, never lab edits, and show payment figures only when coverage ≥ 1 and the option is fundable.
+- **Land deals:** canonical `data/land-deals.csv` and aligned `data/land-deals-meta.json`, embedded as `LAND_DEAL_DATA` / `LAND_DEAL_META`. `landBuyerFit` ranks analytical candidates; `ldImplied` reuses unchanged `calcLand`. Proposed bands never write to CAL. COMPANY_FILING is a company filing/annual report, COMPANY_RELEASE a primary company release; neither implies completed purchase. Run `/refresh-land-deals` for updates.
 - **Views:** one `view…` and `bind…` pair per route, with the router (`render()`) at the end.
 - **Sync:** on claude.ai the page saves a private workspace through the artifact runtime (`window.claude`); elsewhere it uses localStorage. Keep that fallback.
 

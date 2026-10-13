@@ -2,6 +2,16 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.4 (13 Oct 2026): land deals and buyer fit
+- Added Land deals route with sortable table, search/buyer filters, inferred locality pins, keyboard selection, source detail and comparison ASP.
+- Canonical CSV preserves the seed schema; aligned metadata and embedded snapshots are checked for exact parity. Fifteen sourced KL/Selangor records across seven developer groups plus two legacy rows retained for audit.
+- Buyer profiles show count, gross consideration, median area, ticket/psf range and locations. All 21 dossiers have three explained analytical candidates, not expressions of interest. Unknown site budgets are not invented.
+- Added COMPANY_FILING and COMPANY_RELEASE provenance, evidence records, source-access limitations and a refresh skill.
+- Land psf uses gross area; partial GDV ratios are withheld and minimum GDV marked as a bound. Existing buildings and JV consideration receive explicit notes.
+- Proposed bands remain review-only: suburban 10.30–17.12% (five records), prime 23.45% (one record; insufficient range). Existing calibration and all golden values are unchanged.
+- Added independent arithmetic, data/provenance, ranking, isolation and UI tests plus route/phone/dark screenshots. Validation runs in GitHub Actions; see commit checks for the result. No local project files created.
+- See docs/land-deals.md for methods, sample limits, pending source fields and follow-up recommendations.
+
 ## Build 5.3 (11 Oct 2026): massing and parking sensitivity
 - New Massing check route for every modelled site. Compare base, DBKL as read, classification ceiling and custom PR; Taiping includes 4.0, 6.0 and 6.8.
 - Editable rectangular parcel, setbacks, tower/parking footprints, unit size, parking demand, full-floor basement/podium cost and assumed height check. A theme-aware SVG shows an equivalent block.

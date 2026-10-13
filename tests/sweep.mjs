@@ -16,7 +16,7 @@ const ids = await page.evaluate(() => SITES.map((s) => s.id));
 const modelled = await page.evaluate(() => MODELLED);
 const owned = await page.evaluate(() => MODELLED.filter((i) => st(i).owner));
 const inc = await page.evaluate(() => MODELLED.filter((i) => INC_DEFAULT[i]));
-const routes = ['watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
+const routes = ['land','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
   ...ids.map((i) => `site/${i}`), ...modelled.map((i) => `lab/${i}`), ...owned.map((i) => `deal/${i}`),
   ...owned.map((i) => `assembly/${i}`), ...inc.map((i) => `incentive/${i}`),
   ...owned.flatMap((i) => ['en/base', 'ms/g26', 'zh/g26'].map((v) => `pack/${i}/${v}`)), ...owned.map((i) => `odds/${i}`), ...modelled.map((i) => `massing/${i}`)];
@@ -32,7 +32,7 @@ for (const r of routes) {
 lines.push(`${routes.length} routes rendered`);
 
 await page.setViewportSize({ width: 390, height: 844 });
-const PHONE = ['watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'map', 'site/taiping', 'lab/taiping', 'deal/taiping', 'assembly/taiping', 'calibration', 'triggers', 'sources', 'universe', 'method', 'pack/taiping/zh/g26', 'pack/pantai/ms/g26', 'odds/taiping', 'massing/taiping', 'massing/salak'];
+const PHONE = ['land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'map', 'site/taiping', 'lab/taiping', 'deal/taiping', 'assembly/taiping', 'calibration', 'triggers', 'sources', 'universe', 'method', 'pack/taiping/zh/g26', 'pack/pantai/ms/g26', 'odds/taiping', 'massing/taiping', 'massing/salak'];
 for (const r of PHONE) {
   await page.evaluate((h) => { location.hash = '#/' + h; }, r);
   await page.waitForTimeout(150);
@@ -44,7 +44,7 @@ lines.push(`phone-width overflow checked on ${PHONE.length} views`);
 if (SHOTS) {
   const dir = path.join(ROOT, 'screenshots'); mkdirSync(dir, { recursive: true });
   await page.setViewportSize({ width: 1440, height: 1000 });
-  for (const r of ['watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'site/taiping', 'lab/taiping', 'map', 'calibration', 'pack/taiping/en/g26', 'pack/salak/zh/g26', 'odds/taiping', 'massing/taiping', 'massing/salak']) {
+  for (const r of ['land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'site/taiping', 'lab/taiping', 'map', 'calibration', 'pack/taiping/en/g26', 'pack/salak/zh/g26', 'odds/taiping', 'massing/taiping', 'massing/salak']) {
     await page.evaluate((h) => { location.hash = '#/' + h; }, r); await page.waitForTimeout(250);
     await page.screenshot({ path: path.join(dir, r.replaceAll('/', '_') + '.png'), fullPage: true });
   }
@@ -58,6 +58,11 @@ if (SHOTS) {
   await page.screenshot({path:path.join(dir,'massing_taiping_dark.png'),fullPage:true});
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:path.join(dir,'massing_taiping_phone.png'),fullPage:true});
+  await page.evaluate(() => { document.documentElement.setAttribute('data-theme','dark'); location.hash='#/land'; }); await page.waitForTimeout(250);
+  await page.setViewportSize({width:1440,height:1000});
+  await page.screenshot({path:path.join(dir,'land_dark.png'),fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(dir,'land_phone.png'),fullPage:true});
   lines.push(`screenshots saved to ${dir}`);
 }
 await browser.close();

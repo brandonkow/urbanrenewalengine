@@ -1,0 +1,243 @@
+[
+  {
+    "id": "ms-aspira",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.1,
+      101.69
+    ]
+  },
+  {
+    "id": "ms-aurora",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.09,
+      101.66
+    ]
+  },
+  {
+    "id": "param-brunsfield",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "prime",
+    "eligible": true,
+    "pin": [
+      3.16,
+      101.73
+    ],
+    "asset": true,
+    "gdvLowerBound": true
+  },
+  {
+    "id": "ms-aria",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Report date; SPA date unverified",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.18,
+      101.69
+    ]
+  },
+  {
+    "id": "sky-montkiara",
+    "checked": "2026-10-13",
+    "confidence": "HIGH",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "prime",
+    "eligible": true,
+    "pin": [
+      3.17,
+      101.65
+    ],
+    "extraSource": "https://skyworld.listedcompany.com/newsroom/SWD_Annual_Report_2025_Part_1.pdf"
+  },
+  {
+    "id": "ms-corus",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Report date; SPA date unverified",
+    "product": "high-rise",
+    "tier": "prime",
+    "eligible": true,
+    "pin": [
+      3.16,
+      101.71
+    ],
+    "asset": true
+  },
+  {
+    "id": "osk-rawang",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "mixed",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.32,
+      101.53
+    ]
+  },
+  {
+    "id": "osk-subang",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.06,
+      101.56
+    ]
+  },
+  {
+    "id": "ms-legasi",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "township",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      2.96,
+      101.84
+    ],
+    "partialGDV": true
+  },
+  {
+    "id": "ms-mira",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.2,
+      101.73
+    ]
+  },
+  {
+    "id": "param-u9",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "mixed",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.17,
+      101.49
+    ]
+  },
+  {
+    "id": "sdb-penaga",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      3.07,
+      101.61
+    ],
+    "asset": true
+  },
+  {
+    "id": "param-ampang",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Completion reported 16 Jun 2026 (filing mirror)",
+    "dateBasis": "Announcement date",
+    "product": "high-rise",
+    "tier": "prime",
+    "eligible": true,
+    "pin": [
+      3.16,
+      101.73
+    ],
+    "extraSource": "https://www.klsescreener.com/v2/announcements/view/11614685"
+  },
+  {
+    "id": "sime-unirazak",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Binding offer accepted; completion unverified",
+    "dateBasis": "Announcement date",
+    "product": "mixed",
+    "tier": "prime",
+    "eligible": true,
+    "pin": [
+      3.16,
+      101.72
+    ],
+    "asset": true
+  },
+  {
+    "id": "eco-forest2",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Signed/proposed; completion not verified",
+    "dateBasis": "Announcement date",
+    "product": "township",
+    "tier": "suburban",
+    "eligible": true,
+    "pin": [
+      2.91,
+      101.86
+    ],
+    "joint": true
+  },
+  {
+    "id": "ayer-seed",
+    "checked": "2026-10-13",
+    "confidence": "LOW",
+    "status": "Legacy seed; verification incomplete",
+    "dateBasis": "Date unverified",
+    "product": "unknown",
+    "tier": "suburban",
+    "eligible": false,
+    "pin": null
+  },
+  {
+    "id": "malton-seed",
+    "checked": "2026-10-13",
+    "confidence": "MEDIUM",
+    "status": "Conditional SPA reported; outside region",
+    "dateBasis": "June 3; year unverified",
+    "product": "high-rise",
+    "tier": "suburban",
+    "eligible": false,
+    "pin": null
+  }
+]
