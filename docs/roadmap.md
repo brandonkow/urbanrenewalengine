@@ -69,7 +69,7 @@ Before anything is printed, have a native speaker check the Malay and Chinese, a
 - Golden numbers are unchanged.
 
 ### C. Land-deal tracker
-**Status: built in 5.4 (13 Oct 2026).** Fifteen scoped records plus two legacy rows; sortable table, map, buyer fit and review-only bands. See `docs/land-deals.md` for source gaps and completion-status limits.
+**Status: built in 5.4 (13 Oct 2026).** Fifteen scoped records plus two legacy rows; sortable table, map, buyer fit and review-only bands. Build 5.5 (23 Oct 2026) adds dated status history, stage filtering and termination exclusions; three filing notices reviewed. See `docs/land-deals.md` and `docs/land-deal-history.md` for source gaps and completion-status limits.
 **Prompt**
 > Build a land-deal tracker for Klang Valley development land.
 >

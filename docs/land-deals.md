@@ -1,6 +1,6 @@
-# Land deals and buyer fit — Build 5.4
+# Land deals and buyer fit — Builds 5.4–5.5
 
-Checked **13 October 2026**. This is a curated evidence sample, not a complete market database or a record of expressions of interest.
+Acquisition data checked **13 October 2026**; three status notices checked **23 October 2026**. See [dated status history](land-deal-history.md). This is a curated evidence sample, not a complete market database or a record of expressions of interest.
 
 ## Delivery and calculation boundary
 
@@ -12,7 +12,8 @@ The page opens at `#/land`; `#/land/<deal-id>` opens a supporting record. All 21
 
 - `data/land-deals.csv` preserves all 15 columns of the original seed.
 - `data/land-deals-meta.json` has one matching row per CSV row: stable ID, check date, confidence, status/date basis, approximate locality, inferred product/tier and inclusion flags.
-- The self-contained HTML embeds both arrays. Tests enforce exact equality with these canonical files.
+- `data/land-deal-events.json` holds dated baseline and follow-up status records; current stage comes from this ledger. Metadata status remains a historical snapshot.
+- The self-contained HTML embeds acquisition arrays and the event ledger. Tests enforce exact equality with these canonical files.
 - 17 records: 15 sourced 2024–2026 KL/Selangor acquisitions or proposals by seven listed developer groups, plus two legacy records. Multiple parcels under one announcement count as one deal.
 - Company annual reports / announcements use COMPANY_FILING. Company press releases use COMPANY_RELEASE. Company-hosted press clippings remain PRESS_REPORT. These are evidence-source labels, not completion statuses.
 - Blank fields mean not verified, not zero. Report dates are explicitly distinguished from SPA dates. Status reflects the cited document rather than a claim that every pending transaction is still pending today.

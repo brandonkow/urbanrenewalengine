@@ -16,7 +16,7 @@ const ids = await page.evaluate(() => SITES.map((s) => s.id));
 const modelled = await page.evaluate(() => MODELLED);
 const owned = await page.evaluate(() => MODELLED.filter((i) => st(i).owner));
 const inc = await page.evaluate(() => MODELLED.filter((i) => INC_DEFAULT[i]));
-const routes = ['land','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
+const routes = ['land','land/ms-corus','land/param-ampang','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
   ...ids.map((i) => `site/${i}`), ...modelled.map((i) => `lab/${i}`), ...owned.map((i) => `deal/${i}`),
   ...owned.map((i) => `assembly/${i}`), ...inc.map((i) => `incentive/${i}`),
   ...owned.flatMap((i) => ['en/base', 'ms/g26', 'zh/g26'].map((v) => `pack/${i}/${v}`)), ...owned.map((i) => `odds/${i}`), ...modelled.map((i) => `massing/${i}`)];
@@ -42,9 +42,10 @@ for (const r of PHONE) {
 lines.push(`phone-width overflow checked on ${PHONE.length} views`);
 
 if (SHOTS) {
+  await page.evaluate(()=>{LD={...LD,q:'',buyer:'',status:'',legacy:false,sel:'sime-unirazak'};location.hash='#/land/sime-unirazak'});await page.waitForTimeout(150);
   const dir = path.join(ROOT, 'screenshots'); mkdirSync(dir, { recursive: true });
   await page.setViewportSize({ width: 1440, height: 1000 });
-  for (const r of ['land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'site/taiping', 'lab/taiping', 'map', 'calibration', 'pack/taiping/en/g26', 'pack/salak/zh/g26', 'odds/taiping', 'massing/taiping', 'massing/salak']) {
+  for (const r of ['land','land/ms-corus','land/param-ampang','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'site/taiping', 'lab/taiping', 'map', 'calibration', 'pack/taiping/en/g26', 'pack/salak/zh/g26', 'odds/taiping', 'massing/taiping', 'massing/salak']) {
     await page.evaluate((h) => { location.hash = '#/' + h; }, r); await page.waitForTimeout(250);
     await page.screenshot({ path: path.join(dir, r.replaceAll('/', '_') + '.png'), fullPage: true });
   }

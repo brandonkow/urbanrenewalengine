@@ -2,6 +2,15 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.5 (23 Oct 2026): dated land-deal status history
+- Added canonical event ledger, stage filter, completion subtotal and linked timelines with separate event/date/check bases.
+- Corus: completion reported in 2 March 2026 notice (exact completion day unspecified). Paramount Jalan Ampang: completion on 16 June 2026. UNIRAZAK: SPA signed 19 August 2026; completion unverified. Filing mirrors read; original Bursa pages returned 403.
+- Retained all 17 acquisition snapshots and their original check dates. Two scoped deals have completion reports, representing RM518m of unchanged rounded gross consideration.
+- Reported terminations remain in the historical table but are excluded from buyer summaries/fit, implied PR, locality pins and proposed bands. No current row was labelled terminated without evidence.
+- Added sourced Lot 20009 reference for Paramount; coordinates remain approximate. No prices, financial formulas, calibration inputs or golden numbers changed.
+- Added event parity, chronology, termination, filtering and isolation tests, plus completion-detail screenshots. Validation runs in GitHub Actions.
+- See docs/land-deal-history.md for methods, access limitations and remaining source work.
+
 ## Build 5.4 (13 Oct 2026): land deals and buyer fit
 - Added Land deals route with sortable table, search/buyer filters, inferred locality pins, keyboard selection, source detail and comparison ASP.
 - Canonical CSV preserves the seed schema; aligned metadata and embedded snapshots are checked for exact parity. Fifteen sourced KL/Selangor records across seven developer groups plus two legacy rows retained for audit.
