@@ -2,6 +2,12 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.6 (24 Oct 2026): land evidence review queue
+- Added read-only review queue with search, review-need and legacy filters, as-of date, source links and deal-history links.
+- Acquisition and latest-status checks age independently against an explicit 90-day editorial interval. Missing/future dates, unresolved status and unverified parcel geometry are visible without claiming a deal remains open.
+- All current parcel geometry remains unverified. No evidence, check dates, financial formulas, calibration inputs or golden numbers changed.
+- Added review scheduling/isolation tests and desktop, phone and dark screenshots. See docs/evidence-review.md.
+
 ## Build 5.5 (23 Oct 2026): dated land-deal status history
 - Added canonical event ledger, stage filter, completion subtotal and linked timelines with separate event/date/check bases.
 - Corus: completion reported in 2 March 2026 notice (exact completion day unspecified). Paramount Jalan Ampang: completion on 16 June 2026. UNIRAZAK: SPA signed 19 August 2026; completion unverified. Filing mirrors read; original Bursa pages returned 403.
