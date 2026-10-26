@@ -72,8 +72,10 @@ ck('Sources exposes imported records',(await page.innerText('main')).includes('S
 ck('workspace includes transactions',await page.evaluate(()=>workspaceBody().transactions.taiping.length===2));
 ck('workspace roundtrip validates transactions',await page.evaluate(()=>{const b=workspaceBody();TX={};return importWorkspace(JSON.stringify(b))&&TX.taiping.length===2}));
 await page.evaluate(()=>location.hash='#/transactions/taiping');await page.waitForTimeout(150);await page.setViewportSize({width:390,height:844});
+await page.evaluate(()=>{TX.taiping[0].scheme='LONG SYNTHETIC SCHEME '.repeat(8);TX.taiping[1].scheme=TX.taiping[0].scheme;render()});
 ck('phone no page overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
 await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));
+ck('dark cohort control contrast',await page.locator('#tx-group').evaluate(e=>getComputedStyle(e).backgroundColor!=='rgb(255, 255, 255)'));
 ck('dark view rendered',await page.locator('#tx-filter').count()===1);
 page.once('dialog',d=>d.accept());await page.click('#tx-clear');
 ck('clear records only',await page.evaluate(()=>txRows('taiping').length===0&&st('taiping').asp===1100));

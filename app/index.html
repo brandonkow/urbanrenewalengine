@@ -441,6 +441,7 @@ tr.mc-cur td{background:color-mix(in srgb,var(--zone-soft) 45%,transparent)}
 
 .lr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:20px;margin-top:24px}.lr-card{min-width:0;overflow-wrap:anywhere}.lr-card h2{font-size:1.2rem}.lr-card .kv{margin-top:16px}.review-page .ld-controls{margin-top:24px}
 .tx-page textarea{width:100%;max-width:100%;padding:10px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:6px}.tx-page input,.tx-page select{max-width:100%;min-width:0}.tx-page .block,.tx-summary{overflow-wrap:anywhere}.tx-page button{margin-top:10px}.tx-page input[type=file]{display:block;margin:10px 0;width:100%}
+.tx-page .mass-field,.cmp-page .mass-field{min-width:0}.tx-page select,.cmp-page select{width:100%;min-width:0;max-width:100%;padding:8px;border:1px solid var(--rule);border-radius:4px;color:var(--ink);background:var(--panel)}.tx-page input[type=date]{color-scheme:light}[data-theme=dark] .tx-page input[type=date]{color-scheme:dark}.cmp-page #cmp-results{min-width:650px}.cmp-page #cmp-results td,.cmp-page #cmp-results th{white-space:normal;min-width:160px}.cmp-page .block{min-width:0;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -1108,7 +1109,7 @@ function interestGrid(x,m){
 }
 
 /* ---------- shell ---------- */
-const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['land','Land deals','Buyers & evidence'],['transactions','Transactions','Import evidence'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
+const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['compare','Compare sites','Side by side'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['land','Land deals','Buyers & evidence'],['transactions','Transactions','Import evidence'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('show'),1800)}
 function go(h){location.hash=h}
 function head(title,lede,right=''){return `<div class="page-head"><div><h1>${title}</h1>${lede?`<p class="lede">${lede}</p>`:''}</div><div>${right}</div></div>`}
@@ -1397,7 +1398,7 @@ function viewSite(id){
       <dl class="kv"><dt>Recorded verdict</dt><dd>${verdictTag(s.verdict)}</dd>
       ${sug?`<dt>Model suggests</dt><dd>${verdictTag(sug[0])} <span class="small">${esc(sug[1])}</span></dd>`:''}
       ${m?`<dt>Owner test</dt><dd><span class="chip ${os.c}">${os.l}</span></dd>`:''}
-      ${m?`<dt>Nearest lever</dt><dd>${esc(leverText(levers(s)))} <a href="#/board">Compare sites</a></dd>`:''}
+      ${m?`<dt>Nearest lever</dt><dd>${esc(leverText(levers(s)))} <a href="#/compare">Compare sites</a></dd>`:''}
       ${gi&&gi.mb.own?`<dt>With DBKL incentive</dt><dd><span class="chip ${covCls(gi.mb.own.coverage)}">${fmtPct(Math.max(0,gi.mb.own.coverage),0)} covered</span> at PR ${fmt2(gi.b.pr)} (+${fmtPct(gi.b.share,0)}, ${incTag(s.id)})</dd>`:''}</dl>
      </div>
     </div>
@@ -4405,12 +4406,75 @@ function bindTransactions(root){
  const undo=root.querySelector('#tx-undo');if(undo)undo.onclick=()=>{const x=st(sid);if(x.asp===x.transactionASP.value){x.asp=x.transactionASP.old;delete x.transactionASP;saveState();render();toast('Previous ASP restored')}};
 }
 
+
+/* ---------- site comparison: consistent scenario basis, no ranking shortcut ---------- */
+let CMP={ids:['taiping','salak','pantai'],basis:'base'};
+function comparisonInput(id,basis){
+ const s=SITE[id];if(!s?.rlv)return null;
+ const x=JSON.parse(JSON.stringify(basis==='live'?st(id):presetState(s,'base')));x.dc=dcRate(x);
+ if(basis==='g26'){if(!INC_DEFAULT[id])return null;x.prUp=Math.min(G26.cap,INC_DEFAULT[id].redev);x.sc='g26'}
+ return x;
+}
+function comparisonResult(s,x,evidence,transactions,deals){
+ const m=x?model(x):null,own=m?.own;
+ const gaps=[];
+ if(!s.area||s.area.type!=='OFFICIAL_CADASTRAL')gaps.push('Cadastral site area / boundary unverified');
+ if(s.prType!=='OFFICIAL_PLANNING')gaps.push('Parcel plot ratio unverified');
+ if(!own)gaps.push('Owner economics not assessed');
+ else if(!x.owner.nConfirmed)gaps.push(x.owner.mode==='landed'?'Lot values and ownership roll unverified':'Ownership-interest count unverified');
+ if(!transactions.length)gaps.push('No imported completed-sale records');
+ else gaps.push('Imported sales and new-product comparability need independent review');
+ const ticket=s.area&&own?own.reqTotal:null;
+ return {id:s.id,name:s.name,x,m,gaps,evidenceCount:evidence.length,transactionCount:transactions.length,
+  coverage:own?.coverage??null,gap:own?Math.max(0,own.reqTotal-m.rlv):null,surplus:own?m.rlv-own.reqTotal:null,
+  requiredPR:own?.reqPR??null,requiredASP:own?.reqASP??null,
+  areaBasis:!s.area?'Normalised test parcel; assembled site area unknown':x?.areaConfirmed?'User-confirmed area; inspect source':s.area.type==='OFFICIAL_CADASTRAL'?'Cadastral area':'Public-map proxy; boundary unverified',
+  buyers:landBuyerFit(s,deals,ticket),ticket};
+}
+function comparisonRows(){
+ return CMP.ids.map(id=>{const s=SITE[id];return comparisonResult(s,comparisonInput(id,CMP.basis),EVIDENCE.filter(e=>e.site===id),txRows(id),LAND_DEALS)});
+}
+function viewCompare(){
+ const rows=comparisonRows(),num=(v,f)=>v===null?'Not assessed':Number.isFinite(v)?f(v):'Not achievable at this ASP';
+ const metrics=[
+ ['Area basis',r=>esc(r.areaBasis)],
+ ['Test area (acres)',r=>r.x?fmt2(r.x.area):'Not modelled'],
+ ['Effective plot ratio',r=>r.m?fmt2(r.m.epr)+'×':'Not modelled'],
+ ['ASP (RM / saleable sf)',r=>r.x?fmtRM(r.x.asp):'Not modelled'],
+ ['RLV per acre',r=>r.m?fmtM(r.m.rlvAc):'Not modelled'],
+ ['RLV for test parcel',r=>r.m?fmtM(r.m.rlv):'Not modelled'],
+ ['Owner budget for test parcel',r=>r.m?.own?fmtM(r.m.own.reqTotal):'Not assessed'],
+ ['Owner coverage',r=>num(r.coverage,v=>fmtPct(v,1))],
+ ['Funding shortfall',r=>num(r.gap,fmtM)],
+ ['Surplus / deficit',r=>num(r.surplus,fmtM)],
+ ['Owner-required PR',r=>num(r.requiredPR,v=>fmt2(v)+'×')],
+ ['Owner-required ASP',r=>num(r.requiredASP,v=>fmtRM(v)+' psf')],
+ ['Owner test',r=>r.m?.own?esc(ownerStatus(r.m,r.x).l):'Not assessed'],
+ ['Evidence entries / imported sales',r=>r.evidenceCount+' / '+r.transactionCount],
+ ['Next investigation',r=>esc(SITE[r.id].next||'Evidence gathering required')]
+ ];
+ return '<div class="page cmp-page">'+head('Compare sites','Compare two to four sites on one scenario basis. Financial coverage does not resolve planning, ownership or market-evidence gaps.')+
+ '<form id="cmp-form"><div class="mass-fields">'+[0,1,2,3].map(i=>'<label class="mass-field">Site '+(i+1)+'<select data-cmp="'+i+'"><option value="">'+(i<2?'Choose a site':'Optional')+'</option>'+SITES.map(s=>'<option value="'+s.id+'" '+(CMP.ids[i]===s.id?'selected':'')+'>'+esc(s.name)+'</option>').join('')+'</select></label>').join('')+
+ '<label class="mass-field">Scenario basis<select id="cmp-basis">'+[['base','Recorded base: no incentive'],['g26','DBKL incentive as read'],['live','Current live scenarios']].map(([v,l])=>'<option value="'+v+'" '+(CMP.basis===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><button class="btn">Compare selected sites</button><p id="cmp-error" role="alert"></p></form>'+
+ '<p class="note info">'+(CMP.basis==='g26'?'Guideline classification as read, with no residing/open-space/transit bonus. Discretionary approval is unresolved.':CMP.basis==='live'?'Live scenarios may contain different presets, incentives and analyst edits. Compare the displayed inputs before comparing outcomes.':'Recorded base inputs with the current global development-charge setting. No discretionary incentive is included.')+' Per-acre residuals normalize scale; total amounts refer only to each displayed test parcel. One-acre village cases are not assembled-site budgets.</p>'+
+ '<div class="tw" role="region" tabindex="0" aria-label="Site comparison"><table id="cmp-results"><thead><tr><th>Measure</th>'+rows.map(r=>'<th><a href="#/site/'+r.id+'">'+esc(r.name)+'</a></th>').join('')+'</tr></thead><tbody>'+metrics.map(([label,fn])=>'<tr><th scope="row">'+label+'</th>'+rows.map(r=>'<td>'+fn(r)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'+
+ '<div class="sec"><h2>Evidence gaps and buyer research</h2><div class="lr-grid">'+rows.map(r=>'<article class="block"><h3>'+esc(r.name)+'</h3><ul>'+r.gaps.map(g=>'<li>'+esc(g)+'</li>').join('')+'</ul><h4>Analytical buyer candidates</h4><p class="small">Heuristic match points, not a probability or expression of interest. Product assumes high-rise redevelopment. '+(r.ticket?'Ticket uses '+fmtM(r.ticket)+' test owner budget; ownership remains subject to review.':'Ticket omitted: total site budget is unknown.')+'</p>'+r.buyers.map(b=>'<p><b>'+esc(b.buyer)+'</b> · '+fmt0(b.score)+'/100<br><span class="small">'+(b.km===null?'Location unknown':'Approx. '+fmt1(b.km)+' km to supporting deal')+'; '+esc(b.deal.intended_use||'product unconfirmed')+'. <a href="#/land/'+b.deal.id+'">Inspect deal evidence</a></span></p>').join('')+'<p><a href="#/transactions/'+r.id+'">Review transactions</a> · <a href="#/site/'+r.id+'">Open dossier</a></p></article>').join('')+'</div></div>'+
+ '<p class="small">No composite winner is calculated. A missing owner model is not a pass; a positive surplus does not establish legal assembly or planning feasibility. '+badge('MODEL_OUTPUT')+'</p><button class="btn ghost" id="cmp-export">Export comparison JSON</button></div>';
+}
+function bindCompare(root){
+ root.querySelector('#cmp-form').onsubmit=e=>{e.preventDefault();const ids=[...root.querySelectorAll('[data-cmp]')].map(e=>e.value).filter(Boolean);
+  if(ids.length<2||new Set(ids).size!==ids.length){root.querySelector('#cmp-error').textContent='Choose two to four different sites.';return}
+  CMP={ids,basis:root.querySelector('#cmp-basis').value};render();
+ };
+ root.querySelector('#cmp-export').onclick=()=>saveText('klure-comparison.json',JSON.stringify({asOf:new Date().toISOString(),basis:CMP.basis,notice:'Screening outputs; not verified site feasibility.',sites:comparisonRows()},(k,v)=>typeof v==='number'&&!Number.isFinite(v)?'Not achievable':v,2),'application/json');
+}
+
 /* ---------- router ---------- */
 function route(){const h=(location.hash||'#/watchlist').slice(2).split('/');return {p:h[0]||'watchlist',a:h[1],b:h[2],c:h[3]}}
 let LAST='';
 function render(){
   const r=route(), v=document.getElementById('view');
-  const views={watchlist:[viewWatchlist,bindWatchlist],map:[viewMap,bindMap],site:[()=>viewSite(r.a||'taiping'),bindSite],lab:[()=>viewLab(r.a),bindLab],deal:[()=>viewDeal(r.a),bindDeal],land:[()=>viewLand(r.a),bindLand],review:[viewReview,bindReview],transactions:[()=>viewTransactions(r.a),bindTransactions],calibration:[viewCalibration,bindCalibration],board:[viewBoard,bindBoard],incentive:[()=>viewIncentive(r.a),bindIncentive],assembly:[()=>viewAssembly(r.a),bindAssembly],pack:[()=>viewPack(r.a,r.b,r.c),bindPack],odds:[()=>viewOdds(r.a),bindOdds],massing:[()=>viewMassing(r.a),bindMassing],triggers:[viewTriggers,()=>{}],sources:[viewSources,bindSources],universe:[viewUniverse,bindUniverse],method:[viewMethod,bindMethod]};
+  const views={watchlist:[viewWatchlist,bindWatchlist],map:[viewMap,bindMap],site:[()=>viewSite(r.a||'taiping'),bindSite],lab:[()=>viewLab(r.a),bindLab],deal:[()=>viewDeal(r.a),bindDeal],land:[()=>viewLand(r.a),bindLand],review:[viewReview,bindReview],compare:[viewCompare,bindCompare],transactions:[()=>viewTransactions(r.a),bindTransactions],calibration:[viewCalibration,bindCalibration],board:[viewBoard,bindBoard],incentive:[()=>viewIncentive(r.a),bindIncentive],assembly:[()=>viewAssembly(r.a),bindAssembly],pack:[()=>viewPack(r.a,r.b,r.c),bindPack],odds:[()=>viewOdds(r.a),bindOdds],massing:[()=>viewMassing(r.a),bindMassing],triggers:[viewTriggers,()=>{}],sources:[viewSources,bindSources],universe:[viewUniverse,bindUniverse],method:[viewMethod,bindMethod]};
   const [fn,bind]=views[r.p]||views.watchlist;
   const y=window.scrollY, same=LAST===location.hash;
   const fid=document.activeElement&&document.activeElement.id;

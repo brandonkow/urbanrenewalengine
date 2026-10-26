@@ -2,6 +2,13 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.8 (27 Oct 2026): site comparison
+- Compare two to four sites on a common selected scenario basis, showing per-acre residual, owner coverage, funding gaps and required PR/ASP.
+- Missing owner models and unknown assembled-site budgets stay explicit. Buyer candidates link to evidence and carry heuristic limitations.
+- Export input/output snapshots and evidence gaps. Comparison does not write to scenarios or calibration; golden numbers are unchanged.
+- Fixed transaction dropdown dark-mode contrast and phone-width containment for long scheme names.
+- Added independent arithmetic, isolation, selection/export and rendering checks. See docs/comparison.md.
+
 ## Build 5.7 (26 Oct 2026): transaction evidence importer
 - CSV mapping, validation, staged import, duplicate detection and source metadata; completed-sale assertions remain provisional.
 - Comparable groups separate scheme, tenure, type and area basis; size/period filters, median psf and 12-calendar-month flags appear in Transactions, dossiers and Sources.
