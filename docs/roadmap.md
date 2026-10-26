@@ -131,6 +131,7 @@ The single 250 KB file is fine to publish but hard to edit safely.
 ---
 
 ## 6. Cash flow and IRR *(plan first)*
+**Status: implemented in Build 5.9; acceptance tracked in docs/completion-programme.md.** See docs/cashflow.md. Billing and facility terms are editable assumptions, not a claimed statutory schedule.
 **Prompt**
 > Add a time-phased cash flow beside the static residual: land payment timing (cash at signing, or deferred under replacement units or JV), a construction S-curve, sales take-up and progress billing (for example the Housing Development Act Schedule H pattern for strata), and finance cost on the peak debt instead of a flat 5% of GDV. Output developer IRR, peak debt, and the land value that hits a target IRR. The static RLV and every golden number must stay as they are; this is a second view, not a replacement.
 

@@ -2,6 +2,13 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.9 (27 Oct 2026): quarterly cash flow and IRR
+- Added an independent live-scenario view with editable construction S-curve, sales take-up, progress collections, deposits and retention.
+- Cash, deferred cash, JV entitlement and replacement-unit structures feed an explicit debt/equity ledger; facility caps and terminal equity calls stay visible.
+- Developer/project IRR, peak debt/equity, interest, target-return consideration and static reconciliation are displayed, with a summary in each scenario lab.
+- Invalid and non-conventional IRRs are withheld; all timing/funding terms remain assumptions. Settings join workspace persistence and exports.
+- Existing static formulas, source facts and golden numbers are unchanged. See docs/cashflow.md for methods and limits.
+
 ## Build 5.8 (27 Oct 2026): site comparison
 - Compare two to four sites on a common selected scenario basis, showing per-acre residual, owner coverage, funding gaps and required PR/ASP.
 - Missing owner models and unknown assembled-site budgets stay explicit. Buyer candidates link to evidence and carry heuristic limitations.
