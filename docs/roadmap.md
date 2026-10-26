@@ -114,6 +114,7 @@ The single 250 KB file is fine to publish but hard to edit safely.
 ---
 
 ## 4. Transaction evidence importer
+**Status: implemented in Build 5.7; release validation tracked in docs/completion-programme.md.** See docs/transactions.md.
 **Prompt**
 > Add a CSV importer for transaction evidence (NAPIC/JPPH or Brickz exports that I download myself): date, address or scheme, unit size, price, tenure. Store rows as TRANSACTION evidence per site, show the median psf and its date range in the dossier, and flag evidence older than 12 months. Never scrape sites behind a login; the input is files I provide.
 

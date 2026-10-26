@@ -2,6 +2,13 @@
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
 
+## Build 5.7 (26 Oct 2026): transaction evidence importer
+- CSV mapping, validation, staged import, duplicate detection and source metadata; completed-sale assertions remain provisional.
+- Comparable groups separate scheme, tenure, type and area basis; size/period filters, median psf and 12-calendar-month flags appear in Transactions, dossiers and Sources.
+- Explicit built-up ASP application with rationale and restore; live scenarios change only on application. Recorded presets, calibration and golden numbers are unchanged.
+- Workspace sync/export/import includes validated transaction rows. Added independent arithmetic and end-to-end UI tests plus synthetic light/dark/phone screenshots.
+- See docs/transactions.md and docs/completion-programme.md. CI and rendered review determine release acceptance.
+
 ## Build 5.6 (24 Oct 2026): land evidence review queue
 - Added read-only review queue with search, review-need and legacy filters, as-of date, source links and deal-history links.
 - Acquisition and latest-status checks age independently against an explicit 90-day editorial interval. Missing/future dates, unresolved status and unverified parcel geometry are visible without claiming a deal remains open.

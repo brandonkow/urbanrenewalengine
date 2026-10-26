@@ -6,7 +6,7 @@
   "description": "KL Urban Renewal Engine: residual land value against required owner consideration, with DBKL's 2026 redevelopment incentive guideline.",
   "scripts": {
     "setup": "playwright install chromium",
-    "test": "node tests/run-tests.mjs && node tests/sweep.mjs && node tests/ui.mjs && node tests/packs.mjs && node tests/odds.mjs && node tests/massing.mjs && node tests/land-deals.mjs && node tests/land-deal-history.mjs && node tests/evidence-review.mjs",
+    "test": "node tests/run-tests.mjs && node tests/sweep.mjs && node tests/ui.mjs && node tests/packs.mjs && node tests/odds.mjs && node tests/massing.mjs && node tests/land-deals.mjs && node tests/land-deal-history.mjs && node tests/evidence-review.mjs && node tests/transactions.mjs",
     "test:numbers": "node tests/run-tests.mjs",
     "test:sweep": "node tests/sweep.mjs",
     "test:ui": "node tests/ui.mjs",
@@ -17,7 +17,8 @@
     "test:massing": "node tests/massing.mjs",
     "test:land": "node tests/land-deals.mjs",
     "test:land-history": "node tests/land-deal-history.mjs",
-    "test:review": "node tests/evidence-review.mjs"
+    "test:review": "node tests/evidence-review.mjs",
+    "test:transactions": "node tests/transactions.mjs"
   },
   "devDependencies": {
     "playwright": "1.63.0"

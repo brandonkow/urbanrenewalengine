@@ -16,7 +16,7 @@ const ids = await page.evaluate(() => SITES.map((s) => s.id));
 const modelled = await page.evaluate(() => MODELLED);
 const owned = await page.evaluate(() => MODELLED.filter((i) => st(i).owner));
 const inc = await page.evaluate(() => MODELLED.filter((i) => INC_DEFAULT[i]));
-const routes = ['review','land','land/ms-corus','land/param-ampang','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
+const routes = ['transactions/taiping','review','land','land/ms-corus','land/param-ampang','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
   ...ids.map((i) => `site/${i}`), ...modelled.map((i) => `lab/${i}`), ...owned.map((i) => `deal/${i}`),
   ...owned.map((i) => `assembly/${i}`), ...inc.map((i) => `incentive/${i}`),
   ...owned.flatMap((i) => ['en/base', 'ms/g26', 'zh/g26'].map((v) => `pack/${i}/${v}`)), ...owned.map((i) => `odds/${i}`), ...modelled.map((i) => `massing/${i}`)];
@@ -32,7 +32,7 @@ for (const r of routes) {
 lines.push(`${routes.length} routes rendered`);
 
 await page.setViewportSize({ width: 390, height: 844 });
-const PHONE = ['review','land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'map', 'site/taiping', 'lab/taiping', 'deal/taiping', 'assembly/taiping', 'calibration', 'triggers', 'sources', 'universe', 'method', 'pack/taiping/zh/g26', 'pack/pantai/ms/g26', 'odds/taiping', 'massing/taiping', 'massing/salak'];
+const PHONE = ['transactions/taiping','review','land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'map', 'site/taiping', 'lab/taiping', 'deal/taiping', 'assembly/taiping', 'calibration', 'triggers', 'sources', 'universe', 'method', 'pack/taiping/zh/g26', 'pack/pantai/ms/g26', 'odds/taiping', 'massing/taiping', 'massing/salak'];
 for (const r of PHONE) {
   await page.evaluate((h) => { location.hash = '#/' + h; }, r);
   await page.waitForTimeout(150);
@@ -68,7 +68,19 @@ if (SHOTS) {
   await page.screenshot({path:path.join(dir,'review_phone.png'),fullPage:true});
   await page.setViewportSize({width:1440,height:1000});
   await page.screenshot({path:path.join(dir,'review_dark.png'),fullPage:true});
+  
+  // Synthetic fixture only in the ephemeral screenshot browser, never seed evidence.
+  await page.evaluate(()=>{
+    TX.taiping=[{date:'2024-01-01',scheme:'SYNTHETIC EXAMPLE ONLY',size:1000,price:500000,tenure:'freehold',propertyType:'apartment',basis:'built-up',unit:'sqft',sqft:1000,psf:500,source:'Synthetic screenshot fixture',url:'https://example.com',checked:'2026-01-01',type:'TRANSACTION',conf:'PROVISIONAL'}];
+    document.documentElement.removeAttribute('data-theme');location.hash='#/transactions/taiping';
+  });await page.waitForTimeout(250);
+  await page.screenshot({path:path.join(dir,'transactions.png'),fullPage:true});
+  await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));
+  await page.screenshot({path:path.join(dir,'transactions_dark.png'),fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(dir,'transactions_phone.png'),fullPage:true});
   lines.push(`screenshots saved to ${dir}`);
+
 }
 await browser.close();
 const ok = report('UI sweep', lines, fails, errors, routes.length + PHONE.length);
