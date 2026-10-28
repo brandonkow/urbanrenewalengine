@@ -1,6 +1,6 @@
 # Due-diligence workspace (Build 6.0)
 
-Open Due diligence, or the link in a site dossier. All 21 sites have seven investigation questions: boundary, ownership, planning, market, cost, consent and funding. Taiping also has the existing checklist questions, initially unreviewed regardless of old checkbox ticks.
+Open Due diligence, the Sources page link, or the selected site’s Map preview. All 21 sites have seven investigation questions: boundary, ownership, planning, market, cost, consent and funding. Taiping also has the existing checklist questions, initially unreviewed regardless of old checkbox ticks.
 
 ## Recording work
 Select a task, responsible role, due date and status. A recorded review requires a nonfuture review date, finding, note, source URL and document/page reference. A finding can support, contradict or be inconclusive about the stated question. Recording it never certifies approval, legal consent or feasibility. Existing triggers remain visible and unchanged. Dates use UTC.
