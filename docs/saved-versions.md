@@ -9,3 +9,6 @@ History uses schema `klure.scenario-version.v1` and model version `static-v1/cas
 Browser writes must succeed before history changes in memory. Limits are 60 versions and 4 MB; no silent truncation. Export before deleting or replacing versions. Invalid stored history is preserved for raw export. Account sync follows the existing private-workspace mechanism, without a new service or runtime dependency.
 
 No financial formula, statutory conclusion, baseline expected result or source fact changes. Acceptance pending GitHub CI and rendered review.
+
+## Acceptance record — 29 October 2026
+Source commit fd4f966 passed GitHub Actions run 40728681255: 2,867 checks including 184 saved-version checks. All 43 screenshots were reviewed (unchanged images were byte-compared against the previously reviewed set). The generated offline HTML is committed with this record, and CI again checks it before rebuilding. `tests/expected.json` is unchanged. Private artifact publication and real-device acceptance remain outstanding.

@@ -20,8 +20,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
       - run: npm run build:check
+      - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - name: Render committee memo PDF for inspection

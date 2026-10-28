@@ -62,3 +62,6 @@ The full map is in handoff §14.
 
 ## Publishing
 The live engine is a private claude.ai artifact. To update it, attach the new `app/index.html` in a Claude chat and ask for it to be republished to the existing artifact link. Never put API keys or tokens in the code.
+
+## Build 6.3 saved scenario versions
+`#/versions/<site>` captures immutable dated snapshots of inputs, funding, evidence, due-diligence summaries and proposed positions. `svValidate` recomputes stored results; `svClean` validates the entire history before import. `SV` joins workspace sync/export. `svBridge` uses ordered substitutions, not causal attribution. Invalid stored history is preserved for raw recovery. Never promote saved proposals to committee approval or evidence verification. See docs/saved-versions.md; run `npm run test:versions`.
