@@ -2,7 +2,14 @@
 const MEMO_BASES={base:'Recorded base — no incentive',g26:'DBKL incentive as read — discretionary',live:'Current live scenario — inspect edits'};
 const MEMO_DECISIONS={unreviewed:'Not reviewed by committee',investigate:'Investigate further',hold:'Hold pending evidence',decline:'Do not pursue'};
 let MEMO={site:'taiping',basis:'base',decision:'unreviewed',rationale:'',next:'',snapshot:null};
-function memoCapture(id,basis,decision='unreviewed',rationale='',next='',at=new Date().toISOString()){
+function memoCapture(...args){
+ // Existing trigger adapters lazily initialize live scenario/incentive defaults.
+ // Evaluate against detached copies so report generation cannot modify the workspace.
+ const state=STATE,inc=INC;
+ try{STATE=JSON.parse(JSON.stringify(state));INC=JSON.parse(JSON.stringify(inc));return memoCaptureData(...args)}
+ finally{STATE=state;INC=inc}
+}
+function memoCaptureData(id,basis,decision='unreviewed',rationale='',next='',at=new Date().toISOString()){
  if(!Object.hasOwn(SITE,id)||!Object.hasOwn(MEMO_BASES,basis)||!Object.hasOwn(MEMO_DECISIONS,decision))throw Error('Choose a valid site, scenario and review position.');
  if(typeof rationale!=='string'||typeof next!=='string'||rationale.length>3000||next.length>3000)throw Error('Notes must be text up to 3,000 characters.');
  if(decision!=='unreviewed'&&!rationale.trim())throw Error('Explain the proposed committee position.');
