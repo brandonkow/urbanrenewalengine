@@ -8,7 +8,7 @@ User-authorized order, 26 October 2026. Project changes and CI are GitHub-only. 
 | 5.8 Site comparison | 2–4 selected sites, consistent scenario basis, coverage/gap/required PR, buyer-fit explanation and evidence gaps, missing-data handling, isolation tests | Accepted: commit 339b687, CI run 40355964578, 2,117 checks; all 31 screenshots inspected |
 | 5.9 Cash flow / IRR | Editable timing, construction and sales profiles, debt/interest ledger, IRR/peak debt/target land value, static reconciliation, independent arithmetic and UI tests | Accepted: commit 596b341, CI run 40360153016, 2,389 checks; all 34 screenshots inspected |
 | 6.0 Due diligence | Per-site evidence-linked tasks, dates/status/review history, unresolved gates visible, workspace persistence/export, no owner personal fields, tests | Implemented; CI and rendered acceptance pending |
-| 6.1 Modularisation | Source modules, deterministic self-contained offline HTML build, direct pure-function unit tests, existing regression suite unchanged, reproducibility check | Pending |
+| 6.1 Modularisation | Source modules, deterministic self-contained offline HTML build, direct pure-function unit tests, existing regression suite unchanged, reproducibility check | Implemented; final build artifact and acceptance pending |
 
 ## Invariants
 Preserve existing recorded presets and golden values; keep discretionary incentives as scenarios. Never claim planning approval, completed sales, cadastral accuracy or owner consent from a user checkbox or an import. Keep owner personal data out of schema. New features must be reachable, usable at phone width and in dark mode. Financial formulas are tested against independent examples, not just self-comparison.

@@ -19,12 +19,24 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Bootstrap updated build lockfile on GitHub
+        run: npm install --package-lock-only --ignore-scripts
       - run: npm ci
+      - run: npm run build
       - run: npx playwright install --with-deps chromium
+      - run: npm run build:check
       - run: npm test
       - name: Screenshots for a visual check
         if: always()
         run: npm run shots
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-build
+          path: |
+            app/index.html
+            package-lock.json
+          retention-days: 14
       - uses: actions/upload-artifact@v4
         if: always()
         with:

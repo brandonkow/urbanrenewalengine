@@ -3,7 +3,7 @@
 Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of the Malaysia Structural Real Estate Opportunity Engine. Decision rule: **residual land value (RLV) must exceed the required owner consideration**. It is a screening model only, not a valuation or investment advice.
 
 ## Files
-- `app/index.html`: the whole engine, one self-contained HTML file (vanilla JS, hash router, no build step). It is the reference implementation and the file that gets published.
+- `app/index.html`: generated self-contained publication file (vanilla JS, hash router). Edit source modules under `src/`, run `npm run build`, and commit both source and output. See docs/build-system.md.
 - `docs/handoff.md`: the build-5 handoff. Formulas are in §5, assumptions §6, results §7–8, data model §13, code map §14 and roadmap §16. Read the relevant section before changing anything.
 - `docs/roadmap.md`: next tasks, each with a prompt and an acceptance check.
 - `docs/CHANGELOG.md`: append one entry per change that moves numbers or behaviour.
@@ -13,6 +13,8 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 
 ## Commands
 - `npm install`, then `npm run setup` once (installs Chromium for Playwright).
+- `npm run build && npm run build:check`: produce and verify the offline HTML from source.
+- `npm run test:unit`: direct engine/guideline Vitest tests without a browser.
 - `npm test`: formula tests, UI sweep and interaction checks. It must pass before a change counts as done.
 - `npm run test:numbers -- --verbose`: every formula check, with values.
 - `npm run shots`: screenshots in `screenshots/`. Look at them after any UI change.

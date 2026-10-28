@@ -104,6 +104,7 @@ Before anything is printed, have a native speaker check the Malay and Chinese, a
 ---
 
 ## 3. Make the code easier to change *(plan first)*
+**Status: implemented in Build 6.1; acceptance tracked in docs/completion-programme.md.** See docs/build-system.md.
 The single 250 KB file is fine to publish but hard to edit safely.
 
 **Prompt**

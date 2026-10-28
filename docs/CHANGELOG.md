@@ -100,3 +100,7 @@ Watchlist, map, dossier, scenario lab, triggers, sources, site universe and meth
 ## Build 6.0 — Due-diligence workspace (28 October 2026)
 
 Adds per-site investigation queues, responsible roles, due/review dates, findings, linked evidence snapshots, source-change rechecks and review history. Integrates workspace sync/import/export with validation and visible storage errors. Existing checklist ticks, evidence, consent records and model results remain separate and unchanged. No golden values move. See docs/due-diligence.md; acceptance is tracked in docs/completion-programme.md.
+
+## Build 6.1 — Modular source and deterministic offline build (28 October 2026)
+
+Extracts pure engine/guideline ES modules and one browser source file per view, with an explicit source manifest, CSS and HTML template. esbuild produces the offline HTML; Vitest directly tests the pure functions. Browser adapters explicitly pass the existing development-charge fallback. No calculation or golden value is intentionally changed. Removes optional external Google Fonts links and fixes due-diligence summary label spacing. CI checks reproducibility and retains the full browser regression/screenshot suite. See docs/build-system.md.

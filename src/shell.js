@@ -1,0 +1,7 @@
+/* ---------- shell ---------- */
+const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['compare','Compare sites','Side by side'],['cashflow','Cash flow & IRR','Funding'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['land','Land deals','Buyers & evidence'],['transactions','Transactions','Import evidence'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['diligence','Due diligence','Tasks & reviews'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('show'),1800)}
+function go(h){location.hash=h}
+function head(title,lede,right=''){return `<div class="page-head"><div><h1>${title}</h1>${lede?`<p class="lede">${lede}</p>`:''}</div><div>${right}</div></div>`}
+function siteLink(s,label){return `<a href="#/site/${s.id}">${esc(label||s.name)}</a>`}
+
