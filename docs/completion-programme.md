@@ -7,7 +7,7 @@ User-authorized order, 26 October 2026. Project changes and CI are GitHub-only. 
 | 5.7 Transaction importer | Validated CSV mapping, source metadata, comparable medians, 12-month flag, dossier/Sources, explicit ASP application, persistence and UI tests | Accepted with 5.8 fixes; CI run 40355964578 and rendered review passed |
 | 5.8 Site comparison | 2–4 selected sites, consistent scenario basis, coverage/gap/required PR, buyer-fit explanation and evidence gaps, missing-data handling, isolation tests | Accepted: commit 339b687, CI run 40355964578, 2,117 checks; all 31 screenshots inspected |
 | 5.9 Cash flow / IRR | Editable timing, construction and sales profiles, debt/interest ledger, IRR/peak debt/target land value, static reconciliation, independent arithmetic and UI tests | Accepted: commit 596b341, CI run 40360153016, 2,389 checks; all 34 screenshots inspected |
-| 6.0 Due diligence | Per-site evidence-linked tasks, dates/status/review history, unresolved gates visible, workspace persistence/export, no owner personal fields, tests | Pending |
+| 6.0 Due diligence | Per-site evidence-linked tasks, dates/status/review history, unresolved gates visible, workspace persistence/export, no owner personal fields, tests | Implemented; CI and rendered acceptance pending |
 | 6.1 Modularisation | Source modules, deterministic self-contained offline HTML build, direct pure-function unit tests, existing regression suite unchanged, reproducibility check | Pending |
 
 ## Invariants

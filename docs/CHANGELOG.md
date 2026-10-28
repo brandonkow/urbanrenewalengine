@@ -96,3 +96,7 @@ Deal structures (cash, replacement units, JV), originator fee and promote; assem
 
 ## Build 1
 Watchlist, map, dossier, scenario lab, triggers, sources, site universe and method, seeded from workbook v3, reproducing every workbook and handoff figure.
+
+## Build 6.0 — Due-diligence workspace (28 October 2026)
+
+Adds per-site investigation queues, responsible roles, due/review dates, findings, linked evidence snapshots, source-change rechecks and review history. Integrates workspace sync/import/export with validation and visible storage errors. Existing checklist ticks, evidence, consent records and model results remain separate and unchanged. No golden values move. See docs/due-diligence.md; acceptance is tracked in docs/completion-programme.md.

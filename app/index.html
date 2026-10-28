@@ -443,6 +443,24 @@ tr.mc-cur td{background:color-mix(in srgb,var(--zone-soft) 45%,transparent)}
 .tx-page textarea{width:100%;max-width:100%;padding:10px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:6px}.tx-page input,.tx-page select{max-width:100%;min-width:0}.tx-page .block,.tx-summary{overflow-wrap:anywhere}.tx-page button{margin-top:10px}.tx-page input[type=file]{display:block;margin:10px 0;width:100%}
 .tx-page .mass-field,.cmp-page .mass-field{min-width:0}.tx-page select,.cmp-page select{width:100%;min-width:0;max-width:100%;padding:8px;border:1px solid var(--rule);border-radius:4px;color:var(--ink);background:var(--panel)}.tx-page input[type=date]{color-scheme:light}[data-theme=dark] .tx-page input[type=date]{color-scheme:dark}.cmp-page #cmp-results{min-width:650px}.cmp-page #cmp-results td,.cmp-page #cmp-results th{white-space:normal;min-width:160px}.cmp-page .block{min-width:0;overflow-wrap:anywhere}
 .cf-page .mass-field{min-width:0}.cf-page input,.cf-page select,.cf-page textarea{width:100%;min-width:0;max-width:100%;padding:8px;border:1px solid var(--rule);border-radius:4px;background:var(--panel);color:var(--ink);font:inherit}.cf-page textarea{resize:vertical}.cf-ledger{min-width:1300px}.cf-ledger th{white-space:normal;min-width:95px}.cf-page .metrics .v{font-size:24px;overflow-wrap:anywhere}.cf-summary{padding:12px 0;border-bottom:1px solid var(--rule);margin-bottom:20px}.cf-page #cf-form>h2{margin-top:24px}.cf-page #cf-error{color:var(--bad)}
+
+.dd-page label{display:block;font-size:12.5px;margin-bottom:12px;min-width:0}
+.dd-page input,.dd-page select,.dd-page textarea{display:block;width:100%;min-width:0;max-width:100%;font:inherit;color:var(--ink);background:var(--panel);padding:8px;border:1px solid var(--rule);border-radius:4px}
+.dd-page textarea{resize:vertical}
+.dd-layout{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,2fr);gap:32px;margin:28px 0}
+.dd-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.dd-queue{list-style:none;padding:0}.dd-queue li{padding:12px 0;border-bottom:1px solid var(--rule)}
+.dd-queue button{width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.dd-queue button[aria-pressed=true]{font-weight:700;border-color:var(--ink)}
+.dd-editor{min-width:0}.dd-editor h2{margin-top:12px}
+.dd-note{white-space:pre-wrap;overflow-wrap:anywhere}
+.dd-history{padding:10px 0;border-bottom:1px solid var(--rule)}.dd-history summary,.dd-gates summary{cursor:pointer;font-weight:650}
+.dd-history[open]>summary{margin-bottom:12px}.dd-history p,.dd-history a{overflow-wrap:anywhere}
+.dd-gates{padding:16px;border:1px solid var(--rule);margin:20px 0}.dd-gates li{margin:10px 0}
+.dd-error{color:var(--bad);margin:10px 0}
+:root[data-theme=dark] .dd-page input[type=date],:root[data-theme=dark] .review-page input[type=date]{color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .dd-page input[type=date],:root:not([data-theme=light]) .review-page input[type=date]{color-scheme:dark}}
+@media(max-width:800px){.dd-layout,.dd-fields{grid-template-columns:1fr}.dd-gates{padding:12px}}
 </style>
 </head>
 <body>
@@ -648,7 +666,7 @@ const MODELLED = SITES.filter(s=>s.rlv).map(s=>s.id);
 /* ---------- persistence (per-viewer convenience) ---------- */
 const store={
   get(k,d){try{const v=localStorage.getItem('klure:'+k);return v?JSON.parse(v):d}catch(e){return d}},
-  set(k,v){try{localStorage.setItem('klure:'+k,JSON.stringify(v))}catch(e){}if(['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow'].includes(k))schedulePush()}
+  set(k,v){try{localStorage.setItem('klure:'+k,JSON.stringify(v))}catch(e){}if(['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence'].includes(k))schedulePush()}
 };
 
 /* ---------- global assumptions ---------- */
@@ -1110,7 +1128,7 @@ function interestGrid(x,m){
 }
 
 /* ---------- shell ---------- */
-const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['compare','Compare sites','Side by side'],['cashflow','Cash flow & IRR','Funding'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['land','Land deals','Buyers & evidence'],['transactions','Transactions','Import evidence'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
+const NAV=[['watchlist','Watchlist','21 sites'],['board','Distance to deal','Levers'],['compare','Compare sites','Side by side'],['cashflow','Cash flow & IRR','Funding'],['odds','Owner-test odds','Monte Carlo'],['massing','Massing check','Space & parking'],['incentive','DBKL incentives','2026 guide'],['map','Map','Pins'],['site','Site dossier','Detail'],['lab','Scenario lab','Live'],['deal','Deal structures','Cash, units, JV'],['assembly','Assembly','Consent'],['pack','Owner packs','Print'],['land','Land deals','Buyers & evidence'],['transactions','Transactions','Import evidence'],['calibration','Calibration','Comps'],['triggers','Triggers','Watch'],['diligence','Due diligence','Tasks & reviews'],['sources','Sources & diligence','Evidence'],['universe','Site universe','8 + 49'],['method','Method','Formulas']];
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('show'),1800)}
 function go(h){location.hash=h}
 function head(title,lede,right=''){return `<div class="page-head"><div><h1>${title}</h1>${lede?`<p class="lede">${lede}</p>`:''}</div><div>${right}</div></div>`}
@@ -1240,7 +1258,7 @@ function viewMap(){
   const side=`<div class="side">
     <h2 style="margin-bottom:2px">${esc(s.name)}</h2>
     <p class="small muted">${esc(s.place)}, ${esc(s.ref)} ${badge('INFERRED','Pin position is approximate')}</p>
-    <p>${stageTag(s.stage)} ${verdictTag(s.verdict)}</p>
+    <p><a href="#/diligence/${s.id}">Open site due-diligence workspace</a></p><p>${stageTag(s.stage)} ${verdictTag(s.verdict)}</p>
     <dl class="kv small">
      <dt>Plot ratio</dt><dd>${s.pr?fmt2(s.pr)+'× ':'Not confirmed '}${badge(s.prType)}</dd>
      ${(()=>{const ns=nearestStation(s),tz=tpzRead(ns.km);return `<dt>Nearest station</dt><dd>${esc(ns.n)}, about ${fmt0(ns.km*1000)} m <span class="chip ${tz[1]}">${tz[0]}</span></dd>`})()}
@@ -1615,7 +1633,7 @@ function viewSources(){
   const done=CHECK.filter(c=>CHECKS[c.id]).length;
   return `<div class="page">
    ${head('Sources & diligence','What the numbers stand on. Each entry shows when it was last checked against its source.')}
-   <p><a href="#/review">Open land evidence review queue</a> · <a href="#/transactions">Import transaction evidence</a></p>
+   <p><a href="#/diligence">Open due-diligence workspace</a> · <a href="#/review">Open land evidence review queue</a> · <a href="#/transactions">Import transaction evidence</a></p>
    <div class="sec" style="margin-top:0"><div class="sec-head"><h2>Issues and open questions</h2><span class="muted">${ISSUES.length} items</span></div>
     <ul class="issues">${ISSUES.map(i=>`<li><span class="impact"><span class="chip ${i.imp==='High'?'bad':i.imp==='Medium'?'warn':'na'}">${i.imp} impact</span></span><div><h3>${esc(i.t)}</h3><p class="small">${esc(i.d)}</p><p class="small"><b>Do:</b> ${esc(i.a)}${i.src?` <a href="${i.src}" target="_blank" rel="noopener">Source</a>`:''}</p></div></li>`).join('')}</ul>
    </div>
@@ -2038,7 +2056,7 @@ function bindAssembly(root){
 }
 
 /* ---------- account sync (db, private per viewer) ---------- */
-const SYNC_KEYS=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow'];
+const SYNC_KEYS=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence'];
 const SYNC={mode:'local',doc:null,pushing:false,dirty:false,t:0,lastPushed:null};
 function syncLabel(){
   const el=document.getElementById('syncState'); if(!el) return;
@@ -2048,7 +2066,7 @@ function syncLabel(){
 function setSync(m){SYNC.mode=m;syncLabel()}
 function workspaceBody(){
   return {v:2,updatedAt:store.get('updatedAt',new Date().toISOString()),
-    state:STATE,saved:store.get('saved',[]),checks:CHECKS,v2w:V2W,deal:DEAL,asm:ASM,cal:CAL,glob:GLOB,inc:INC,mc:MC,massing:MASS,transactions:TX,cashflow:CF};
+    state:STATE,saved:store.get('saved',[]),checks:CHECKS,v2w:V2W,deal:DEAL,asm:ASM,cal:CAL,glob:GLOB,inc:INC,mc:MC,massing:MASS,transactions:TX,cashflow:CF,diligence:DD};
 }
 function schedulePush(){
   try{localStorage.setItem('klure:updatedAt',JSON.stringify(new Date().toISOString()))}catch(e){}
@@ -2085,6 +2103,7 @@ function applyRemote(b){
   if(b.massing&&typeof b.massing==='object'&&!Array.isArray(b.massing)){MASS=JSON.parse(JSON.stringify(b.massing));raw('massing',MASS)}
   if(Object.hasOwn(b,'transactions')){TX=txClean(b.transactions,reviewToday());raw('transactions',TX)}
   if(Object.hasOwn(b,'cashflow')){CF=cfClean(b.cashflow);raw('cashflow',CF)}
+  if(Object.hasOwn(b,'diligence')){const d=ddClean(b.diligence,reviewToday());DD=d.data;DDNOTICE=d.rejected;raw('diligence',DD)}
   if(b.updatedAt) raw('updatedAt',b.updatedAt);
   const a=document.activeElement; if(a&&a.type==='range') return; // don't yank a slider mid-drag
   render();
@@ -3383,7 +3402,7 @@ async function saveText(name,text,mime){
 function importWorkspace(text){
   let j; try{j=JSON.parse(text)}catch(e){toast('That is not valid JSON');return false}
   const b=j&&typeof j==='object'?(j.workspace||j):null;
-  const keys=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow'];
+  const keys=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence'];
   if(!b||typeof b!=='object'||!keys.some(k=>b[k]&&typeof b[k]==='object')){toast('No workspace data found in that file');return false}
   if(b.state&&typeof b.state==='object'){
     const clean={};
@@ -3405,7 +3424,7 @@ function dataSection(){
   return `<div class="sec"><div class="sec-head"><h2>Data: export and import</h2><span class="muted">Move the workspace to another device, tool or person</span></div>
    <div class="cols">
     <div>
-     <p class="small">The workspace file holds every edited scenario, deal assumption, assembly record, checklist tick, score weight, calibration and global setting, plus the site data, evidence register and each site’s current results.</p>
+     <p class="small">The workspace file holds every edited scenario, deal assumption, assembly record, checklist tick, score weight, calibration, global setting, cash-flow assumptions and due-diligence history, plus the site data, evidence register and each site’s current results.</p>
      <p style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="expJson">Download workspace (.json)</button><button type="button" class="btn ghost" id="expCsv">Download site results (.csv)</button><button type="button" class="btn ghost" id="expShow">Show JSON to copy</button></p>
      <label class="small muted" for="expText" id="expLab" hidden>Exported JSON</label>
      <textarea id="expText" readonly hidden rows="10" style="width:100%;border:1px solid var(--rule);background:var(--panel);border-radius:4px;padding:8px;font:12px/1.4 var(--f)"></textarea>
@@ -4674,12 +4693,152 @@ function bindCashflow(root){
  };
 }
 
+
+/* ---------- due diligence: evidence-linked workflow, never gate certification ---------- */
+const DD_STATUS={open:'Open',working:'In progress',waiting:'Waiting for evidence',reviewed:'Review recorded'};
+const DD_FINDING={pending:'Not assessed',supported:'Supports the stated question',contradicted:'Contradicts the stated question',inconclusive:'Inconclusive'};
+const DD_ROLE={unassigned:'Unassigned',analyst:'Analyst',planner:'Planner',legal:'Legal adviser',valuer:'Valuer',qs:'Quantity surveyor'};
+const DD_TASKS=[
+ ['boundary','Confirm parcel boundary and area','Obtain title, cadastral area and parcel geometry; distinguish public-map proxies.'],
+ ['ownership','Verify legal interests and tenure','Confirm parcel counts, share units, tenure and restrictions from records. Do not store owner personal data.'],
+ ['planning','Obtain written planning position','Confirm permitted use, intensity, incentive eligibility, development charges and required technical studies.'],
+ ['market','Review comparable completed sales','Check dates, property type, area basis and proposed-product comparability. Asking prices remain separate.'],
+ ['cost','Reconcile design and cost allowances','Reconcile massing, parking, demolition, relocation and contingencies with QS evidence.'],
+ ['consent','Review assembly evidence','Reconcile the Assembly tracker with legal records. Recording this task does not establish consent.'],
+ ['funding','Verify funding and programme','Obtain lender terms, collection timing, equity commitments and a deliverable programme.']
+];
+function ddTemplates(id){return DD_TASKS.map(([id,title,need])=>({id,title,need})).concat(id==='taiping'?CHECK.map(c=>({id:'legacy-'+c.id,title:c.t,need:c.n})):[])}
+function ddEmpty(){return {status:'open',role:'unassigned',due:'',review:'',finding:'pending',note:'',url:'',reference:'',source:null}}
+function ddSnapshot(e){return Object.fromEntries(['site','f','v','type','conf','url','chk','n'].map(k=>[k,String(e[k]??'')]))}
+function ddKey(e){return JSON.stringify([e.site,e.f,e.url,e.n])}
+function ddEvidence(id){return EVIDENCE.filter(e=>e.site===id||e.site==='all').concat(txEvidence(id)).map(ddSnapshot)}
+function ddValidate(e,asOf){
+ const errs=[];
+ if(!e||typeof e!=='object'||Array.isArray(e))return ['Invalid review record.'];
+ for(const [k,dict] of [['status',DD_STATUS],['role',DD_ROLE],['finding',DD_FINDING]])if(!Object.hasOwn(dict,e[k]))errs.push('Choose a valid '+k+'.');
+ for(const [k,max] of [['due',10],['review',10],['note',2000],['url',2000],['reference',300]])if(typeof e[k]!=='string'||e[k].length>max)errs.push('Invalid '+k+' length.');
+ for(const k of ['due','review'])if(e[k]&&reviewDay(e[k])===null)errs.push('Enter a valid '+k+' date.');
+ if(e.review&&e.review>asOf)errs.push('Review date cannot be in the future.');
+ if(e.url&&!txURL(e.url))errs.push('Use an http or https source URL without login credentials.');
+ if(e.source!==null){
+  if(!e.source||typeof e.source!=='object'||Array.isArray(e.source)||['site','f','v','type','conf','url','chk','n'].some(k=>typeof e.source[k]!=='string'||e.source[k].length>6000))errs.push('Invalid evidence snapshot.');
+  else if(e.source.url&&!txURL(e.source.url))errs.push('Invalid evidence URL.');
+ }
+ if(e.status==='reviewed'){
+  if(!e.review||e.finding==='pending'||(typeof e.note!=='string'||!e.note.trim())||(typeof e.reference!=='string'||!e.reference.trim())||!e.url)errs.push('A recorded review needs a date, finding, note, source URL and document/page reference.');
+  if(e.source?.type==='MISSING')errs.push('Missing evidence cannot support a recorded review. Cite an actual document.');
+ }
+ return errs;
+}
+function ddClean(raw,asOf){
+ const data={};let rejected=0;
+ if(raw==null)return {data,rejected};
+ if(typeof raw!=='object'||Array.isArray(raw))return {data,rejected:1};
+ for(const [id,tasks] of Object.entries(raw)){
+  if(!Object.hasOwn(SITE,id)||!tasks||typeof tasks!=='object'||Array.isArray(tasks)){rejected++;continue}
+  const allowed=new Set(ddTemplates(id).map(t=>t.id)),clean={};
+  for(const [key,record] of Object.entries(tasks)){
+   const hist=record?.history;let prev='';
+   if(!allowed.has(key)||!Array.isArray(hist)||!hist.length||hist.length>500){rejected++;continue}
+   const history=[];let bad=false;
+   for(const rawEvent of hist){
+    if(!rawEvent||typeof rawEvent!=='object'||Array.isArray(rawEvent)){bad=true;break}
+    const e=Object.fromEntries(Object.keys(ddEmpty()).map(k=>[k,rawEvent[k]]));
+    const at=rawEvent.at,ms=Date.parse(at);
+    if(ddValidate(e,asOf).length||typeof at!=='string'||!Number.isFinite(ms)||new Date(ms).toISOString()!==at||at<prev||at.slice(0,10)>asOf||(e.review&&e.review>at.slice(0,10))){bad=true;break}
+    if(e.source)e.source=ddSnapshot(e.source);
+    history.push({...e,at});prev=at;
+   }
+   if(bad){rejected++;continue}
+   clean[key]={history};
+  }
+  if(Object.keys(clean).length)data[id]=clean;
+ }
+ return {data,rejected};
+}
+const DD_LOAD=ddClean(store.get('diligence',{}),reviewToday());
+let DD=DD_LOAD.data,DDNOTICE=DD_LOAD.rejected,DDUI={site:'taiping',filter:'all',task:'boundary'};
+function ddCurrent(record){return record?.history?.at(-1)||ddEmpty()}
+function ddChanged(event,evidence){
+ if(!event.source)return false;
+ const now=evidence.find(e=>ddKey(e)===ddKey(event.source));
+ return !now||JSON.stringify(ddSnapshot(now))!==JSON.stringify(ddSnapshot(event.source));
+}
+function ddRows(id,asOf=reviewToday()){
+ const evidence=ddEvidence(id);
+ return ddTemplates(id).map(t=>{
+  const record=DD[id]?.[t.id],event=ddCurrent(record),changed=ddChanged(event,evidence);
+  return {...t,event,history:record?.history||[],changed,unreviewed:event.status!=='reviewed'||changed,overdue:!!event.due&&event.due<asOf&&(event.status!=='reviewed'||changed)};
+ });
+}
+function ddAppend(record,event,at,asOf){
+ const errors=ddValidate(event,asOf);if(errors.length)throw Error(errors.join(' '));
+ const history=record?.history||[];
+ if(history.length>=500)throw Error('History is full (500 entries). Export it before arranging an archive; no entries have been removed.');
+ const clean=ddClean({taiping:{boundary:{history:history.concat({...event,at})}}},asOf);
+ if(clean.rejected)throw Error('Invalid or out-of-order review timestamp.');
+ return clean.data.taiping.boundary;
+}
+function ddSave(id,key,event){
+ if(!Object.hasOwn(SITE,id)||!ddTemplates(id).some(t=>t.id===key))throw Error('Unknown site or task.');
+ const record=ddAppend(DD[id]?.[key],event,new Date().toISOString(),reviewToday());
+ const next={...DD,[id]:{...DD[id],[key]:record}};
+ try{localStorage.setItem('klure:diligence',JSON.stringify(next))}catch(e){throw Error('Review was not saved: browser storage is unavailable or full. Export the workspace before freeing storage.')}
+ DD=next;schedulePush();
+}
+function ddGates(id){
+ return TRIGGERS.filter(t=>t.site===id).map(t=>({label:t.l,state:evalTrigger(t).state,basis:t.basis||'Current scenario and recorded evidence',need:t.need||'Confirm the underlying evidence; workflow reviews do not change this condition.'}));
+}
+function ddLink(url,label){const u=txURL(url);return u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+esc(label||url)+'</a>':'No source URL recorded'}
+function ddHistory(e){
+ return '<details class="dd-history"><summary>'+esc(e.at)+' · '+esc(DD_STATUS[e.status])+'</summary><p>'+esc(DD_FINDING[e.finding])+' · '+esc(DD_ROLE[e.role])+'<br>Due: '+esc(e.due||'Not set')+' · Reviewed: '+esc(e.review||'Not recorded')+'</p><p class="dd-note">'+esc(e.note||'No note')+'</p><p>'+ddLink(e.url,e.reference||'Source document')+'</p>'+(e.source?'<details><summary>Evidence snapshot at this review</summary><p>'+esc(e.source.f)+' · '+esc(e.source.type)+' · '+esc(e.source.conf)+'<br>Checked: '+esc(e.source.chk||'Not dated')+'</p><p class="dd-note">'+esc(e.source.v)+'<br>'+esc(e.source.n)+'</p></details>':'<p class="small muted">Separate document reference; external page changes are not monitored.</p>')+'</details>';
+}
+function ddEditor(row,evidence){
+ const e=row.event,sel=e.source?evidence.findIndex(v=>ddKey(v)===ddKey(e.source)):-1;
+ const opts=(obj,v)=>Object.entries(obj).map(([k,l])=>'<option value="'+k+'" '+(v===k?'selected':'')+'>'+esc(l)+'</option>').join('');
+ return '<section class="dd-editor" aria-label="Selected investigation task"><h2>'+esc(row.title)+'</h2><p>'+esc(row.need)+'</p>'+(row.changed?'<p class="note warn">Linked evidence changed or was removed from the workspace. Recheck the source; the previous snapshot is preserved below.</p>':'')+
+ '<form id="dd-form"><div class="dd-fields"><label>Status<select id="dd-status">'+opts(DD_STATUS,e.status)+'</select></label><label>Responsible role<select id="dd-role">'+opts(DD_ROLE,e.role)+'</select></label><label>Due date<input id="dd-due" type="date" value="'+esc(e.due)+'"></label><label>Review date<input id="dd-review" type="date" max="'+reviewToday()+'" value="'+esc(e.review)+'"></label></div><label>Finding<select id="dd-finding">'+opts(DD_FINDING,e.finding)+'</select></label>'+
+ '<label>Link workspace evidence<select id="dd-source"><option value="-1">Separate source / no registry link</option>'+evidence.map((v,i)=>'<option value="'+i+'" '+(i===sel?'selected':'')+'>'+esc(v.f+' · '+v.type+' · '+(v.chk||'Undated'))+'</option>').join('')+'</select></label>'+
+ '<label>Source URL<input id="dd-url" type="url" maxlength="2000" value="'+esc(e.url)+'" placeholder="https://…"></label><label>Document and page / reference<input id="dd-reference" maxlength="300" value="'+esc(e.reference)+'"></label><label>Review note<textarea id="dd-note" rows="4" maxlength="2000">'+esc(e.note)+'</textarea></label>'+
+ '<p class="small muted">Record the question, evidence and limitations. Do not enter owners’ names, contacts, IC numbers, access tokens or private document contents. Documents are linked, not uploaded or fetched.</p><p id="dd-error" class="dd-error" role="alert"></p><button class="btn" type="submit">Save review entry</button></form>'+
+ '<h3>Review history ('+row.history.length+')</h3><p class="small muted">New saves append entries. Workspace imports or sync can replace this history; it is not an authenticated or tamper-proof audit trail.</p>'+(row.history.length?row.history.slice().reverse().map(ddHistory).join(''):'<p>No review entries yet. Legacy checklist ticks do not count as reviews.</p>')+'</section>';
+}
+function viewDiligence(id){
+ DDUI.site=Object.hasOwn(SITE,id)?id:DDUI.site;const sid=DDUI.site,rows=ddRows(sid),ev=ddEvidence(sid);
+ const visible=rows.filter(r=>DDUI.filter==='all'||DDUI.filter==='open'&&r.unreviewed||DDUI.filter==='overdue'&&r.overdue||DDUI.filter==='waiting'&&r.event.status==='waiting'||DDUI.filter==='recheck'&&r.changed);
+ if(!visible.some(r=>r.id===DDUI.task))DDUI.task=visible[0]?.id||'';
+ const selected=visible.find(r=>r.id===DDUI.task),gates=ddGates(sid);
+ return '<div class="page dd-page">'+head('Due-diligence workspace','Track investigation work and its sources. A recorded review is an analyst assertion, never a planning approval or consent certificate.',siteSelect(sid,SITES,'dd-site'))+
+ '<p><a href="#/site/'+sid+'">Site dossier</a> · <a href="#/sources">Evidence register</a> · <a href="#/triggers">Underlying triggers</a></p>'+
+ (DDNOTICE?'<p class="note warn" role="status">'+DDNOTICE+' invalid task record(s) were excluded from loaded history. Check the original workspace export before recording further reviews.</p>':'')+
+ '<p class="note">This workspace cannot change scenario inputs, evidence, trigger results or Assembly records. The existing checklist remains separate.</p>'+
+ '<div class="metrics">'+[['Tasks',rows.length],['Awaiting review / recheck',rows.filter(r=>r.unreviewed).length],['Overdue',rows.filter(r=>r.overdue).length],['Linked evidence changed',rows.filter(r=>r.changed).length]].map(([l,v])=>'<div class="metric"><span>'+l+'</span><b>'+v+'</b></div>').join('')+'</div>'+
+ '<details class="dd-gates" open><summary>Underlying conditions remain visible</summary><p class="small">Trigger results below use current scenario inputs and recorded evidence. A “Met” model threshold is not an approval. Parcel-specific planning, legal and funding documents still require professional review.</p>'+(gates.length?'<ul>'+gates.map(g=>'<li><b>'+esc(g.label)+'</b> · '+({await:'Awaiting data',no:'Not met',met:'Met'}[g.state])+'<br><span class="small">'+esc(g.basis)+' · '+esc(g.need)+'</span></li>').join('')+'</ul>':'<p>No configured triggers for this site. Absence of a trigger is not clearance.</p>')+(!SITE[sid].rlv?'<p>Development and owner models remain missing.</p>':'')+'</details>'+
+ '<div class="dd-layout"><aside aria-label="Investigation queue"><label>Show tasks<select id="dd-filter">'+[['all','All tasks'],['open','Awaiting review / recheck'],['overdue','Overdue'],['waiting','Waiting for evidence'],['recheck','Evidence changed']].map(([k,l])=>'<option value="'+k+'" '+(DDUI.filter===k?'selected':'')+'>'+l+'</option>').join('')+'</select></label><p class="small muted">'+visible.length+' of '+rows.length+' tasks · Dates use UTC ('+reviewToday()+').</p><ul class="dd-queue">'+visible.map(r=>'<li><button class="btn ghost" type="button" data-dd-task="'+r.id+'" aria-pressed="'+(r.id===DDUI.task)+'">'+esc(r.title)+'</button><p class="small">'+esc(DD_STATUS[r.event.status])+' · '+esc(DD_ROLE[r.event.role])+'<br>Due: '+esc(r.event.due||'Not set')+(r.overdue?' · <b>Overdue</b>':'')+(r.changed?' · <b>Recheck source</b>':'')+'</p></li>').join('')+'</ul><button class="btn ghost" type="button" id="dd-export">Export this site’s reviews</button></aside>'+
+ (selected?ddEditor(selected,ev):'<p>No tasks match this filter.</p>')+'</div></div>';
+}
+function bindDiligence(root){
+ root.querySelector('#dd-site').onchange=e=>{DDUI.task='boundary';DDUI.filter='all';go('#/diligence/'+e.target.value)};
+ root.querySelector('#dd-filter').onchange=e=>{DDUI.filter=e.target.value;render()};
+ root.querySelectorAll('[data-dd-task]').forEach(b=>b.onclick=()=>{DDUI.task=b.dataset.ddTask;render();document.getElementById('dd-status')?.focus()});
+ root.querySelector('#dd-export').onclick=()=>saveText('diligence-'+DDUI.site+'.json',JSON.stringify({v:1,asOf:reviewToday(),site:DDUI.site,basis:'Analyst workflow only; not approval or consent',workspace:{diligence:{[DDUI.site]:DD[DDUI.site]||{}}},tasks:ddRows(DDUI.site),conditions:ddGates(DDUI.site)},null,2),'application/json');
+ const form=root.querySelector('#dd-form');if(!form)return;const evidence=ddEvidence(DDUI.site);
+ root.querySelector('#dd-source').onchange=e=>{const src=evidence[Number(e.target.value)];if(src){root.querySelector('#dd-url').value=src.url;root.querySelector('#dd-reference').value=src.f.slice(0,300)}};
+ form.onsubmit=e=>{
+  e.preventDefault();const event=ddEmpty();
+  for(const k of Object.keys(event))if(k!=='source')event[k]=root.querySelector('#dd-'+k).value.trim();
+  const src=evidence[Number(root.querySelector('#dd-source').value)];
+  event.source=src&&txURL(src.url)===txURL(event.url)?ddSnapshot(src):null;
+  try{ddSave(DDUI.site,DDUI.task,event);render();toast('Review entry saved')}catch(err){root.querySelector('#dd-error').textContent=err.message}
+ };
+}
+
 /* ---------- router ---------- */
 function route(){const h=(location.hash||'#/watchlist').slice(2).split('/');return {p:h[0]||'watchlist',a:h[1],b:h[2],c:h[3]}}
 let LAST='';
 function render(){
   const r=route(), v=document.getElementById('view');
-  const views={watchlist:[viewWatchlist,bindWatchlist],map:[viewMap,bindMap],site:[()=>viewSite(r.a||'taiping'),bindSite],lab:[()=>viewLab(r.a),bindLab],deal:[()=>viewDeal(r.a),bindDeal],land:[()=>viewLand(r.a),bindLand],review:[viewReview,bindReview],compare:[viewCompare,bindCompare],cashflow:[()=>viewCashflow(r.a),bindCashflow],transactions:[()=>viewTransactions(r.a),bindTransactions],calibration:[viewCalibration,bindCalibration],board:[viewBoard,bindBoard],incentive:[()=>viewIncentive(r.a),bindIncentive],assembly:[()=>viewAssembly(r.a),bindAssembly],pack:[()=>viewPack(r.a,r.b,r.c),bindPack],odds:[()=>viewOdds(r.a),bindOdds],massing:[()=>viewMassing(r.a),bindMassing],triggers:[viewTriggers,()=>{}],sources:[viewSources,bindSources],universe:[viewUniverse,bindUniverse],method:[viewMethod,bindMethod]};
+  const views={watchlist:[viewWatchlist,bindWatchlist],map:[viewMap,bindMap],site:[()=>viewSite(r.a||'taiping'),bindSite],lab:[()=>viewLab(r.a),bindLab],deal:[()=>viewDeal(r.a),bindDeal],land:[()=>viewLand(r.a),bindLand],review:[viewReview,bindReview],compare:[viewCompare,bindCompare],cashflow:[()=>viewCashflow(r.a),bindCashflow],transactions:[()=>viewTransactions(r.a),bindTransactions],calibration:[viewCalibration,bindCalibration],board:[viewBoard,bindBoard],incentive:[()=>viewIncentive(r.a),bindIncentive],assembly:[()=>viewAssembly(r.a),bindAssembly],pack:[()=>viewPack(r.a,r.b,r.c),bindPack],odds:[()=>viewOdds(r.a),bindOdds],massing:[()=>viewMassing(r.a),bindMassing],triggers:[viewTriggers,()=>{}],diligence:[()=>viewDiligence(r.a),bindDiligence],sources:[viewSources,bindSources],universe:[viewUniverse,bindUniverse],method:[viewMethod,bindMethod]};
   const [fn,bind]=views[r.p]||views.watchlist;
   const y=window.scrollY, same=LAST===location.hash;
   const fid=document.activeElement&&document.activeElement.id;

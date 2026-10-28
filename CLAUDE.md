@@ -41,6 +41,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 - **Transactions:** `#/transactions/<site>` imports user-supplied CSVs with explicit source metadata and provisional confidence. `txCSV`, `txRow`, `txStage`, `txStats` validate and summarize; `TX` joins workspace sync/export. Only explicit `txApply` changes live ASP; recorded presets stay unchanged. See docs/transactions.md.
 - **Site comparison:** `#/compare`, `comparisonInput`, `comparisonResult`, `viewCompare` / `bindCompare`; 2–4 sites on base/as-read/live inputs, explicit evidence gaps and no composite winner. See docs/comparison.md.
 - **Cash flow:** `#/cashflow/<site>`, `cfModel`, `cfIRR`, `cfTarget`, `cfReceipts` provide a second quarterly funding model and a scenario-lab summary. `CF` settings join workspace persistence. Static engine/golden values stay unchanged. See docs/cashflow.md.
+- **Due diligence:** `#/diligence/<site>` provides evidence-linked tasks and append-only UI review entries; `DD` joins private workspace persistence. Review status never changes triggers or models. See docs/due-diligence.md.
 - **Views:** one `view…` and `bind…` pair per route, with the router (`render()`) at the end.
 - **Sync:** on claude.ai the page saves a private workspace through the artifact runtime (`window.claude`); elsewhere it uses localStorage. Keep that fallback.
 
