@@ -3,9 +3,11 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {Script} from 'node:vm';
 import {build,transform} from 'esbuild';
+import {validateParcelRegistry} from '../src/parcel-validator.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>readFile(path.join(root,p),'utf8');
 export async function generate(){
+ validateParcelRegistry(JSON.parse(await read('data/parcel-registry.json')));
  const manifest=JSON.parse(await read('src/manifest.json'));
  if(new Set(manifest).size!==manifest.length||manifest.some(p=>!/^[a-z0-9/-]+\.js$/.test(p)||p.includes('..')))throw Error('Invalid source manifest');
  const core=await build({absWorkingDir:root,entryPoints:['src/core.js'],bundle:true,format:'iife',globalName:'URECore',write:false,target:'es2022',charset:'utf8',legalComments:'inline',minify:false});

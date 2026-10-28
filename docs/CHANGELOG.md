@@ -114,3 +114,8 @@ Extracts pure engine/guideline ES modules and one browser source file per view, 
 ## Build 6.2 — Committee decision memo (29 October 2026)
 
 Adds dated scenario snapshots, an analyst-proposed position, economics, funding, task review status, evidence gaps and a linked source appendix. Printable PDF flow and standalone script-free HTML/JSON export preserve the displayed snapshot. Live triggers are labelled as a separate basis. No financial formulas, golden values, source facts or consent states change. Acceptance tracked in docs/continuation-programme.md.
+
+## Build 6.4 foundation — 29 October 2026
+- Add a strict, source-reviewed parcel registry and separate planning/cadastral boundary display, source details and focus view.
+- Reject unsafe/incomplete records and unsupported geometry; withhold unreviewed or stale outlines. No new dependencies, runtime fetches, financial input changes or golden-number changes.
+- Production geometry remains empty: official records and reuse permission are unavailable. Software acceptance and real parcel evidence acceptance remain separate.

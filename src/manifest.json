@@ -12,6 +12,7 @@
   "charts.js",
   "shell.js",
   "views/watchlist.js",
+  "views/parcels.js",
   "views/map.js",
   "views/site.js",
   "views/lab.js",

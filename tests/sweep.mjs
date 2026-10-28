@@ -3,6 +3,7 @@
 //
 //   npm run test:sweep
 //   npm run shots        also saves screenshots to screenshots/ for a visual check
+import { parcelFixture } from './fixtures/parcels.mjs';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, launch, openEngine, report } from './lib.mjs';
@@ -130,6 +131,18 @@ if (SHOTS) {
   await page.screenshot({path:path.join(dir,'versions_dark.png'),fullPage:true});
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:path.join(dir,'versions_phone.png'),fullPage:true});
+
+  await page.setViewportSize({width:1440,height:1000});
+  await page.evaluate(()=>{document.documentElement.setAttribute('data-theme','dark');MAP.sel='taiping';location.hash='#/map'});await page.waitForTimeout(250);
+  await page.screenshot({path:path.join(dir,'map_dark.png'),fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(dir,'map_phone.png'),fullPage:true});
+  await page.setViewportSize({width:1440,height:1000});
+  await page.evaluate(x=>{PARCELS=URECore.validateParcelRegistry(x,SITES.map(s=>s.id));MAP.boundaries=true;MAP.focus=true;render()},parcelFixture());
+  await page.locator('.parcel-record summary').click();
+  await page.screenshot({path:path.join(dir,'map_synthetic_focus.png'),fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(dir,'map_synthetic_phone.png'),fullPage:true});
   lines.push(`screenshots saved to ${dir}`);
 
 
