@@ -8,6 +8,8 @@ const checks=await page.evaluate(()=>{
  MODELLED.forEach(id=>st(id));const workspace=()=>JSON.stringify({...workspaceBody(),updatedAt:null});const before=workspace();
  const base=memoCapture('taiping','base'),g=memoCapture('taiping','g26'),live=memoCapture('taiping','live');
  ck('base and incentive separate',base.input.prUp===0&&g.input.prUp===.5&&g.model.rlv>base.model.rlv);
+ ck('incentive memo includes policy and cost evidence',g.evidence.some(e=>e.f==='Incentive guideline')&&g.evidence.some(e=>e.f==='Construction-cost benchmark'));
+ ck('unrelated land deals excluded',!base.evidence.some(e=>e.f.startsWith('Land deal:')));
  ck('captured DC is explicit',typeof base.input.dc==='number');
  ck('coverage follows captured residual and owner budget',Math.abs(base.model.own.coverage-base.model.rlv/base.model.own.reqTotal)<1e-10);
  ck('known base residual retained',Math.abs(base.model.rlv-27.5866e6)<1000);

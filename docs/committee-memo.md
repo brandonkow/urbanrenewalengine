@@ -9,3 +9,5 @@ Generation detaches the report from workspace objects. Changes to controls or un
 Printing hides application controls and expands the quarterly profile appendix. The report may span several pages, including the evidence register; it is not constrained to an executive-summary page count. No finance formula, golden value, trigger, source record or consent state changes when creating a memo.
 
 Validation covers every site and basis, missing models, source and scenario isolation, safe HTML, selected-snapshot export, mobile/dark layout and print controls. GitHub CI renders a synthetic committee memo PDF for paginated visual inspection. See the continuation programme for acceptance.
+
+The source appendix includes site-specific records, relevant shared planning/cost references and any documents linked to the site’s latest reviews, including retained snapshots. It does not include unrelated land-deal records from the global register.

@@ -466,3 +466,5 @@ tr.mc-cur td{background:color-mix(in srgb,var(--zone-soft) 45%,transparent)}
 .memo-task,.memo-source{border-bottom:1px solid var(--rule);padding:8px 0}.committee-memo a{overflow-wrap:anywhere}
 @media(max-width:600px){.committee-memo{padding:16px;margin:18px 0}.committee-memo h1{font-size:26px}.memo-table th{width:44%}.memo-table th,.memo-table td{padding:6px}}
 @media print{.committee-memo{max-width:none;margin:0;padding:0;border:0;font-size:10pt}.committee-memo h1{font-size:21pt}.committee-memo h2{font-size:14pt;break-after:avoid}.committee-memo h3{font-size:11pt;break-after:avoid}.memo-table tr,.memo-task,.memo-source{break-inside:avoid}.memo-page{max-width:none}.memo-small,.memo-kicker{font-size:9pt}.memo-table{min-width:0}}
+
+@media print{.committee-memo footer{break-inside:avoid}}
