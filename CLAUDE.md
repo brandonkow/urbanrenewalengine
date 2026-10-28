@@ -44,6 +44,7 @@ Redevelopment screener and deal-origination tool for Kuala Lumpur, module 1 of t
 - **Site comparison:** `#/compare`, `comparisonInput`, `comparisonResult`, `viewCompare` / `bindCompare`; 2–4 sites on base/as-read/live inputs, explicit evidence gaps and no composite winner. See docs/comparison.md.
 - **Cash flow:** `#/cashflow/<site>`, `cfModel`, `cfIRR`, `cfTarget`, `cfReceipts` provide a second quarterly funding model and a scenario-lab summary. `CF` settings join workspace persistence. Static engine/golden values stay unchanged. See docs/cashflow.md.
 - **Due diligence:** `#/diligence/<site>` provides evidence-linked tasks and append-only UI review entries; `DD` joins private workspace persistence. Review status never changes triggers or models. See docs/due-diligence.md.
+- **Committee memo:** `#/memo/<site>` captures a detached discussion snapshot of scenario economics, funding, evidence and review tasks. `memoCapture` preserves workspace state; `memoHTML` exports a script-free report. Positions are proposals, not committee approval. See docs/committee-memo.md.
 - **Views:** one `view…` and `bind…` pair per route, with the router (`render()`) at the end.
 - **Sync:** on claude.ai the page saves a private workspace through the artifact runtime (`window.claude`); elsewhere it uses localStorage. Keep that fallback.
 
