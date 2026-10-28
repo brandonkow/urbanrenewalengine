@@ -1,0 +1,73 @@
+import {launch,openEngine,report,ROOT} from './lib.mjs';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import path from 'node:path';
+const browser=await launch(),{page,errors}=await openEngine(browser,'#/memo/taiping');
+const lines=[];let fails=0;const ck=(n,c)=>{if(!c)fails++;lines.push((c?'PASS ':'FAIL ')+n)};
+const checks=await page.evaluate(()=>{
+ const out=[],ck=(n,c)=>out.push([n,!!c]);
+ MODELLED.forEach(id=>st(id));const workspace=()=>JSON.stringify({...workspaceBody(),updatedAt:null});const before=workspace();
+ const base=memoCapture('taiping','base'),g=memoCapture('taiping','g26'),live=memoCapture('taiping','live');
+ ck('base and incentive separate',base.input.prUp===0&&g.input.prUp===.5&&g.model.rlv>base.model.rlv);
+ ck('captured DC is explicit',typeof base.input.dc==='number');
+ ck('coverage follows captured residual and owner budget',Math.abs(base.model.own.coverage-base.model.rlv/base.model.own.reqTotal)<1e-10);
+ ck('known base residual retained',Math.abs(base.model.rlv-27.5866e6)<1000);
+ ck('no approval decision',base.decision==='unreviewed'&&!Object.hasOwn(MEMO_DECISIONS,'approved'));
+ for(const s of SITES)for(const b of Object.keys(MEMO_BASES)){
+  const d=memoCapture(s.id,b),html=memoBody(d);
+  ck(s.id+'/'+b+' usable snapshot',d.site.id===s.id&&!/\bNaN\b|\bundefined\b|Infinity|\[object|\bnull\b/.test(html));
+  if(!s.rlv)ck(s.id+'/'+b+' no fabricated outputs',d.model===null&&d.funding===null&&html.includes('No development model'));
+ }
+ for(const [id,b,decision,note] of [['__proto__','base','unreviewed',''],['taiping','bad','unreviewed',''],['taiping','base','approved',''],['taiping','base','hold',''],['taiping','base','hold','x'.repeat(3001)]]){
+  let bad=false;try{memoCapture(id,b,decision,note)}catch(e){bad=true}ck('invalid memo rejected '+id+'/'+b+'/'+decision,bad);
+ }
+ const oldASP=st('taiping').asp;STATE.taiping={...st('taiping'),asp:oldASP+100};
+ ck('snapshot detached from scenario',base.input.asp===oldASP&&memoCapture('taiping','live').input.asp===oldASP+100);
+ STATE.taiping.asp=oldASP;
+ const oldCF=CF.taiping;CF.taiping={...cfDefaults(base.input),land:1234567,facility:9876543};
+ const c=memoCapture('taiping','g26');ck('saved absolute funding amounts explicit',c.funding.saved&&c.funding.settings.land===1234567&&c.funding.settings.facility===9876543);
+ if(oldCF)CF.taiping=oldCF;else delete CF.taiping;
+ const src=EVIDENCE.find(e=>e.site==='taiping'),old=src.v;src.v='Changed after snapshot';
+ ck('evidence frozen',!base.evidence.some(e=>e.v==='Changed after snapshot'));src.v=old;
+ const hostile=memoCapture('taiping','base','hold','<img src=x onerror=alert(1)>','</script><script>alert(2)</script>');
+ hostile.evidence.push({f:'<svg onload=alert(1)>',v:'<script>x</script>',url:'javascript:alert(1)',conf:'LOW',type:'MISSING'});
+ const html=memoHTML(hostile);const doc=new DOMParser().parseFromString(html,'text/html');
+ ck('standalone has no scripts or active injection',!doc.querySelector('script,img,svg,iframe,[onerror],[onload],a[href^="javascript:"]'));
+ ck('unsafe source URL withheld',html.includes('No source URL recorded'));
+ ck('hostile text retained as text',doc.body.textContent.includes('<img src=x onerror=alert(1)>'));
+ ck('no external assets',!doc.querySelector('link,script[src],img'));
+ ck('export opens profiles',doc.querySelector('.memo-profiles').open);
+ ck('live trigger basis explicit',memoBody(g).includes('may use different inputs'));
+ ck('JSON round trip',JSON.parse(JSON.stringify(base)).model.rlv===base.model.rlv);
+ ck('memo writes no workspace data',workspace()===before);
+ return out;
+});checks.forEach(([n,c])=>ck(n,c));
+ck('memo route visible',await page.locator('.committee-memo').count()===1);
+await page.selectOption('#memo-decision','hold');
+await page.click('#memo-form button[type=submit]');
+ck('rationale required',await page.locator('#memo-error').innerText()!=='');
+await page.fill('#memo-rationale','SYNTHETIC EXAMPLE ONLY: await parcel and ownership evidence.');
+await page.fill('#memo-next','Obtain official records before committee review.');
+await page.selectOption('#memo-site','salak');await page.selectOption('#memo-basis','g26');
+await page.click('#memo-form button[type=submit]');await page.waitForTimeout(180);
+ck('selected site and basis captured',await page.evaluate(()=>MEMO.snapshot.site.id==='salak'&&MEMO.snapshot.basis==='g26'));
+ck('position captured',await page.locator('.memo-position').innerText()==='Hold pending evidence');
+await page.evaluate(()=>{window.capturedExport=null;saveText=(name,content,mime)=>{window.capturedExport={name,content,mime}}});
+await page.click('#memo-html');ck('HTML export uses displayed snapshot',await page.evaluate(()=>capturedExport.mime==='text/html'&&capturedExport.content.includes(MEMO.snapshot.createdAt)&&!capturedExport.content.includes('<script')));
+await page.click('#memo-json');ck('JSON export uses displayed snapshot',await page.evaluate(()=>JSON.parse(capturedExport.content).createdAt===MEMO.snapshot.createdAt));
+await page.fill('#memo-rationale','UNGENERATED EDIT');await page.click('#memo-json');
+ck('unsubmitted controls do not leak into exports',await page.evaluate(()=>!capturedExport.content.includes('UNGENERATED EDIT')));
+await page.evaluate(()=>{window.printed=false;window.print=()=>{window.printed=true}});await page.click('#memo-print');
+ck('print button opens profiles and invokes print',await page.evaluate(()=>printed&&document.querySelector('.memo-profiles').open));
+await page.setViewportSize({width:390,height:844});
+ck('phone has no page overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));
+ck('controls inherit themed colors',await page.locator('#memo-rationale').evaluate(e=>getComputedStyle(e).color===getComputedStyle(document.body).color));
+await page.emulateMedia({media:'print'});
+ck('print hides controls and navigation',await page.locator('#memo-form').evaluate(e=>getComputedStyle(e.closest('.no-print')).display==='none')&&await page.locator('.rail').evaluate(e=>getComputedStyle(e).display==='none'));
+ck('print retains report',await page.locator('.committee-memo').isVisible());
+// Runner-only publication samples; no client data. Rendered PDF QA is a separate CI step.
+const out=path.join(ROOT,'memo-review');mkdirSync(out,{recursive:true});
+await page.pdf({path:path.join(out,'committee-memo.pdf'),format:'A4',printBackground:true,preferCSSPageSize:true});
+const html=await page.evaluate(()=>memoHTML(MEMO.snapshot));
+writeFileSync(path.join(out,'committee-memo.html'),html);
+await browser.close();process.exit(report('Committee memo',lines,fails,errors,lines.length)?0:1);

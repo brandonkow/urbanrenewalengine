@@ -452,3 +452,17 @@ tr.mc-cur td{background:color-mix(in srgb,var(--zone-soft) 45%,transparent)}
 :root[data-theme=dark] .dd-page input[type=date],:root[data-theme=dark] .review-page input[type=date]{color-scheme:dark}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .dd-page input[type=date],:root:not([data-theme=light]) .review-page input[type=date]{color-scheme:dark}}
 @media(max-width:800px){.dd-layout,.dd-fields{grid-template-columns:1fr}.dd-gates{padding:12px}}
+
+/* Committee report: shared theme on screen, paper layout when printed. */
+.memo-page .mass-field select,.memo-page textarea{width:100%;min-width:0;background:var(--panel);color:var(--ink);border:1px solid var(--rule);padding:8px}
+.memo-page .memo-actions{display:flex;flex-wrap:wrap;gap:10px}
+.committee-memo{max-width:1000px;background:var(--panel);padding:28px;border:1px solid var(--rule);margin:24px auto;overflow-wrap:anywhere}
+.committee-memo h1{font-size:32px}.committee-memo h2{font-size:22px;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-top:30px}
+.committee-memo h3{font-size:16px}.committee-memo section,.committee-memo footer{margin-top:26px}
+.memo-table{width:100%;table-layout:fixed;border-collapse:collapse}
+.memo-table th,.memo-table td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid var(--rule);white-space:normal;overflow-wrap:anywhere}
+.memo-table th{width:46%}.memo-kicker,.memo-small{font-size:12px;color:var(--ink2)}.memo-pre{white-space:pre-wrap}
+.memo-warning,.memo-position{padding:12px;border-left:3px solid var(--zone);background:var(--sunk)}.memo-position{font-weight:700}
+.memo-task,.memo-source{border-bottom:1px solid var(--rule);padding:8px 0}.committee-memo a{overflow-wrap:anywhere}
+@media(max-width:600px){.committee-memo{padding:16px;margin:18px 0}.committee-memo h1{font-size:26px}.memo-table th{width:44%}.memo-table th,.memo-table td{padding:6px}}
+@media print{.committee-memo{max-width:none;margin:0;padding:0;border:0;font-size:10pt}.committee-memo h1{font-size:21pt}.committee-memo h2{font-size:14pt;break-after:avoid}.committee-memo h3{font-size:11pt;break-after:avoid}.memo-table tr,.memo-task,.memo-source{break-inside:avoid}.memo-page{max-width:none}.memo-small,.memo-kicker{font-size:9pt}.memo-table{min-width:0}}

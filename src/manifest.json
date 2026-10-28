@@ -43,5 +43,6 @@
   "views/compare.js",
   "views/cashflow.js",
   "views/diligence.js",
+  "views/memo.js",
   "router.js"
 ]
