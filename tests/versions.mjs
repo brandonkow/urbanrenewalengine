@@ -16,7 +16,7 @@ const checks=await page.evaluate(()=>{
  ck('valid changed assumptions accepted',!!svValidate(b));
  const bridge=svBridge(a,b);
  for(const k of ['rlv','coverage','irr'])ck(k+' ordered bridge reconciles',bridge.every(r=>r[k]!==null)&&close(bridge.reduce((s,r)=>s+r[k],0),b.outcome[k]-a.outcome[k]));
- ck('changed inputs list ASP owner count and rate',svChanges(a,b).some(c=>c.field.startsWith('ASP'))&&svChanges(a,b).some(c=>c.field==='Owner.n')&&svChanges(a,b).some(c=>c.field==='Funding.rate'));
+ ck('changed inputs list ASP owner count and rate',svChanges(a,b).some(c=>c.field.startsWith('ASP'))&&svChanges(a,b).some(c=>c.field==='Ownership interests tested')&&svChanges(a,b).some(c=>c.field==='Annual debt interest (%)'));
  let changed=copy(a);changed.outcome.rlv+=100;ck('tampered outcome rejected',throws(()=>svValidate(changed)));
  for(const [label,edit] of [
  ['future timestamp',v=>v.createdAt='2999-01-01T00:00:00.000Z'],['invalid calendar date',v=>v.createdAt='2026-02-30T00:00:00.000Z'],['schema',v=>v.schema='unknown'],['engine',v=>v.engine='unknown'],['site',v=>v.site='__proto__'],['basis',v=>v.basis='unknown'],['decision',v=>v.decision='approved'],['missing rationale',v=>v.rationale=''],['nonfinite input',v=>v.input.dc=Infinity],['out of range input',v=>v.input.eff=2],['bad funding profile',v=>v.funding.sales=[100]],['oversize label',v=>v.label='x'.repeat(121)],['oversize source',v=>v.evidence[0].v='x'.repeat(6001)],['model mismatch',v=>v.input=null]
@@ -82,4 +82,11 @@ await page.locator('[data-sv-delete]').first().click();
 ck('confirmed delete removes only selected version',await page.evaluate(()=>SV.length===1&&SV[0].id===SVUI.left||SV.length===1));
 await page.selectOption('#sv-site','salak');await page.waitForTimeout(150);
 ck('site selection clears cross-site comparison',await page.locator('#sv-comparison').count()===0);
+await page.evaluate(()=>localStorage.setItem('klure:versions','{invalid JSON'));
+await page.reload();
+ck('malformed stored history visibly rejected and retained',await page.evaluate(()=>!!SVNOTICE&&SV.length===0&&localStorage.getItem('klure:versions')==='{invalid JSON'));
+await page.fill('#sv-label','Must not overwrite');await page.click('#sv-form button[type=submit]');
+ck('save does not overwrite invalid original history',await page.evaluate(()=>localStorage.getItem('klure:versions')==='{invalid JSON'));
+await page.evaluate(()=>{saveText=(name,content)=>{window.recovery={name,content}}});await page.click('#sv-export');
+ck('recovery export preserves exact original bytes',await page.evaluate(()=>recovery.content==='{invalid JSON'&&recovery.name.endsWith('.txt')));
 await browser.close();process.exit(report('Saved scenario versions',lines,fails,errors,lines.length)?0:1);

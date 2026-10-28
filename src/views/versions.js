@@ -65,7 +65,7 @@ function svClean(raw){
  return out;
 }
 let SV=[],SVNOTICE='';
-try{SV=svClean(store.get('versions',[]))}catch(e){SVNOTICE='Stored history could not be loaded: '+e.message+' The original browser record has been retained.'}
+try{const raw=localStorage.getItem('klure:versions');SV=svClean(raw===null?[]:JSON.parse(raw))}catch(e){SVNOTICE='Stored history could not be loaded: '+e.message+' The original browser record has been retained.'}
 let SVUI={site:'taiping',left:'',right:'current',basis:'live',label:'',decision:'unreviewed',rationale:'',current:null};
 function svPersist(raw){
  const next=svClean(raw);
@@ -83,9 +83,13 @@ function svCapture(id,basis,label,decision='unreviewed',rationale=''){
 }
 function svFlat(v){
  const out={'Scenario basis':MEMO_BASES[v.basis],'Area basis':v.areaBasis,'Funding settings origin':v.fundingSaved?'Saved absolute settings':'Illustrative defaults'};
- if(v.input){for(const [k,l] of SV_FIELDS)out[l]=v.input[k];out['Area confirmed by user']=v.input.areaConfirmed;
- const walk=(o,p)=>{for(const [k,z] of Object.entries(o||{})){if(z&&typeof z==='object'&&!Array.isArray(z))walk(z,p+k+'.');else out[p+k]=z}};
- walk(v.input.owner,'Owner.');walk(v.funding,'Funding.')}
+ if(v.input){
+  for(const [k,l] of SV_FIELDS)out[l]=['prUp','eff','pf','cont','stat','sm','fin','demo','profit','dc'].includes(k)?fmtPct(v.input[k],4):v.input[k];
+  out['Area confirmed by user']=v.input.areaConfirmed;
+  const labels={res:'Residential owner value (RM / interest)',com:'Commercial owner value (RM / interest)',n:'Ownership interests tested',cs:'Commercial share of interests',up:'Owner uplift',hold:'Holdout allowance',nConfirmed:'Owner count confirmed by user',placeholder:'Placeholder owner assumptions',mode:'Owner model',net:'Net residential land share',lot:'Typical lot area (sf)',lpsf:'Owner land value (RM / land sf)'};
+  for(const [k,value] of Object.entries(v.input.owner||{})){if(k==='form'){out['Block-derived count enabled']=value.on;out['Bays per block']=value.bays;out['Levels per block']=value.levels}else out[labels[k]||k]=['cs','up','hold','net'].includes(k)?fmtPct(value,4):value}
+  if(v.funding){for(const [k,l] of CF_FIELDS)out[l]=v.funding[k];out['Funding structure']=v.funding.structure;out['Construction profile (% by quarter)']=v.funding.construction;out['Sales profile (% by quarter)']=v.funding.sales}
+ }
  return out;
 }
 function svChanges(a,b){
@@ -112,12 +116,12 @@ function svCompare(a,b){
  const delta=(k)=>a.outcome[k]===null||b.outcome[k]===null?'Not assessed':['irr','coverage'].includes(k)?fmt2((b.outcome[k]-a.outcome[k])*100)+' pp':fmtM(b.outcome[k]-a.outcome[k]);
  const changes=svChanges(a,b),ev=svEvidenceDiff(a,b),bridge=svBridge(a,b);
  return '<section id="sv-comparison"><h2>What changed</h2><p>From <b>'+esc(a.label)+'</b> ('+esc(a.createdAt)+') to <b>'+esc(b.label)+'</b> ('+esc(b.createdAt)+'). Times are UTC.</p>'+
- '<div class="tw"><table class="sv-table"><thead><tr><th>Result</th><th>Earlier selection</th><th>Later selection</th><th>Change</th></tr></thead><tbody>'+
+ '<p class="small">On narrow screens, scroll each table horizontally to see both selections and the change.</p><div class="tw" role="region" tabindex="0" aria-label="Scrollable scenario comparison"><table class="sv-table"><thead><tr><th>Result</th><th>Earlier selection</th><th>Later selection</th><th>Change</th></tr></thead><tbody>'+
  [['rlv','Static RLV'],['ownerBudget','Owner consideration'],['coverage','Owner coverage'],['irr','Equity IRR'],['peakDebt','Peak debt'],['peakEquity','Peak equity'],['profit','Pre-tax equity profit'],['npv','Equity NPV at captured target']].map(([k,l])=>'<tr><th>'+l+'</th><td>'+svMetric(k,a.outcome[k])+'</td><td>'+svMetric(k,b.outcome[k])+'</td><td>'+delta(k)+'</td></tr>').join('')+'</tbody></table></div>'+
  '<p class="small">IRR: earlier '+esc(a.outcome.irrReason||'Defined')+'; later '+esc(b.outcome.irrReason||'Defined')+'. Changes in coverage and IRR are percentage points (pp). NPV uses each version’s target; inspect target changes below.</p>'+
  '<h3>Proposed position and evidence gaps</h3><div class="cols">'+[a,b].map(v=>'<div class="block"><h4>'+esc(v.label)+'</h4><p><b>'+esc(MEMO_DECISIONS[v.decision])+'</b></p><p class="memo-pre">'+esc(v.rationale||'No rationale recorded')+'</p><p>'+esc(v.areaBasis)+'</p><ul>'+v.gaps.map(g=>'<li>'+esc(g)+'</li>').join('')+'</ul><p>'+v.tasks.filter(t=>t.unreviewed).length+' of '+v.tasks.length+' investigation tasks await review or recheck.</p></div>').join('')+'</div><p class="note warn">The position is an analyst proposal. A stronger financial result does not verify evidence, create committee approval or establish owner consent.</p>'+
- '<h3>Changed assumptions ('+changes.length+')</h3>'+(changes.length?'<div class="tw"><table class="sv-table"><thead><tr><th>Assumption</th><th>Earlier selection</th><th>Later selection</th></tr></thead><tbody>'+changes.map(c=>'<tr><th>'+esc(c.field)+'</th><td>'+esc(svDisplay(c.before))+'</td><td>'+esc(svDisplay(c.after))+'</td></tr>').join('')+'</tbody></table></div>':'<p>No captured input changes.</p>')+
- (bridge.length?'<details class="sv-detail"><summary>Explain the numerical change</summary><p>Ordered substitutions: area/owner, planning, sales, construction, other costs, then funding. Each row changes only that group; earlier funding amounts stay fixed until the final row. Contributions depend on this order and are model arithmetic, not evidence of market causation. Intermediate unsupported IRRs are withheld.</p><div class="tw"><table class="sv-table"><thead><tr><th>Input group</th><th>RLV change</th><th>Coverage change</th><th>Equity IRR change</th></tr></thead><tbody>'+bridge.map(r=>'<tr><th>'+esc(r.label)+'</th><td>'+svMetric('rlv',r.rlv)+'</td><td>'+(r.coverage===null?'Not assessed':fmt2(r.coverage*100)+' pp')+'</td><td>'+(r.irr===null?'Withheld: '+esc(r.reason):fmt2(r.irr*100)+' pp')+'</td></tr>').join('')+'</tbody></table></div></details>':'')+
+ '<h3>Changed assumptions ('+changes.length+')</h3>'+(changes.length?'<div class="tw" role="region" tabindex="0" aria-label="Scrollable scenario comparison"><table class="sv-table"><thead><tr><th>Assumption</th><th>Earlier selection</th><th>Later selection</th></tr></thead><tbody>'+changes.map(c=>'<tr><th>'+esc(c.field)+'</th><td>'+esc(svDisplay(c.before))+'</td><td>'+esc(svDisplay(c.after))+'</td></tr>').join('')+'</tbody></table></div>':'<p>No captured input changes.</p>')+
+ (bridge.length?'<details class="sv-detail"><summary>Explain the numerical change</summary><p>Ordered substitutions: area/owner, planning, sales, construction, other costs, then funding. Each row changes only that group; earlier funding amounts stay fixed until the final row. Contributions depend on this order and are model arithmetic, not evidence of market causation. Intermediate unsupported IRRs are withheld.</p><div class="tw" role="region" tabindex="0" aria-label="Scrollable scenario comparison"><table class="sv-table"><thead><tr><th>Input group</th><th>RLV change</th><th>Coverage change</th><th>Equity IRR change</th></tr></thead><tbody>'+bridge.map(r=>'<tr><th>'+esc(r.label)+'</th><td>'+svMetric('rlv',r.rlv)+'</td><td>'+(r.coverage===null?'Not assessed':fmt2(r.coverage*100)+' pp')+'</td><td>'+(r.irr===null?'Withheld: '+esc(r.reason):fmt2(r.irr*100)+' pp')+'</td></tr>').join('')+'</tbody></table></div></details>':'')+
  '<h3>Evidence changes ('+ev.length+')</h3><p class="small">Captured text, URLs and check dates only. A changed source is not automatically a verified fact.</p>'+
  (ev.length?ev.map(e=>'<details class="sv-detail"><summary>'+esc(e.kind+' — '+e.field)+'</summary>'+[e.before,e.after].map((rows,i)=>'<h4>'+(i?'Later':'Earlier')+'</h4>'+(rows.length?rows.map(r=>'<p>'+esc(r.v)+'<br>'+esc(r.type+' · '+r.conf+' · '+r.chk)+'</p><p>'+esc(r.n)+'</p><p>'+ddLink(r.url,r.url)+'</p>').join(''):'<p>Not recorded.</p>')).join('')+'</details>').join(''):'<p>No captured source changes.</p>')+
  '<details class="sv-detail"><summary>Investigation review snapshots</summary>'+[a,b].map(v=>'<h4>'+esc(v.label)+'</h4><ul>'+v.tasks.map(t=>'<li>'+esc(t.title+': '+t.status+' / '+t.finding+'; review '+(t.review||'not recorded')+(t.changed?' — source changed':''))+'</li>').join('')+'</ul>').join('')+'</details></section>';
@@ -142,6 +146,6 @@ function bindVersions(root){
  root.querySelector('#sv-form').onsubmit=e=>{e.preventDefault();try{read();if(SVNOTICE)throw Error('Resolve the stored-history error before replacing its original record. Export the original browser record first.');const v=svCapture(SVUI.site,SVUI.basis,SVUI.label,SVUI.decision,SVUI.rationale);svPersist([...SV,v]);SVUI.left=v.id;render();toast('Dated version saved')}catch(e){error(e)}};
  root.querySelector('#sv-refresh').onclick=()=>{try{read();SVUI.current=svCapture(SVUI.site,'live','Current live snapshot',SVUI.decision,SVUI.rationale);SVUI.right='current';render()}catch(e){error(e)}};
  for(const k of ['left','right'])root.querySelector('#sv-'+k).onchange=e=>{read();SVUI[k]=e.target.value;render()};
- root.querySelector('#sv-export').onclick=()=>saveText('scenario-history.json',SVNOTICE?JSON.stringify({versions:store.get('versions',[])}):JSON.stringify({versions:SV},null,2),'application/json');
+ root.querySelector('#sv-export').onclick=()=>{if(SVNOTICE)saveText('scenario-history-recovery.txt',localStorage.getItem('klure:versions')||'No stored history could be read.','text/plain');else saveText('scenario-history.json',JSON.stringify({versions:SV},null,2),'application/json')};
  root.querySelectorAll('[data-sv-delete]').forEach(b=>armConfirm(b,()=>{try{svPersist(SV.filter(v=>v.id!==b.dataset.svDelete));render()}catch(e){error(e)}}));
 }
