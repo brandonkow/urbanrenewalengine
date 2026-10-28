@@ -44,5 +44,6 @@
   "views/cashflow.js",
   "views/diligence.js",
   "views/memo.js",
+  "views/versions.js",
   "router.js"
 ]

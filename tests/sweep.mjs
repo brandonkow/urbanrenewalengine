@@ -16,7 +16,7 @@ const ids = await page.evaluate(() => SITES.map((s) => s.id));
 const modelled = await page.evaluate(() => MODELLED);
 const owned = await page.evaluate(() => MODELLED.filter((i) => st(i).owner));
 const inc = await page.evaluate(() => MODELLED.filter((i) => INC_DEFAULT[i]));
-const routes = [...ids.map(i=>'memo/'+i),...ids.map(i=>'diligence/'+i),...modelled.map(i=>'cashflow/'+i),'compare','transactions/taiping','review','land','land/ms-corus','land/param-ampang','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
+const routes = [...ids.map(i=>'versions/'+i),...ids.map(i=>'memo/'+i),...ids.map(i=>'diligence/'+i),...modelled.map(i=>'cashflow/'+i),'compare','transactions/taiping','review','land','land/ms-corus','land/param-ampang','land/ms-mira','land/ayer-seed','watchlist', 'board', 'incentive', 'map', 'triggers', 'sources', 'universe', 'method', 'calibration',
   ...ids.map((i) => `site/${i}`), ...modelled.map((i) => `lab/${i}`), ...owned.map((i) => `deal/${i}`),
   ...owned.map((i) => `assembly/${i}`), ...inc.map((i) => `incentive/${i}`),
   ...owned.flatMap((i) => ['en/base', 'ms/g26', 'zh/g26'].map((v) => `pack/${i}/${v}`)), ...owned.map((i) => `odds/${i}`), ...modelled.map((i) => `massing/${i}`)];
@@ -32,7 +32,7 @@ for (const r of routes) {
 lines.push(`${routes.length} routes rendered`);
 
 await page.setViewportSize({ width: 390, height: 844 });
-const PHONE = ['memo/taiping','diligence/taiping','cashflow/taiping','compare','transactions/taiping','review','land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'map', 'site/taiping', 'lab/taiping', 'deal/taiping', 'assembly/taiping', 'calibration', 'triggers', 'sources', 'universe', 'method', 'pack/taiping/zh/g26', 'pack/pantai/ms/g26', 'odds/taiping', 'massing/taiping', 'massing/salak'];
+const PHONE = ['versions/taiping','memo/taiping','diligence/taiping','cashflow/taiping','compare','transactions/taiping','review','land','watchlist', 'board', 'incentive/taiping', 'incentive/salak', 'map', 'site/taiping', 'lab/taiping', 'deal/taiping', 'assembly/taiping', 'calibration', 'triggers', 'sources', 'universe', 'method', 'pack/taiping/zh/g26', 'pack/pantai/ms/g26', 'odds/taiping', 'massing/taiping', 'massing/salak'];
 for (const r of PHONE) {
   await page.evaluate((h) => { location.hash = '#/' + h; }, r);
   await page.waitForTimeout(150);
@@ -115,6 +115,21 @@ if (SHOTS) {
   await page.screenshot({path:path.join(dir,'memo_dark.png'),fullPage:true});
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:path.join(dir,'memo_phone.png'),fullPage:true});
+
+  await page.setViewportSize({width:1440,height:1000});
+  await page.evaluate(()=>{
+    document.documentElement.removeAttribute('data-theme');
+    const a=svCapture('taiping','base','SYNTHETIC EXAMPLE — earlier','hold','Awaiting reviewed parcel and ownership records.');
+    const b=svCopy(a);b.id='sv_screenshot_later';b.label='SYNTHETIC EXAMPLE — revised';b.input.asp+=100;b.input.owner.n+=2;b.funding.rate+=1;b.outcome=svOutcome(b.input,b.funding);b.decision='investigate';b.rationale='Illustrative change only; evidence gates remain unresolved.';
+    b.evidence[0].v+=' — SYNTHETIC CHANGE ONLY';
+    SV=[a,b];SVUI={site:'taiping',left:a.id,right:b.id,basis:'live',label:'',decision:'unreviewed',rationale:'',current:null};location.hash='#/versions/taiping';
+  });await page.waitForTimeout(250);
+  await page.locator('.sv-detail').first().evaluate(e=>e.open=true);
+  await page.screenshot({path:path.join(dir,'versions.png'),fullPage:true});
+  await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));
+  await page.screenshot({path:path.join(dir,'versions_dark.png'),fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(dir,'versions_phone.png'),fullPage:true});
   lines.push(`screenshots saved to ${dir}`);
 
 

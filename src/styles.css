@@ -468,3 +468,12 @@ tr.mc-cur td{background:color-mix(in srgb,var(--zone-soft) 45%,transparent)}
 @media print{.committee-memo{max-width:none;margin:0;padding:0;border:0;font-size:10pt}.committee-memo h1{font-size:21pt}.committee-memo h2{font-size:14pt;break-after:avoid}.committee-memo h3{font-size:11pt;break-after:avoid}.memo-table tr,.memo-task,.memo-source{break-inside:avoid}.memo-page{max-width:none}.memo-small,.memo-kicker{font-size:9pt}.memo-table{min-width:0}}
 
 @media print{.committee-memo footer{break-inside:avoid}}
+
+/* Saved versions use horizontal scrolling for numerical comparisons on phones. */
+.sv-page input,.sv-page select,.sv-page textarea{width:100%;min-width:0;max-width:100%;padding:8px;background:var(--panel);color:var(--ink);border:1px solid var(--rule);font:inherit}
+.sv-page .mass-field,.sv-page .block{min-width:0;overflow-wrap:anywhere}.sv-page textarea{resize:vertical}
+.sv-page h3{margin-top:26px}.sv-page #sv-error{color:var(--bad)}
+.sv-table{min-width:700px;width:100%;table-layout:fixed}.sv-table th,.sv-table td{white-space:normal;overflow-wrap:anywhere;vertical-align:top}
+.sv-detail{margin:16px 0;padding:14px;border:1px solid var(--rule);overflow-wrap:anywhere}.sv-detail summary{cursor:pointer;font-weight:650}.sv-detail[open]>summary{margin-bottom:12px}
+.sv-history{list-style:none;padding:0}.sv-history li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule)}.sv-history li>div{min-width:0;overflow-wrap:anywhere}.sv-history button{flex-shrink:0}
+@media(max-width:600px){.sv-history li{align-items:start;flex-direction:column}.sv-detail{padding:10px}}

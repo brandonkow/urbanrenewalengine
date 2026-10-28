@@ -1,5 +1,5 @@
 /* ---------- account sync (db, private per viewer) ---------- */
-const SYNC_KEYS=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence'];
+const SYNC_KEYS=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence','versions'];
 const SYNC={mode:'local',doc:null,pushing:false,dirty:false,t:0,lastPushed:null};
 function syncLabel(){
   const el=document.getElementById('syncState'); if(!el) return;
@@ -9,7 +9,7 @@ function syncLabel(){
 function setSync(m){SYNC.mode=m;syncLabel()}
 function workspaceBody(){
   return {v:2,updatedAt:store.get('updatedAt',new Date().toISOString()),
-    state:STATE,saved:store.get('saved',[]),checks:CHECKS,v2w:V2W,deal:DEAL,asm:ASM,cal:CAL,glob:GLOB,inc:INC,mc:MC,massing:MASS,transactions:TX,cashflow:CF,diligence:DD};
+    state:STATE,saved:store.get('saved',[]),checks:CHECKS,v2w:V2W,deal:DEAL,asm:ASM,cal:CAL,glob:GLOB,inc:INC,mc:MC,massing:MASS,transactions:TX,cashflow:CF,diligence:DD,versions:SV};
 }
 function schedulePush(){
   try{localStorage.setItem('klure:updatedAt',JSON.stringify(new Date().toISOString()))}catch(e){}
@@ -32,6 +32,7 @@ async function pushNow(){
 }
 function applyRemote(b){
   if(!b||typeof b!=='object') return;
+  if(Object.hasOwn(b,'versions')){try{const next=svClean(b.versions);localStorage.setItem('klure:versions',JSON.stringify(next));SV=next;SVNOTICE=''}catch(e){toast('Workspace unchanged: '+e.message);return false}}
   const raw=(k,v)=>{try{localStorage.setItem('klure:'+k,JSON.stringify(v))}catch(e){}};
   if(b.state){STATE=JSON.parse(JSON.stringify(b.state));raw('state',STATE)}
   if(b.saved){raw('saved',b.saved)}
@@ -49,7 +50,7 @@ function applyRemote(b){
   if(Object.hasOwn(b,'diligence')){const d=ddClean(b.diligence,reviewToday());DD=d.data;DDNOTICE=d.rejected;raw('diligence',DD)}
   if(b.updatedAt) raw('updatedAt',b.updatedAt);
   const a=document.activeElement; if(a&&a.type==='range') return; // don't yank a slider mid-drag
-  render();
+  render();return true;
 }
 async function initSync(){
   if(!(window.claude&&typeof window.claude.use==='function')){setSync('local');return}

@@ -39,8 +39,9 @@ async function saveText(name,text,mime){
 function importWorkspace(text){
   let j; try{j=JSON.parse(text)}catch(e){toast('That is not valid JSON');return false}
   const b=j&&typeof j==='object'?(j.workspace||j):null;
-  const keys=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence'];
+  const keys=['state','saved','checks','v2w','deal','asm','cal','glob','inc','mc','massing','transactions','cashflow','diligence','versions'];
   if(!b||typeof b!=='object'||!keys.some(k=>b[k]&&typeof b[k]==='object')){toast('No workspace data found in that file');return false}
+  if(Object.hasOwn(b,'versions'))try{b.versions=svClean(b.versions)}catch(e){toast(e.message);return false}
   if(b.state&&typeof b.state==='object'){
     const clean={};
     for(const id in b.state){
@@ -55,13 +56,13 @@ function importWorkspace(text){
     b.state=clean;
   }
   b.updatedAt=new Date().toISOString();
-  applyRemote(b); schedulePush(); toast('Workspace imported'); return true;
+  if(applyRemote(b)===false)return false; schedulePush(); toast('Workspace imported'); return true;
 }
 function dataSection(){
   return `<div class="sec"><div class="sec-head"><h2>Data: export and import</h2><span class="muted">Move the workspace to another device, tool or person</span></div>
    <div class="cols">
     <div>
-     <p class="small">The workspace file holds every edited scenario, deal assumption, assembly record, checklist tick, score weight, calibration, global setting, cash-flow assumptions and due-diligence history, plus the site data, evidence register and each site’s current results.</p>
+     <p class="small">The workspace file holds every edited scenario, deal assumption, assembly record, checklist tick, score weight, calibration, global setting, cash-flow assumptions and due-diligence history, saved scenario versions and their evidence snapshots, plus the site data, evidence register and each site’s current results.</p>
      <p style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="expJson">Download workspace (.json)</button><button type="button" class="btn ghost" id="expCsv">Download site results (.csv)</button><button type="button" class="btn ghost" id="expShow">Show JSON to copy</button></p>
      <label class="small muted" for="expText" id="expLab" hidden>Exported JSON</label>
      <textarea id="expText" readonly hidden rows="10" style="width:100%;border:1px solid var(--rule);background:var(--panel);border-radius:4px;padding:8px;font:12px/1.4 var(--f)"></textarea>

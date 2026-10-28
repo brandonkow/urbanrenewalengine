@@ -1,3 +1,9 @@
+## Build 6.3 — dated scenario comparisons
+
+- Preserve assumptions, funding, source context and proposed positions in validated workspace history.
+- Compare results, changed inputs and evidence; explain numerical movements through ordered substitutions.
+- Build 6.2 accepted at 855e6e3: 2,661 checks, unchanged golden numbers, 40 screenshots plus app and standalone report print review.
+
 # Changelog
 
 Add one entry per change that moves numbers or behaviour. When golden values in `tests/expected.json` change, list them as old → new with the reason.
