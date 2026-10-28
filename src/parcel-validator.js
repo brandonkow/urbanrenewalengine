@@ -44,6 +44,7 @@ export function validateParcelRegistry(raw,siteIds=null){
   obj(p.rights,['status','reference'],'Rights');one(p.rights.status,['permitted','unknown'],'reuse status');str(p.rights.reference,2000,'Rights reference',p.rights.status==='unknown');
   const r=p.review;obj(r,['status','date','role','siteMatch','note'],'Review');one(r.status,['pending','reviewed'],'review status');day(r.date,r.status==='pending');one(r.role,['unassigned','planner','surveyor'],'review role');one(r.siteMatch,['unconfirmed','confirmed'],'site match');str(r.note,2000,'Review note',r.status==='pending');
   if(r.status==='reviewed'&&(r.role==='unassigned'||r.siteMatch!=='confirmed'||!r.date||!r.note.trim()))throw Error('Reviewed record needs role, date, confirmed match and note');
+  if(r.status==='reviewed'&&r.role!==(p.kind==='cadastral'?'surveyor':'planner'))throw Error('Boundary review needs the appropriate surveyor/planner role');
   if(p.sourceAreaSqm!==null&&(typeof p.sourceAreaSqm!=='number'||!Number.isFinite(p.sourceAreaSqm)||p.sourceAreaSqm<=0||p.sourceAreaSqm>100000000))throw Error('Invalid source area');
   if(!Array.isArray(p.controls)||p.controls.length>20)throw Error('Invalid controls');
   for(const c of p.controls){

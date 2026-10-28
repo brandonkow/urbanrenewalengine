@@ -51,6 +51,7 @@ function viewMap(){
   return `<div class="page">
    ${head('Map','Approximate watchlist locations with a separate, source-reviewed boundary layer. Pin colour shows project economics.')}
    <div class="parcel-tools"><label for="map-site">Select site <select id="map-site">${SITES.map(s=>`<option value="${s.id}" ${s.id===selected?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label><label><input type="checkbox" id="map-focus" ${MAP.focus&&MAP.boundaries!==false&&parcelVisible(selected).length?'checked':''} ${MAP.boundaries!==false&&parcelVisible(selected).length?'':'disabled'}> Focus on reviewed boundaries</label></div>
+   ${MAP.focus&&MAP.boundaries!==false&&parcelVisible(selected).length?'<p class="note small">Focused boundary view: north is up. Only this site’s reviewed outlines are shown; schematic pins, rail and overview group filters are hidden here. Turn off focus to return to the overview. This is not a survey plan.</p>':''}
    <div class="map-wrap">
     <div class="map-box"><svg viewBox="${parcelViewBox(selected,MAP.focus&&MAP.boundaries!==false)}" id="mapsvg" role="group" aria-label="Schematic map of Kuala Lumpur redevelopment sites">${g}</svg></div>
     <div>

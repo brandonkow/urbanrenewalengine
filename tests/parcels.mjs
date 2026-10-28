@@ -32,6 +32,8 @@ reject('invalid confidence rejected',f=>f.properties.confidence='VERIFIED');
 reject('negative source area rejected',f=>f.properties.sourceAreaSqm=-1);
 reject('review without confirmed match rejected',f=>f.properties.review.siteMatch='unconfirmed');
 reject('review without role rejected',f=>f.properties.review.role='unassigned');
+reject('cadastral review needs surveyor role',f=>f.properties.review.role='planner');
+check('planning review uses planner role',()=>{const x=copy(fixture),p=x.features[0].properties;p.kind='planning';p.sourceType='OFFICIAL_PLANNING';p.review.role='planner';validateParcelRegistry(x,['taiping']);assert.equal(parcelPublication(x.features[0],today).visible,true)});
 reject('geometry without reuse permission rejected',f=>f.properties.rights.status='unknown');
 reject('missing permission reference rejected',f=>f.properties.rights.reference='');
 reject('control unsafe link rejected',f=>f.properties.controls[0].sourceUrl='data:text/html,evil');
@@ -62,6 +64,8 @@ try{
  assert.notEqual(await page.locator('#mapsvg').getAttribute('viewBox'),'0 0 800 881'); // also test actual focus below
  const box=await page.locator('#mapsvg').getAttribute('viewBox');assert.ok(Number(box.split(' ')[2])<20);n++;
  assert.equal(await page.locator('.pin').count(),0);n++;
+ await page.locator('[data-layer="spec"]').uncheck();assert.equal(await page.locator('.parcel-shape').count(),1);n++;
+ await page.locator('[data-layer="spec"]').check();
  await page.locator('#map-site').selectOption('salak');assert.match(await page.innerText('main'),/No reviewed boundary records/);assert.equal(await page.locator('#map-focus').isDisabled(),true);n+=2;
  await page.locator('#map-site').selectOption('taiping');
  await page.locator('[data-layer="boundaries"]').uncheck();assert.equal(await page.locator('.parcel-shape').count(),0);n++;

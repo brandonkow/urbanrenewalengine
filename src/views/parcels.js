@@ -11,7 +11,7 @@ function parcelViewBox(id,focus){
 }
 function parcelShapes(site=null){
  if(MAP.boundaries===false)return '';
- return PARCELS.features.filter(f=>{const s=SITE[f.properties.site];return (!site||f.properties.site===site)&&URECore.parcelPublication(f).visible&&!(s.group==='specific'&&!MAP.spec)&&!(s.group==='jwp'&&!MAP.jwp);}).map(f=>{
+ return PARCELS.features.filter(f=>{const s=SITE[f.properties.site];return (!site||f.properties.site===site)&&URECore.parcelPublication(f).visible&&(site||(!(s.group==='specific'&&!MAP.spec)&&!(s.group==='jwp'&&!MAP.jwp)));}).map(f=>{
  const p=f.properties;return '<path class="parcel-shape parcel-'+p.kind+'" d="'+parcelPath(f)+'" fill-rule="evenodd"><title>'+esc(p.label+' — reviewed '+p.kind+' record; source '+p.reference)+'</title></path>';
  }).join('');
 }
