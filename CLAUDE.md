@@ -65,3 +65,6 @@ The live engine is a private claude.ai artifact. To update it, attach the new `a
 
 ## Build 6.3 saved scenario versions
 `#/versions/<site>` captures immutable dated snapshots of inputs, funding, evidence, due-diligence summaries and proposed positions. `svValidate` recomputes stored results; `svClean` validates the entire history before import. `SV` joins workspace sync/export. `svBridge` uses ordered substitutions, not causal attribution. Invalid stored history is preserved for raw recovery. Never promote saved proposals to committee approval or evidence verification. See docs/saved-versions.md; run `npm run test:versions`.
+
+## Build 6.4 parcel-map foundation
+`data/parcel-registry.json` is a deliberately empty curated registry. `src/parcel-validator.js` validates schema, bounds, simple polygons and explicit source/reuse/review metadata. Build and browser both validate; no new network/runtime dependency. Cadastral review requires a surveyor role; planning review requires a planner role. `parcelPublication` withholds missing, pending, future or stale records. Validation is not independent professional verification. No geometry, title count or parcel control has been newly verified. See docs/parcel-map.md and docs/owner-model-readiness.md. Do not mark the programme complete while evidence-dependent outcomes remain open.

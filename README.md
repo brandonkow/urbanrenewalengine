@@ -4,6 +4,7 @@ A Kuala Lumpur redevelopment screener with a single-file offline dashboard. The 
 
 ## Current capabilities
 - Site dossiers, watchlist, schematic map, scenario lab and trigger monitoring.
+- Source-reviewed parcel registry, boundary focus and document context; production geometry is empty pending official records and reuse permission.
 - DBKL incentive scenarios, owner/deal economics, assembly tracking and owner briefing packs.
 - Owner-test probability, massing/parking sensitivity and land-deal evidence/history.
 - User-supplied transaction CSVs with comparable-group statistics and explicit ASP application.
@@ -13,7 +14,7 @@ A Kuala Lumpur redevelopment screener with a single-file offline dashboard. The 
 - Saved scenario versions with dated inputs, evidence and proposed positions, result-change explanations and workspace backup.
 - Dated committee memos with scenario economics, funding, evidence gaps, next actions and PDF/HTML/JSON exports.
 
-The five-build completion programme and its test/visual acceptance evidence are in [docs/completion-programme.md](docs/completion-programme.md). The next programme is tracked in [docs/continuation-programme.md](docs/continuation-programme.md). Current source architecture is Build 6.3; [docs/CHANGELOG.md](docs/CHANGELOG.md) records changes.
+The five-build completion programme and its test/visual acceptance evidence are in [docs/completion-programme.md](docs/completion-programme.md). The next programme is tracked in [docs/continuation-programme.md](docs/continuation-programme.md). Current source architecture is Build 6.4 foundation; [docs/CHANGELOG.md](docs/CHANGELOG.md) records changes.
 
 ## Use and publish
 `app/index.html` is the self-contained publication artifact. It has no runtime package, external script, stylesheet or web-font requirement. Outside the private Claude artifact runtime, workspace settings use browser localStorage. Use the Method page's JSON export/import for backups and transfer.
@@ -46,6 +47,8 @@ The unit tests import the pure engine/guideline modules directly. Existing Playw
 | [Transactions](docs/transactions.md) | CSV requirements and comparability limits |
 | [Comparison](docs/comparison.md) | Scenario basis and missing-data handling |
 | [Cash flow](docs/cashflow.md) | Timing model, reconciliation and limitations |
+| [Parcel map](docs/parcel-map.md) | Geometry validation, review gates and missing source records |
+| [Owner-model readiness](docs/owner-model-readiness.md) | Evidence needed before extending four site models |
 | [Saved versions](docs/saved-versions.md) | Dated snapshots, comparison, recovery and backup limits |
 | [Committee memo](docs/committee-memo.md) | Snapshot basis, exports and discussion limits |
 | [Due diligence](docs/due-diligence.md) | Review workflow, privacy and history limits |

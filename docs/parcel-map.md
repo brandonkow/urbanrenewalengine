@@ -33,4 +33,6 @@ DBKL's [public redevelopment planning-layer directory](https://cps.dbkl.gov.my/s
 The user confirmed that no official parcel/strata documents are currently available. Verified geometry remains an external evidence requirement. Existing approximate location and planning-reference data retain their existing provenance.
 
 ## Acceptance
-Implementation acceptance is pending GitHub CI and rendered review. Even after software acceptance, Build 6.4 remains evidence-incomplete until real source records and rights pass review.
+Software source accepted on 1 November 2026: commit c95e750, GitHub Actions run 40733115649, 2,926 checks including 59 parcel checks. All 47 screenshots were reviewed directly or byte-compared to previously reviewed images. The generated offline HTML is committed with this record; final CI checks the committed HTML before regenerating it. Existing source data and golden numbers are unchanged. Private artifact publication and real-device acceptance remain separate.
+
+Build 6.4 remains evidence-incomplete until real source records and rights pass review. The empty production registry is not a verified parcel map.
